@@ -21,49 +21,98 @@ export const mainNavItems: SiteNavItem[] = [
       { label: "Sejarah", href: "/sejarah" },
       { label: "Visi & Misi", href: "/visi-misi" },
       { label: "Struktur Organisasi", href: "/struktur-organisasi" },
-    ],
-  },
-  {
-    label: "Berita",
-    href: "#"
-  },
-  {
-    label: "Program",
-    href: "#",
-    children: [
-      { label: "Bilingual", href: "/bilingual" },
+      { label: "Denah Sekolah", href: "/denah-sekolah" },
+      { label: "Sarana dan Prasarana", href: "/sarana-prasarana" },
+      { label: "Tata Tertib", href: "/tata-tertib" },
       { label: "Kemitraan", href: "/kemitraan" },
-      { label: "Kokurikuler", href: "/kokurikuler" },
-    ],
-  },
-  {
-    label: "Ekstrakurikuler",
-    href: "#",
-    children: [
-      { label: "Akademik", href: "/akademik" },
-      { label: "Non Akademik", href: "/non-akademik" },
     ]
   },
   {
-    label: "Sarpras",
-    href: "/sarana-prasarana",
-  },
-  {
-    label: "Prestasi",
-    href: "#"
-  },
-  {
-    label: "E-Learning",
+    label: "Akademik",
     href: "#",
     children: [
-      { label: "Moodle", href: "https://lms.sman1samarinda.sch.id" },
-      { label: "Google Classroom", href: "https://classroom.google.com/" },
+      { label: "Ekstrakurikuler", href: "/ekstrakurikuler" },
+      { label: "Prestasi", href: "/prestasi" },
+      { label: "Kalender Akademik", href: "/kalender-akademik" },
+      { label: "Pengumuman Kelulusan", href: "https://kelulusan.sman1samarinda.sch.id" },
+      { label: "Alumni", href: "/alumni" },
+    ]
+  },
+  {
+    label: "Aplikasi Kami",
+    href: "#",
+    children: [
+      { label: "SIMSDIG", href: "/simsdig" },
+      { label: "Moodle E-Learning", href: "https://lms.sman1samarinda.sch.id" },
       { label: "Pijar Sekolah", href: "https://portal.pijarsekolah.id/cbtsman1samarinda" },
-      { label: "E-Raport", href: "https://erapor.sman1samarinda.sch.id/" },
+      { label: "E-Rapor", href: "https://erapor.sman1samarinda.sch.id/" },
     ]
   },
   {
-    label: "Alumni",
-    href: "/alumni",
-  }
+    label: "Kegiatan",
+    href: "#",
+    children: [
+      { label: "Berita", href: "/berita" },
+      { label: "Pengumuman", href: "/pengumuman" },
+      { label: "Korikuler", href: "/korikuler" },
+      { label: "Bilingual", href: "/bilingual" },
+    ]
+  },
 ];
+
+// export const mainNavItems: SiteNavItem[] = [
+//   { label: "Beranda", href: "#beranda" },
+//   {
+//     label: "Tentang",
+//     href: "#",
+//     children: [
+//       { label: "Profil", href: "/profil" },
+//       { label: "Sejarah", href: "/sejarah" },
+//       { label: "Visi & Misi", href: "/visi-misi" },
+//       { label: "Struktur Organisasi", href: "/struktur-organisasi" },
+//     ],
+//   },
+//   {
+//     label: "Berita",
+//     href: "#"
+//   },
+//   {
+//     label: "Program",
+//     href: "#",
+//     children: [
+//       { label: "Bilingual", href: "/bilingual" },
+//       { label: "Kemitraan", href: "/kemitraan" },
+//       { label: "Kokurikuler", href: "/kokurikuler" },
+//     ],
+//   },
+//   {
+//     label: "Ekstrakurikuler",
+//     href: "#",
+//     children: [
+//       { label: "Akademik", href: "/akademik" },
+//       { label: "Non Akademik", href: "/non-akademik" },
+//     ]
+//   },
+//   {
+//     label: "Sarpras",
+//     href: "/sarana-prasarana",
+//   },
+//   {
+//     label: "Prestasi",
+//     href: "#"
+//   },
+//   {
+//     label: "E-Learning",
+//     href: "#",
+//     children: [
+//       { label: "Moodle", href: "https://lms.sman1samarinda.sch.id" },
+//       { label: "Google Classroom", href: "https://classroom.google.com/" },
+//       { label: "Pijar Sekolah", href: "https://portal.pijarsekolah.id/cbtsman1samarinda" },
+//       { label: "E-Raport", href: "https://erapor.sman1samarinda.sch.id/" },
+//     ]
+//   },
+//   {
+//     label: "Alumni",
+//     href: "/alumni",
+//   }
+// ];

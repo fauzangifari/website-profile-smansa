@@ -3,29 +3,29 @@ import { PageTemplate } from "@/components/layout/page-template";
 import { AppNavbar } from "@/components/site/app-navbar";
 import { SiteFooter } from "@/components/site/site-footer";
 import { mainNavItems } from "@/config/site";
-import { AkademikContent } from "@/features/akademik/components/akademik-content";
+import { EkskulContent } from "@/features/ekskul/components/ekskul-content";
 
 export const metadata: Metadata = {
-  title: "Akademik & Ekskul Sains SMA Negeri 1 Samarinda",
+  title: "Ekstrakurikuler — SMA Negeri 1 Samarinda",
   description:
-    "Jelajahi berbagai program akademik dan klub sains di SMAN 1 Samarinda yang dirancang untuk mengasah potensi intelektual dan prestasi siswa.",
+    "Jelajahi seluruh program ekstrakurikuler akademik dan non-akademik SMAN 1 Samarinda. Temukan club sains, olahraga, seni budaya, teknologi, dan keagamaan yang tepat untukmu.",
 };
 
-export default function AkademikPage() {
+export default function EkskulPage() {
   return (
     <>
       <AppNavbar items={mainNavItems} anchorBasePath="/" />
       <PageTemplate
         eyebrow="Ekstrakurikuler"
-        title="Akademik Smansa: Intelektualitas & Prestasi"
-        description="Pusat pengembangan bakat akademik melalui program pengayaan intensif dan bimbingan spesialis untuk mencetak generasi juara di kancah nasional maupun internasional."
+        title="Kembangkan Diri di SMANSA"
+        description="Program pengembangan bakat akademik dan non-akademik untuk membentuk siswa yang unggul, berkarakter, dan siap berprestasi di berbagai bidang."
         variant="glass"
         breadcrumbs={[
           { label: "Beranda", href: "/" },
-          { label: "Akademik" },
+          { label: "Ekstrakurikuler" },
         ]}
       >
-        <AkademikContent />
+        <EkskulContent />
       </PageTemplate>
       <SiteFooter anchorBasePath="/" />
     </>
