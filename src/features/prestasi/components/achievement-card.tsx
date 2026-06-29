@@ -16,6 +16,8 @@ import {
   getStudentMembers,
 } from "@/features/prestasi/utils/achievement-helpers";
 
+const FRAME_SRC = "/images/template/prestasi.png";
+
 interface AchievementCardProps {
   achievement: Achievement;
   onPhotoClick: (src: string, alt: string) => void;
@@ -49,105 +51,122 @@ export function AchievementCard({ achievement, onPhotoClick }: AchievementCardPr
       )}
     >
       {/* ── Thumbnail section ─────────────────────────────────────────────
-          Wrapper relative div: badges position relative to this.
-          The photo button itself is NOT inset-0 — it sizes naturally so
-          pointer events are bounded strictly to the thumbnail area.
+          Frame PNG (RGBA) diletakkan di atas foto sebagai overlay (z-20).
+          Foto terlihat melalui area transparan frame.
+          Badge Level/Type dipindah ke card body — tidak di thumbnail.
       ─────────────────────────────────────────────────────────────────── */}
-      <div className="relative">
-        {photoUrl ? (
-          <button
-            id={`photo-btn-${achievement.id}`}
-            onClick={() => onPhotoClick(photoUrl, name)}
-            className="relative block w-full overflow-hidden bg-gradient-to-br from-slate-100 to-slate-200 focus:outline-none focus-visible:ring-4 focus-visible:ring-brand-primary/30"
-            style={{ aspectRatio: "4/3" }}
-            aria-label={`Lihat foto dokumentasi ${name}`}
+      {photoUrl ? (
+        <button
+          id={`photo-btn-${achievement.id}`}
+          onClick={() => onPhotoClick(photoUrl, name)}
+          className="relative block w-full overflow-hidden bg-slate-100 focus:outline-none focus-visible:ring-4 focus-visible:ring-brand-primary/30"
+          style={{ aspectRatio: "4/3" }}
+          aria-label={`Lihat foto dokumentasi ${name}`}
+        >
+          {/* Foto asli — base layer */}
+          <Image
+            src={photoUrl}
+            alt={`Foto dokumentasi ${name}`}
+            fill
+            className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+            sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw"
+          />
+
+          {/* Frame overlay — tampil di atas foto */}
+          <Image
+            src={FRAME_SRC}
+            alt=""
+            fill
+            aria-hidden="true"
+            className="object-cover pointer-events-none"
+            style={{ zIndex: 20 }}
+            sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw"
+            priority={false}
+          />
+
+          {/* Hover overlay "Lihat Foto" — di atas frame */}
+          <div
+            className={cn(
+              "absolute inset-0 z-30 flex items-center justify-center pointer-events-none",
+              "opacity-0 transition-all duration-300",
+              "group-hover:opacity-100"
+            )}
           >
-            <Image
-              src={photoUrl}
-              alt={`Foto dokumentasi ${name}`}
-              fill
-              className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.06]"
-              sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw"
-            />
-
-            {/* Gradient vignette */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent pointer-events-none" />
-
-            {/* Rank — bottom left */}
-            <div className="absolute bottom-3 left-3 flex items-center gap-1.5 pointer-events-none">
-              <span className="text-lg leading-none drop-shadow-lg">{medal}</span>
-              <span className="text-xs font-bold text-white/90 drop-shadow tracking-wide">
-                {rankLabel}
-              </span>
-            </div>
-
-            {/* Hover overlay — purely visual, pointer-events-none */}
             <div
               className={cn(
-                "absolute inset-0 flex items-center justify-center pointer-events-none",
-                "opacity-0 transition-all duration-300",
-                "group-hover:opacity-100"
+                "flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-white",
+                "bg-black/50 backdrop-blur-md border border-white/25 shadow-2xl",
+                "translate-y-1.5 scale-95 transition-all duration-300",
+                "group-hover:translate-y-0 group-hover:scale-100"
               )}
             >
-              <div
-                className={cn(
-                  "flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-white",
-                  "bg-black/40 backdrop-blur-md border border-white/25 shadow-2xl",
-                  "translate-y-1.5 scale-95 transition-all duration-300",
-                  "group-hover:translate-y-0 group-hover:scale-100"
-                )}
-              >
-                <ArrowSquareOut size={14} weight="bold" />
-                Lihat Foto
-              </div>
-            </div>
-          </button>
-        ) : (
-          /* ── No photo fallback ── */
-          <div
-            className="relative w-full bg-gradient-to-br from-slate-50 via-neutral-100 to-slate-200 overflow-hidden"
-            style={{ aspectRatio: "4/3" }}
-          >
-            <div className="absolute size-32 rounded-full bg-neutral-200/60 blur-2xl -top-4 -left-4 pointer-events-none" />
-            <div className="absolute size-24 rounded-full bg-neutral-300/40 blur-xl bottom-0 right-0 pointer-events-none" />
-            <div className="flex h-full w-full flex-col items-center justify-center gap-3">
-              <span className="relative text-5xl leading-none drop-shadow-sm">{medal}</span>
-              <span className="relative text-xs font-bold text-neutral-500 uppercase tracking-widest">
-                {rankLabel}
-              </span>
+              <ArrowSquareOut size={14} weight="bold" />
+              Lihat Foto
             </div>
           </div>
-        )}
+        </button>
+      ) : (
+        /* ── No photo fallback — frame tampil di atas gradient ── */
+        <div
+          className="relative w-full overflow-hidden bg-gradient-to-br from-slate-50 via-neutral-100 to-slate-200"
+          style={{ aspectRatio: "4/3" }}
+        >
+          {/* Dekoratif */}
+          <div className="absolute size-32 rounded-full bg-neutral-200/60 blur-2xl -top-4 -left-4 pointer-events-none" />
+          <div className="absolute size-24 rounded-full bg-neutral-300/40 blur-xl bottom-0 right-0 pointer-events-none" />
 
-        {/* Level badge — top left (outside button, above it in z-order) */}
-        <div className="absolute left-3 top-3 z-10 pointer-events-none">
+          {/* Rank medal — tampil di area transparan frame */}
+          <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-3" style={{ paddingBottom: "13%" }}>
+            <span className="text-5xl leading-none drop-shadow-sm">{medal}</span>
+            <span className="text-xs font-bold text-neutral-500 uppercase tracking-widest">
+              {rankLabel}
+            </span>
+          </div>
+
+          {/* Frame overlay */}
+          <Image
+            src={FRAME_SRC}
+            alt=""
+            fill
+            aria-hidden="true"
+            className="object-cover pointer-events-none"
+            style={{ zIndex: 20 }}
+            sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw"
+          />
+        </div>
+      )}
+
+      {/* ── Card Body ─────────────────────────────────────────────────────── */}
+      <div className="flex flex-1 flex-col gap-2.5 p-4">
+
+        {/* Rank pill + Level & Type badges — dipindah dari thumbnail ke sini */}
+        <div className="flex flex-wrap items-center gap-1.5">
+          {/* Rank */}
+          <span className="inline-flex items-center gap-1 rounded-full bg-neutral-100 px-2.5 py-1 text-[11px] font-bold text-neutral-700">
+            <span className="text-sm leading-none">{medal}</span>
+            {rankLabel}
+          </span>
+          {/* Level */}
           <span
             className={cn(
               "inline-flex items-center rounded-full px-2.5 py-1 text-[10px] font-bold",
-              "shadow-md border border-white/30 backdrop-blur-sm",
               getLevelColor(level)
             )}
           >
             {formatLevel(level)}
           </span>
-        </div>
-
-        {/* Type badge — top right (outside button, above it in z-order) */}
-        <div className="absolute right-3 top-3 z-10 pointer-events-none">
+          {/* Type */}
           <span
             className={cn(
               "inline-flex items-center rounded-full px-2.5 py-1 text-[10px] font-bold",
-              "shadow-md border border-white/30 backdrop-blur-sm",
               getTypeColor(type)
             )}
           >
             {formatType(type)}
           </span>
         </div>
-      </div>
 
-      {/* ── Card Body ─────────────────────────────────────────────────────── */}
-      <div className="flex flex-1 flex-col gap-2.5 p-4">
+        {/* Achievement name */}
         <h3
           className={cn(
             "text-sm font-extrabold leading-snug text-neutral-900",

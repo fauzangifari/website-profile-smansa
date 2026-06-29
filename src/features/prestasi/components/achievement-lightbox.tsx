@@ -4,6 +4,8 @@ import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { X, MagnifyingGlassPlus } from "@phosphor-icons/react";
 
+const FRAME_SRC = "/images/template/prestasi.png";
+
 interface AchievementLightboxProps {
   src: string;
   alt: string;
@@ -43,12 +45,12 @@ export function AchievementLightbox({
       }}
     >
       {/* Backdrop */}
-      <div className="absolute inset-0 bg-black/80 backdrop-blur-md" />
+      <div className="absolute inset-0 bg-black/85 backdrop-blur-md" />
 
       {/* Panel */}
-      <div className="relative z-10 flex max-h-[90vh] max-w-4xl w-full flex-col rounded-2xl overflow-hidden shadow-2xl">
+      <div className="relative z-10 flex w-full max-w-3xl flex-col rounded-2xl overflow-hidden shadow-2xl">
         {/* Top bar */}
-        <div className="flex items-center justify-between bg-neutral-900/90 px-4 py-3 backdrop-blur-sm">
+        <div className="flex items-center justify-between bg-neutral-900/95 px-4 py-3 backdrop-blur-sm">
           <div className="flex items-center gap-2 text-white/80">
             <MagnifyingGlassPlus size={16} />
             <span className="text-sm font-medium truncate max-w-xs">{alt}</span>
@@ -63,14 +65,26 @@ export function AchievementLightbox({
           </button>
         </div>
 
-        {/* Image */}
-        <div className="relative flex-1 bg-neutral-950 flex items-center justify-center min-h-[300px]">
+        {/* Image area — rasio 4:3 tetap agar frame presisi */}
+        <div className="relative w-full bg-neutral-950" style={{ aspectRatio: "4/3" }}>
+          {/* Foto asli — base layer */}
           <Image
             src={src}
             alt={alt}
             fill
-            className="object-contain"
-            sizes="(max-width: 896px) 100vw, 896px"
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, 768px"
+            priority
+          />
+
+          {/* Frame overlay — di atas foto */}
+          <Image
+            src={FRAME_SRC}
+            alt=""
+            fill
+            aria-hidden="true"
+            className="object-cover pointer-events-none"
+            sizes="(max-width: 768px) 100vw, 768px"
             priority
           />
         </div>

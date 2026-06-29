@@ -66,11 +66,12 @@ function formatDateKey(year: number, month: number, day: number) {
 
 // ── Generate Matrix ────────────────────────────────────────────────────────────
 type CellData = {
+  day: number;          // tanggal sebenarnya (1–31)
   dateKey: string;
   isWeekend: boolean;
   weekendLabel?: "S" | "M";
   event?: CalendarEvent;
-  effectiveCounter?: number;
+  effectiveCounter?: number; // nomor urut hari efektif (untuk statistik)
   isEmpty: boolean;
 };
 
@@ -93,7 +94,7 @@ function useCalendarMatrix() {
 
       for (let day = 1; day <= 31; day++) {
         if (day > daysCount) {
-          cells.push({ dateKey: "", isWeekend: false, isEmpty: true });
+          cells.push({ day: 0, dateKey: "", isWeekend: false, isEmpty: true });
           continue;
         }
 
@@ -121,6 +122,7 @@ function useCalendarMatrix() {
         }
 
         cells.push({
+          day,
           dateKey,
           isWeekend,
           weekendLabel,
@@ -311,16 +313,13 @@ export function KalenderAkademikContent() {
                         content = cell.weekendLabel;
                         tooltip = cell.weekendLabel === "M" ? "Minggu" : "Sabtu";
                       } else if (cell.event) {
-                        // Other events (ujian, kegiatan) overlay over regular days
+                        // Other events (ujian, kegiatan) — tampilkan tanggal asli
                         cellClass = cell.event.colorClass;
                         tooltip = cell.event.title;
-                        // Some events we still show the day counter if they are school days
-                        if (cell.effectiveCounter) {
-                          content = cell.effectiveCounter;
-                        }
-                      } else if (cell.effectiveCounter) {
-                        // Regular school day
-                        content = cell.effectiveCounter;
+                        content = cell.day;
+                      } else if (cell.effectiveCounter !== undefined) {
+                        // Hari sekolah biasa — tampilkan tanggal asli
+                        content = cell.day;
                         cellClass = "bg-neutral-50/30 text-neutral-600 font-medium hover:bg-brand-primary-soft hover:text-brand-primary transition-colors cursor-default";
                       }
 
