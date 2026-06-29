@@ -15,6 +15,22 @@ const nextConfig: NextConfig = {
         hostname: "www.sman1samarinda.sch.id",
         pathname: "/public/**",
       },
+      {
+        protocol: "http",
+        hostname: "localhost",
+        port: "3000",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "sims.sman1samarinda.sch.id",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "cdn01-sgp.janjianaja.net",
+        pathname: "/**",
+      },
     ],
   },
   experimental: {
