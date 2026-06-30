@@ -273,16 +273,35 @@ export function KalenderAkademikContent() {
         </div>
 
         {/* The Matrix Table */}
-        <div className="rounded-2xl border border-neutral-200/70 bg-white shadow-sm overflow-hidden">
+        <div className="rounded-2xl border border-indigo-200 bg-gradient-to-br from-indigo-100 via-blue-100 to-slate-100 shadow-md overflow-hidden">
           <div className="overflow-x-auto pb-4 scrollbar-hide">
             <table className="w-full border-collapse text-[10px] sm:text-xs">
               <thead>
-                <tr className="bg-neutral-50/80 border-b border-neutral-200">
-                  <th className="sticky left-0 z-20 bg-neutral-50/90 backdrop-blur-md px-3 py-3 text-left font-bold text-neutral-600 border-r border-neutral-200 min-w-[120px]">
-                    BULAN
+                <tr className="bg-indigo-200/70 border-b border-indigo-300/60">
+                  {/* Pojok kiri atas: dual-label diagonal TANGGAL / BULAN */}
+                  <th
+                    className="sticky left-0 z-20 bg-indigo-200 backdrop-blur-md border-r border-indigo-300/60 min-w-[120px] relative"
+                    style={{ height: 56 }}
+                  >
+                    {/* Garis diagonal */}
+                    <svg
+                      className="absolute inset-0 w-full h-full pointer-events-none"
+                      preserveAspectRatio="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <line x1="4" y1="calc(100% - 4)" x2="calc(100% - 4)" y2="4" stroke="#6366f1" strokeWidth="1" />
+                    </svg>
+                    {/* Label TANGGAL — kanan atas */}
+                    <span className="absolute top-2 right-2.5 text-[9px] font-extrabold uppercase tracking-wider text-indigo-700 leading-none">
+                      TANGGAL
+                    </span>
+                    {/* Label BULAN — kiri bawah */}
+                    <span className="absolute bottom-2 left-2.5 text-[9px] font-extrabold uppercase tracking-wider text-indigo-700 leading-none">
+                      BULAN
+                    </span>
                   </th>
                   {Array.from({ length: 31 }, (_, i) => (
-                    <th key={i} className="px-1.5 py-3 font-bold text-neutral-500 min-w-[28px] text-center border-r border-neutral-100 last:border-r-0">
+                    <th key={i} className="px-1.5 py-3 font-bold text-indigo-800 min-w-[28px] text-center border-r border-indigo-300/50 last:border-r-0">
                       {i + 1}
                     </th>
                   ))}
@@ -290,18 +309,19 @@ export function KalenderAkademikContent() {
               </thead>
               <tbody>
                 {matrixRows.map((row, rIdx) => (
-                  <tr key={rIdx} className="border-b border-neutral-100 last:border-0 group">
-                    <td className="sticky left-0 z-20 bg-white group-hover:bg-neutral-50/50 px-3 py-2 font-bold text-neutral-700 border-r border-neutral-200 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.05)] whitespace-nowrap">
+                  <tr key={rIdx} className="border-b border-indigo-200/50 last:border-0 group">
+                    {/* Sticky label bulan di kiri */}
+                    <td className="sticky left-0 z-20 bg-indigo-100 group-hover:bg-indigo-200/70 px-3 py-2 font-bold text-indigo-900 border-r border-indigo-200 shadow-[2px_0_6px_-2px_rgba(99,102,241,0.12)] whitespace-nowrap">
                       {row.label}
                     </td>
                     {row.cells.map((cell, cIdx) => {
                       if (cell.isEmpty) {
-                        return <td key={cIdx} className="bg-neutral-50/50 border-r border-neutral-100 last:border-0" />;
+                        return <td key={cIdx} className="bg-indigo-50/60 border-r border-indigo-200/40 last:border-0" />;
                       }
 
                       // Cell rendering logic
                       let content: React.ReactNode = "";
-                      let cellClass = "bg-white text-neutral-500";
+                      let cellClass = "bg-blue-50/80 text-slate-600";
                       let tooltip = "";
 
                       if (cell.event && cell.event.type === "libur") {
@@ -320,18 +340,18 @@ export function KalenderAkademikContent() {
                       } else if (cell.effectiveCounter !== undefined) {
                         // Hari sekolah biasa — tampilkan tanggal asli
                         content = cell.day;
-                        cellClass = "bg-neutral-50/30 text-neutral-600 font-medium hover:bg-brand-primary-soft hover:text-brand-primary transition-colors cursor-default";
+                        cellClass = "bg-blue-50/70 text-slate-600 font-medium hover:bg-brand-primary/15 hover:text-brand-primary transition-colors cursor-default";
                       }
 
                       return (
                         <td 
                           key={cIdx} 
                           className={cn(
-                            "relative border-r border-neutral-100 last:border-0 text-center transition-all",
+                            "relative border-r border-indigo-200/40 last:border-0 text-center transition-all",
                             cellClass,
                             tooltip && "cursor-pointer hover:opacity-90 hover:shadow-inner"
                           )}
-                          title={tooltip} // native tooltip for simplicity and accessibility
+                          title={tooltip}
                         >
                           <div className="flex items-center justify-center h-7 w-7 mx-auto">
                             {content}
@@ -346,24 +366,24 @@ export function KalenderAkademikContent() {
           </div>
           
           {/* Legend */}
-          <div className="border-t border-neutral-200 bg-neutral-50 p-5">
-            <p className="text-xs font-bold text-neutral-600 mb-3 flex items-center gap-2">
+          <div className="border-t border-indigo-200 bg-indigo-50 p-5">
+            <p className="text-xs font-bold text-indigo-800 mb-3 flex items-center gap-2">
               <WarningCircle size={16} weight="duotone" />
               Keterangan Warna / Legenda:
             </p>
             <div className="flex flex-wrap gap-x-6 gap-y-3">
               <div className="flex items-center gap-2">
                 <div className="size-4 rounded-sm bg-red-500" />
-                <span className="text-[11px] font-medium text-neutral-600">Sabtu</span>
+                <span className="text-[11px] font-medium text-indigo-900">Sabtu</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="size-4 rounded-sm bg-green-500" />
-                <span className="text-[11px] font-medium text-neutral-600">Minggu</span>
+                <span className="text-[11px] font-medium text-indigo-900">Minggu</span>
               </div>
               {kalenderLegends.map((leg, i) => (
                 <div key={i} className="flex items-center gap-2">
                   <div className={cn("size-4 rounded-sm shadow-sm", leg.colorClass)} />
-                  <span className="text-[11px] font-medium text-neutral-600">{leg.label}</span>
+                  <span className="text-[11px] font-medium text-indigo-900">{leg.label}</span>
                 </div>
               ))}
             </div>

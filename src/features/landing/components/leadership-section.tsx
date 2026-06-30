@@ -15,8 +15,7 @@ export function LeadershipSection() {
   const [principal, ...officials] = leaders;
   const [reducedMotion, setReducedMotion] = useState(false);
 
-  // Split data: 4 Waka, 3 Staff (Bendahara, Koordinator, Kepala Perpustakaan)
-  const petinggi = officials.slice(0, 7);
+  const petinggi = officials.slice(0, 8);
 
   const headerRef = useScrollReveal();
   const contentRef = useScrollReveal();

@@ -219,9 +219,9 @@ export const leaders = [
       "Mengelola perencanaan, pelaksanaan, dan evaluasi layanan administrasi sekolah.",
   },
   {
-    name: "Mila Susan Shofiani, S.Pd.",
+    name: "Chairunisa P, S.Pd.",
     role: "Bendahara Sekolah",
-    imageSrc: "/images/hero/kepemimpinan-mila-susan.jpg",
+    imageSrc: "/images/hero/kepemimpinan-chairunisa-puspanegara.jpg",
     description:
       "Mengelola perencanaan, pelaksanaan, dan pelaporan keuangan sekolah.",
   },
@@ -231,6 +231,13 @@ export const leaders = [
     imageSrc: "/images/hero/kepemimpinan-bagus-baskoro.jpg",
     description:
       "Mengelola layanan perpustakaan sebagai pusat literasi dan sumber belajar sekolah.",
+  },
+  {
+    name: "Mila Susan Shofiani, S.Pd.",
+    role: "Kepala Laboratorium",
+    imageSrc: "/images/hero/kepemimpinan-mila-susan.jpg",
+    description:
+      "Mengelola layanan laboratorium sebagai pusat sumber belajar sekolah.",
   },
 ];
 
