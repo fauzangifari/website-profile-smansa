@@ -1,13 +1,15 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Container } from "@/components/ui/container";
 import { SectionHeader } from "@/components/ui/section-header";
-import { newsSectionGroups } from "@/features/landing/data/landing-data";
+import { newsSectionGroups, placeholderImages } from "@/features/landing/data/landing-data";
 import { cn } from "@/lib/utils";
 import { useScrollReveal } from "@/lib/hooks/use-scroll-reveal";
+import type { Achievement } from "@/features/prestasi/types/achievement";
 
 const toneClasses = {
   primary: {
@@ -36,6 +38,28 @@ const toneClasses = {
 export function NewsSection() {
   const headerRef = useScrollReveal();
   const contentRef = useScrollReveal({ stagger: true });
+
+  const [achievements, setAchievements] = useState<Achievement[]>([]);
+  const [isLoadingAchievements, setIsLoadingAchievements] = useState(true);
+
+  useEffect(() => {
+    let mounted = true;
+    fetch("/api/prestasi")
+      .then((res) => {
+        if (!res.ok) throw new Error("Network response was not ok");
+        return res.json();
+      })
+      .then((data) => {
+        if (mounted) setAchievements(data);
+      })
+      .catch((error) => console.error("Failed to load achievements", error))
+      .finally(() => {
+        if (mounted) setIsLoadingAchievements(false);
+      });
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   return (
     <section
@@ -67,6 +91,40 @@ export function NewsSection() {
         <div ref={contentRef} className="scroll-reveal-stagger mt-8 grid gap-4">
           {newsSectionGroups.map((group, index) => {
             const tone = toneClasses[group.tone];
+
+            let renderItems: any[] = group.items.slice(0, 3);
+            let isPrestasiEmpty = false;
+
+            if (group.key === "prestasi") {
+              if (isLoadingAchievements) {
+                renderItems = ["skeleton", "skeleton", "skeleton"];
+              } else {
+                const mappedAchievements = achievements.slice(0, 3).map((ach) => ({
+                  title: ach.name,
+                  date: new Date(ach.date).toLocaleDateString("id-ID", {
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric",
+                  }),
+                  imageSrc: ach.photoUrl || placeholderImages.achievement,
+                  excerpt: `Tingkat: ${ach.level} • Penyelenggara: ${ach.organizer}`,
+                  href: `#prestasi`,
+                }));
+
+                isPrestasiEmpty = mappedAchievements.length === 0;
+
+                if (!isPrestasiEmpty) {
+                  renderItems = [
+                    ...mappedAchievements,
+                    ...Array(3 - mappedAchievements.length).fill(null),
+                  ];
+                }
+              }
+            }
+
+            const totalItemsCount = group.key === "prestasi" && !isLoadingAchievements 
+              ? achievements.length 
+              : group.items.length;
 
             return (
               <div
@@ -108,7 +166,7 @@ export function NewsSection() {
                       {group.description}
                     </p>
                     <div className="flex items-center justify-between border-t border-neutral-200 pt-3 text-xs font-bold uppercase tracking-[0.16em] text-neutral-500">
-                      <span>{group.items.length} terbaru</span>
+                      <span>{totalItemsCount} terbaru</span>
                       <span
                         aria-hidden="true"
                         className="transition-transform group-hover:translate-x-1"
@@ -132,35 +190,79 @@ export function NewsSection() {
                       />
                     </div>
                     <div className="divide-y divide-neutral-200">
-                      {group.items.slice(0, 3).map((item) => (
-                        <a
-                          key={item.title}
-                          href={item.href}
-                          className="group grid grid-cols-[92px_1fr] gap-3 px-4 py-3.5 transition-colors hover:bg-neutral-50 sm:grid-cols-[116px_1fr] sm:gap-4 md:px-5"
-                        >
-                          <span className="relative min-h-24 overflow-hidden rounded-lg border border-neutral-200 bg-neutral-100 shadow-sm sm:min-h-28">
-                            <Image
-                              src={item.imageSrc}
-                              alt={item.title}
-                              fill
-                              sizes="(max-width: 640px) 92px, 116px"
-                              className="object-cover transition duration-500 ease-out group-hover:scale-105"
-                            />
-                            <span className="absolute inset-0 bg-gradient-to-t from-neutral-950/20 via-transparent to-white/10" />
-                          </span>
-                          <span className="min-w-0 self-center">
-                            <time className="text-xs font-bold uppercase tracking-[0.14em] text-neutral-500">
-                              {item.date}
-                            </time>
-                            <span className="block text-base font-bold leading-snug text-neutral-950 transition-colors group-hover:text-brand-primary">
-                              {item.title}
-                            </span>
-                            <span className="mt-1.5 block text-sm leading-6 text-neutral-700 md:leading-5">
-                              {item.excerpt}
-                            </span>
-                          </span>
-                        </a>
-                      ))}
+                      {group.key === "prestasi" && isPrestasiEmpty ? (
+                        <div className="flex h-full min-h-[300px] items-center justify-center p-6 text-center text-sm font-medium text-neutral-500">
+                          Belum ada data prestasi saat ini.
+                        </div>
+                      ) : (
+                        renderItems.map((item, idx) => {
+                          if (item === "skeleton") {
+                            return (
+                              <div
+                                key={`skeleton-${idx}`}
+                                className="grid animate-pulse grid-cols-[120px_1fr] gap-3 px-4 py-3.5 sm:grid-cols-[140px_1fr] sm:gap-4 md:px-5"
+                              >
+                                <div className="aspect-[4/3] rounded-lg bg-neutral-200" />
+                                <div className="flex flex-col justify-center space-y-3">
+                                  <div className="h-3 w-20 rounded bg-neutral-200" />
+                                  <div className="h-4 w-full rounded bg-neutral-200" />
+                                  <div className="h-3 w-3/4 rounded bg-neutral-200" />
+                                </div>
+                              </div>
+                            );
+                          }
+
+                          if (item === null) {
+                            return (
+                              <div
+                                key={`blank-${idx}`}
+                                className="invisible grid grid-cols-[120px_1fr] gap-3 px-4 py-3.5 sm:grid-cols-[140px_1fr] sm:gap-4 md:px-5"
+                              >
+                                <div className="aspect-[4/3]" />
+                              </div>
+                            );
+                          }
+
+                          return (
+                            <a
+                              key={item.title + idx}
+                              href={item.href}
+                              className="group grid grid-cols-[120px_1fr] gap-3 px-4 py-3.5 transition-colors hover:bg-neutral-50 sm:grid-cols-[140px_1fr] sm:gap-4 md:px-5"
+                            >
+                              <span className="relative aspect-[4/3] overflow-hidden rounded-lg border border-neutral-200 bg-neutral-100 shadow-sm">
+                                <Image
+                                  src={item.imageSrc}
+                                  alt={item.title}
+                                  fill
+                                  sizes="(max-width: 640px) 120px, 140px"
+                                  className="object-cover transition duration-500 ease-out group-hover:scale-105"
+                                />
+                                {group.key === "prestasi" && (
+                                  <Image
+                                    src="/images/template/prestasi.png"
+                                    alt=""
+                                    fill
+                                    className="object-cover pointer-events-none z-10"
+                                    sizes="(max-width: 640px) 120px, 140px"
+                                  />
+                                )}
+                                <span className="absolute inset-0 bg-gradient-to-t from-neutral-950/20 via-transparent to-white/10 z-20" />
+                              </span>
+                              <span className="min-w-0 self-center">
+                                <time className="text-xs font-bold uppercase tracking-[0.14em] text-neutral-500">
+                                  {item.date}
+                                </time>
+                                <span className="block text-base font-bold leading-snug text-neutral-950 transition-colors group-hover:text-brand-primary">
+                                  {item.title}
+                                </span>
+                                <span className="mt-1.5 block text-sm leading-6 text-neutral-700 md:leading-5">
+                                  {item.excerpt}
+                                </span>
+                              </span>
+                            </a>
+                          );
+                        })
+                      )}
                     </div>
                   </div>
                 </Card>
