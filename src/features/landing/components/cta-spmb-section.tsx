@@ -67,10 +67,10 @@ export function CtaSpmbSection() {
             </Button>
             
             <a 
-              href="#kontak" 
+              href="/daftar-ulang" 
               className="group flex items-center gap-3 text-white/80 font-bold hover:text-white transition-colors py-4 px-6 rounded-full border border-white/10 hover:bg-white/5"
             >
-              <span>Hubungi Kami</span>
+              <span>Daftar Ulang</span>
               <div className="size-8 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-brand-primary transition-colors duration-300">
                 <ArrowRight size={16} />
               </div>
