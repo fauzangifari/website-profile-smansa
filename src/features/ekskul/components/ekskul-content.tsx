@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
+import Link from "next/link";
 import {
   BookOpen,
   Trophy,
@@ -20,6 +21,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { SectionHeader } from "@/components/ui/section-header";
 import { cn } from "@/lib/utils";
+import { useScrollReveal } from "@/lib/hooks/use-scroll-reveal";
 import {
   akademikClubs,
   akademikBenefits,
@@ -61,6 +63,10 @@ const TABS: { key: TabKey; label: string; icon: React.ComponentType<{ size?: num
 
 export function EkskulContent() {
   const [activeTab, setActiveTab] = useState<TabKey>("semua");
+  const heroRef = useScrollReveal();
+  const akademikGridRef = useScrollReveal({ stagger: true });
+  const nonAkademikRef = useScrollReveal({ stagger: true });
+  const ctaRef = useScrollReveal();
 
   const handleTabChange = useCallback((key: TabKey) => {
     setActiveTab(key);
@@ -76,7 +82,10 @@ export function EkskulContent() {
     <div className="flex flex-col gap-20 font-sans">
 
       {/* ── 1. Hero Stats Banner ─────────────────────────────────────────── */}
-      <section className="relative overflow-hidden rounded-3xl border border-brand-primary/10 bg-gradient-to-br from-white via-blue-50/30 to-indigo-50/20 p-8 md:p-14">
+      <section
+        ref={heroRef}
+        className="scroll-reveal relative overflow-hidden rounded-3xl border border-brand-primary/10 bg-gradient-to-br from-white via-blue-50/30 to-indigo-50/20 p-8 md:p-14"
+      >
         {/* Background blobs */}
         <div className="pointer-events-none absolute -right-24 -top-24 size-72 rounded-full bg-brand-primary/6 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-16 -left-16 size-56 rounded-full bg-brand-secondary/6 blur-3xl" />
@@ -165,11 +174,17 @@ export function EkskulContent() {
         </div>
 
         {/* Clubs grid */}
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {akademikClubs.map((club) => {
+        <div ref={akademikGridRef} className="scroll-reveal-stagger grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {akademikClubs.map((club, i) => {
             const Icon = akademikIconMap[club.slug] ?? Sparkle;
             return (
-              <AkademikCard key={club.slug} club={club} Icon={Icon} />
+              <AkademikCard
+                key={club.slug}
+                club={club}
+                Icon={Icon}
+                className="scroll-reveal"
+                style={{ "--stagger-index": i } as React.CSSProperties}
+              />
             );
           })}
         </div>
@@ -202,9 +217,13 @@ export function EkskulContent() {
         />
 
         {/* Per-category */}
-        <div className="flex flex-col gap-14">
-          {NON_AKADEMIK_CATEGORIES.map((category) => (
-            <div key={category.id} className="flex flex-col gap-6">
+        <div ref={nonAkademikRef} className="scroll-reveal-stagger flex flex-col gap-14">
+          {NON_AKADEMIK_CATEGORIES.map((category, i) => (
+            <div
+              key={category.id}
+              className="scroll-reveal flex flex-col gap-6"
+              style={{ "--stagger-index": i } as React.CSSProperties}
+            >
               {/* Category divider label */}
               <div className="flex items-center gap-3">
                 <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-brand-primary-soft text-brand-primary">
@@ -229,7 +248,7 @@ export function EkskulContent() {
       </section>
 
       {/* ── 5. CTA Footer ───────────────────────────────────────────────── */}
-      <section className="pb-8">
+      <section ref={ctaRef} className="scroll-reveal pb-8">
         <Card
           variant="glass"
           className="relative overflow-hidden border-brand-primary/15 bg-brand-primary/[0.02] p-8 md:p-14"
@@ -311,37 +330,43 @@ function StatPill({
 function AkademikCard({
   club,
   Icon,
+  className,
+  style,
 }: {
   club: { title: string; description: string; slug: string };
   Icon: React.ComponentType<{ size?: number; weight?: "regular" | "bold" | "fill" | "duotone" | "thin" | "light" }>;
+  className?: string;
+  style?: React.CSSProperties;
 }) {
   return (
-    <Card
-      variant="glass-soft"
-      className="group flex flex-col gap-5 border border-transparent p-6 transition-all duration-200 hover:border-brand-primary/20 hover:shadow-lg hover:shadow-brand-primary/8"
-    >
-      {/* Top row: icon + badge */}
-      <div className="flex items-start justify-between gap-2">
-        <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-brand-primary-soft text-brand-primary transition-all duration-200 group-hover:bg-brand-primary group-hover:text-white">
-          <Icon size={22} weight="duotone" />
+    <Link href={`/ekstrakurikuler/${club.slug}`} className={cn("block h-full", className)} style={style}>
+      <Card
+        variant="glass-soft"
+        className="group flex h-full flex-col gap-5 border border-transparent p-6 transition-all duration-200 hover:border-brand-primary/20 hover:shadow-lg hover:shadow-brand-primary/8"
+      >
+        {/* Top row: icon + badge */}
+        <div className="flex items-start justify-between gap-2">
+          <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-brand-primary-soft text-brand-primary transition-all duration-200 group-hover:bg-brand-primary group-hover:text-white">
+            <Icon size={22} weight="duotone" />
+          </div>
+          <Badge variant="primary" className="shrink-0 text-[10px]">Akademik</Badge>
         </div>
-        <Badge variant="primary" className="shrink-0 text-[10px]">Akademik</Badge>
-      </div>
 
-      {/* Content */}
-      <div className="flex flex-col gap-2">
-        <h3 className="font-extrabold leading-snug text-neutral-900 transition-colors group-hover:text-brand-primary">
-          {club.title}
-        </h3>
-        <p className="text-sm leading-relaxed text-neutral-500">{club.description}</p>
-      </div>
+        {/* Content */}
+        <div className="flex flex-col gap-2">
+          <h3 className="font-extrabold leading-snug text-neutral-900 transition-colors group-hover:text-brand-primary">
+            {club.title}
+          </h3>
+          <p className="text-sm leading-relaxed text-neutral-500">{club.description}</p>
+        </div>
 
-      {/* Hover CTA */}
-      <div className="mt-auto flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-brand-primary opacity-0 transition-all duration-200 group-hover:opacity-100">
-        <span>Pelajari</span>
-        <ArrowRight size={13} weight="bold" />
-      </div>
-    </Card>
+        {/* Hover CTA */}
+        <div className="mt-auto flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-brand-primary opacity-0 transition-all duration-200 group-hover:opacity-100">
+          <span>Pelajari</span>
+          <ArrowRight size={13} weight="bold" />
+        </div>
+      </Card>
+    </Link>
   );
 }
 
@@ -351,6 +376,7 @@ function NonAkademikCard({
 }: {
   activity: {
     id: string;
+    slug: string;
     name: string;
     description: string;
     icon: React.ComponentType<{ size?: number; weight?: "regular" | "bold" | "fill" | "duotone" | "thin" | "light" }>;
@@ -359,27 +385,29 @@ function NonAkademikCard({
 }) {
   const Icon = activity.icon;
   return (
-    <Card
-      variant="glass-soft"
-      className="group flex flex-col gap-4 border border-transparent p-5 transition-all duration-200 hover:border-brand-secondary/20 hover:shadow-lg hover:shadow-brand-secondary/8"
-    >
-      {/* Top row */}
-      <div className="flex items-start justify-between gap-2">
-        <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-brand-secondary/10 text-brand-secondary transition-all duration-200 group-hover:bg-brand-secondary group-hover:text-white">
-          <Icon size={20} weight="duotone" />
+    <Link href={`/ekstrakurikuler/${activity.slug}`}>
+      <Card
+        variant="glass-soft"
+        className="group flex h-full flex-col gap-4 border border-transparent p-5 transition-all duration-200 hover:border-brand-secondary/20 hover:shadow-lg hover:shadow-brand-secondary/8"
+      >
+        {/* Top row */}
+        <div className="flex items-start justify-between gap-2">
+          <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-brand-secondary/10 text-brand-secondary transition-all duration-200 group-hover:bg-brand-secondary group-hover:text-white">
+            <Icon size={20} weight="duotone" />
+          </div>
+          <Badge variant="neutral" className="shrink-0 text-[10px]">
+            {categoryTitle}
+          </Badge>
         </div>
-        <Badge variant="neutral" className="shrink-0 text-[10px]">
-          {categoryTitle}
-        </Badge>
-      </div>
 
-      {/* Content */}
-      <div className="flex flex-col gap-1.5">
-        <h4 className="font-bold leading-snug text-neutral-900 transition-colors group-hover:text-brand-secondary">
-          {activity.name}
-        </h4>
-        <p className="text-sm leading-relaxed text-neutral-500">{activity.description}</p>
-      </div>
-    </Card>
+        {/* Content */}
+        <div className="flex flex-col gap-1.5">
+          <h4 className="font-bold leading-snug text-neutral-900 transition-colors group-hover:text-brand-secondary">
+            {activity.name}
+          </h4>
+          <p className="text-sm leading-relaxed text-neutral-500">{activity.description}</p>
+        </div>
+      </Card>
+    </Link>
   );
 }

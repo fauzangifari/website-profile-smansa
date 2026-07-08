@@ -16,6 +16,7 @@ import {
 
 export interface NonAkademikActivity {
   id: string;
+  slug: string;
   name: string;
   description: string;
   icon: Icon;
@@ -66,12 +67,14 @@ export const NON_AKADEMIK_CATEGORIES: NonAkademikCategory[] = [
     activities: [
       {
         id: "basket",
+        slug: "basket",
         name: "Basket",
         description: "Pengembangan bakat dan strategi dalam olahraga bola basket.",
         icon: Basketball,
       },
       {
         id: "handball",
+        slug: "handball",
         name: "Handball",
         description: "Pengembangan bakat dan kerja sama tim dalam olahraga bola tangan.",
         icon: Pulse,
@@ -86,18 +89,21 @@ export const NON_AKADEMIK_CATEGORIES: NonAkademikCategory[] = [
     activities: [
       {
         id: "paduan-suara",
+        slug: "paduan-suara",
         name: "Paduan Suara",
         description: "Wadah bagi siswa yang memiliki minat di bidang olah vokal kelompok.",
         icon: MicrophoneStage,
       },
       {
         id: "tari-tradisional",
+        slug: "tari-tradisional",
         name: "Tari Tradisional",
         description: "Pelestarian dan pengembangan bakat seni tari daerah Nusantara.",
         icon: MusicNotes,
       },
       {
         id: "teater-dahana",
+        slug: "teater-dahana",
         name: "Teater Dahana",
         description: "Wadah ekspresi seni peran, pertunjukan panggung, dan sastra.",
         icon: MaskHappy,
@@ -112,12 +118,14 @@ export const NON_AKADEMIK_CATEGORIES: NonAkademikCategory[] = [
     activities: [
       {
         id: "digital-creator",
+        slug: "digital-creator",
         name: "SMANSA Digital Creator",
         description: "Fokus pada pembuatan konten kreatif digital dan multimedia.",
         icon: Camera,
       },
       {
         id: "digitech",
+        slug: "digitech",
         name: "SMANSA DIGITECH",
         description: "Fokus pada pengembangan teknologi, robotik, dan inovasi digital.",
         icon: Code,
@@ -132,6 +140,7 @@ export const NON_AKADEMIK_CATEGORIES: NonAkademikCategory[] = [
     activities: [
       {
         id: "rohis",
+        slug: "rohis",
         name: "Rohis 'Ainul Yaqin",
         description: "Organisasi kerohanian Islam untuk pembinaan karakter religius.",
         icon: Users,
