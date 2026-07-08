@@ -10,6 +10,8 @@ import { newsSectionGroups, placeholderImages } from "@/features/landing/data/la
 import { cn } from "@/lib/utils";
 import { useScrollReveal } from "@/lib/hooks/use-scroll-reveal";
 import type { Achievement } from "@/features/prestasi/types/achievement";
+import type { BeritaListItem } from "@/features/berita/types/berita";
+import { formatTanggal } from "@/features/berita/utils/berita-helpers";
 
 const toneClasses = {
   primary: {
@@ -35,12 +37,30 @@ const toneClasses = {
   },
 } as const;
 
+// Post SIMS dibagi berdasarkan kategori: yang berkategori "pengumuman" masuk
+// grup Pengumuman, sisanya masuk grup Berita. Keduanya menuju /berita/[slug].
+const isPengumuman = (post: BeritaListItem) =>
+  post.category?.slug?.toLowerCase() === "pengumuman";
+
+function mapBeritaItem(post: BeritaListItem) {
+  return {
+    title: post.title,
+    date: formatTanggal(post.publishedAt),
+    imageSrc: post.coverImageUrl,
+    excerpt: post.excerpt,
+    href: `/berita/${post.slug}`,
+  };
+}
+
 export function NewsSection() {
   const headerRef = useScrollReveal();
   const contentRef = useScrollReveal({ stagger: true });
 
   const [achievements, setAchievements] = useState<Achievement[]>([]);
   const [isLoadingAchievements, setIsLoadingAchievements] = useState(true);
+
+  const [berita, setBerita] = useState<BeritaListItem[]>([]);
+  const [isLoadingBerita, setIsLoadingBerita] = useState(true);
 
   useEffect(() => {
     let mounted = true;
@@ -60,6 +80,28 @@ export function NewsSection() {
       mounted = false;
     };
   }, []);
+
+  useEffect(() => {
+    let mounted = true;
+    fetch("/api/berita")
+      .then((res) => {
+        if (!res.ok) throw new Error("Network response was not ok");
+        return res.json();
+      })
+      .then((data) => {
+        if (mounted && Array.isArray(data)) setBerita(data);
+      })
+      .catch((error) => console.error("Failed to load berita", error))
+      .finally(() => {
+        if (mounted) setIsLoadingBerita(false);
+      });
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  const beritaItems = berita.filter((post) => !isPengumuman(post));
+  const pengumumanItems = berita.filter(isPengumuman);
 
   return (
     <section
@@ -93,7 +135,7 @@ export function NewsSection() {
             const tone = toneClasses[group.tone];
 
             let renderItems: any[] = group.items.slice(0, 3);
-            let isPrestasiEmpty = false;
+            let isGroupEmpty = false;
 
             if (group.key === "prestasi") {
               if (isLoadingAchievements) {
@@ -111,9 +153,9 @@ export function NewsSection() {
                   href: `#prestasi`,
                 }));
 
-                isPrestasiEmpty = mappedAchievements.length === 0;
+                isGroupEmpty = mappedAchievements.length === 0;
 
-                if (!isPrestasiEmpty) {
+                if (!isGroupEmpty) {
                   renderItems = [
                     ...mappedAchievements,
                     ...Array(3 - mappedAchievements.length).fill(null),
@@ -122,9 +164,50 @@ export function NewsSection() {
               }
             }
 
-            const totalItemsCount = group.key === "prestasi" && !isLoadingAchievements 
-              ? achievements.length 
-              : group.items.length;
+            if (group.key === "berita") {
+              if (isLoadingBerita) {
+                renderItems = ["skeleton", "skeleton", "skeleton"];
+              } else {
+                const mappedBerita = beritaItems.slice(0, 3).map(mapBeritaItem);
+
+                isGroupEmpty = mappedBerita.length === 0;
+
+                if (!isGroupEmpty) {
+                  renderItems = [
+                    ...mappedBerita,
+                    ...Array(3 - mappedBerita.length).fill(null),
+                  ];
+                }
+              }
+            }
+
+            if (group.key === "pengumuman") {
+              if (isLoadingBerita) {
+                renderItems = ["skeleton", "skeleton", "skeleton"];
+              } else {
+                const mappedPengumuman = pengumumanItems
+                  .slice(0, 3)
+                  .map(mapBeritaItem);
+
+                isGroupEmpty = mappedPengumuman.length === 0;
+
+                if (!isGroupEmpty) {
+                  renderItems = [
+                    ...mappedPengumuman,
+                    ...Array(3 - mappedPengumuman.length).fill(null),
+                  ];
+                }
+              }
+            }
+
+            const totalItemsCount =
+              group.key === "prestasi" && !isLoadingAchievements
+                ? achievements.length
+                : group.key === "berita" && !isLoadingBerita
+                  ? beritaItems.length
+                  : group.key === "pengumuman" && !isLoadingBerita
+                    ? pengumumanItems.length
+                    : group.items.length;
 
             return (
               <div
@@ -190,9 +273,13 @@ export function NewsSection() {
                       />
                     </div>
                     <div className="divide-y divide-neutral-200">
-                      {group.key === "prestasi" && isPrestasiEmpty ? (
+                      {isGroupEmpty ? (
                         <div className="flex h-full min-h-[300px] items-center justify-center p-6 text-center text-sm font-medium text-neutral-500">
-                          Belum ada data prestasi saat ini.
+                          {group.key === "berita"
+                            ? "Belum ada berita saat ini."
+                            : group.key === "pengumuman"
+                              ? "Belum ada pengumuman saat ini."
+                              : "Belum ada data prestasi saat ini."}
                         </div>
                       ) : (
                         renderItems.map((item, idx) => {
@@ -246,6 +333,24 @@ export function NewsSection() {
                                     sizes="(max-width: 640px) 120px, 140px"
                                   />
                                 )}
+                                {group.key === "berita" && (
+                                  <Image
+                                    src="/images/template/berita.png"
+                                    alt=""
+                                    fill
+                                    className="object-cover pointer-events-none z-10"
+                                    sizes="(max-width: 640px) 120px, 140px"
+                                  />
+                                )}
+                                {group.key === "pengumuman" && (
+                                  <Image
+                                    src="/images/template/pengumuman.png"
+                                    alt=""
+                                    fill
+                                    className="object-cover pointer-events-none z-10"
+                                    sizes="(max-width: 640px) 120px, 140px"
+                                  />
+                                )}
                                 <span className="absolute inset-0 bg-gradient-to-t from-neutral-950/20 via-transparent to-white/10 z-20" />
                               </span>
                               <span className="min-w-0 self-center">
@@ -273,7 +378,7 @@ export function NewsSection() {
 
         <div className="mt-7 flex justify-center md:mt-10">
           <a
-            href="#semua-berita"
+            href="/berita"
             className="inline-flex h-12 items-center justify-center rounded-full bg-brand-primary px-8 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-brand-primary-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-primary"
           >
             Lihat Semua Informasi

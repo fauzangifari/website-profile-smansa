@@ -53,7 +53,6 @@ export const mainNavItems: SiteNavItem[] = [
     href: "#",
     children: [
       { label: "Berita", href: "/berita" },
-      { label: "Pengumuman", href: "/pengumuman" },
       { label: "Kokurikuler", href: "/kokurikuler" },
       { label: "Bilingual", href: "/bilingual" },
     ]
