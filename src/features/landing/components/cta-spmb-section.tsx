@@ -1,13 +1,16 @@
 "use client";
 
+import { useState } from "react";
 import { Container } from "@/components/ui/container";
 import { Button } from "@/components/ui/button";
 import { ctaJoin } from "@/features/landing/data/landing-data";
 import { ArrowRight, Sparkle, RocketLaunch } from "@phosphor-icons/react";
 import { useScrollReveal } from "@/lib/hooks/use-scroll-reveal";
+import { EnrollmentChoiceModal } from "@/features/landing/components/enrollment-choice-modal";
 
 export function CtaSpmbSection() {
   const contentRef = useScrollReveal({ stagger: true });
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <section 
@@ -61,14 +64,14 @@ export function CtaSpmbSection() {
               size="lg" 
               className="px-10 py-5 h-auto text-lg rounded-full group bg-white text-brand-primary hover:bg-brand-primary hover:text-white transition-all duration-500 shadow-[0_0_30px_rgba(255,255,255,0.1)] hover:shadow-[0_0_40px_rgba(37,99,235,0.4)] border-none"
               iconRight={<ArrowRight size={20} className="group-hover:translate-x-2 transition-transform duration-500" />}
-              onClick={() => window.location.href = ctaJoin.buttonHref}
+              onClick={() => setIsModalOpen(true)}
             >
-              Daftar Sekarang
+              Gabung Sekarang
             </Button>
             
             <a 
               href="/daftar-ulang" 
-              className="group flex items-center gap-3 text-white/80 font-bold hover:text-white transition-colors py-4 px-6 rounded-full border border-white/10 hover:bg-white/5"
+              className="group flex items-center gap-3 text-white/80 font-bold hover:text-white transition-colors py-4 px-6 rounded-lg border border-white/10 hover:bg-white/5"
             >
               <span>Daftar Ulang</span>
               <div className="size-8 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-brand-primary transition-colors duration-300">
@@ -87,6 +90,11 @@ export function CtaSpmbSection() {
       <div 
         aria-hidden="true"
         className="absolute -bottom-48 -right-48 size-[400px] bg-brand-secondary/5 rounded-full blur-[80px] pointer-events-none"
+      />
+
+      <EnrollmentChoiceModal
+        open={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
       />
     </section>
   );
