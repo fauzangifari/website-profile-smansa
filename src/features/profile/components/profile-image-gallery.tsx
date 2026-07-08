@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import { useScrollReveal } from "@/lib/hooks/use-scroll-reveal";
 
 type ProfileImage = {
   src: string;
@@ -18,6 +19,7 @@ type ProfileImageGalleryProps = {
 export function ProfileImageGallery({ images }: ProfileImageGalleryProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const activeImage = images[activeIndex];
+  const galleryRef = useScrollReveal();
 
   const showPreviousImage = () => {
     setActiveIndex((currentIndex) =>
@@ -32,7 +34,7 @@ export function ProfileImageGallery({ images }: ProfileImageGalleryProps) {
   };
 
   return (
-    <section className="mt-2 lg:mt-0" aria-label="Galeri profil sekolah">
+    <section ref={galleryRef} className="scroll-reveal mt-2 lg:mt-0" aria-label="Galeri profil sekolah">
       <div className="rounded-xl border border-neutral-200 bg-white p-3 shadow-md shadow-neutral-900/10 md:p-4">
         <div className="grid gap-3 md:grid-cols-[minmax(0,1fr)_9.5rem]">
           <div

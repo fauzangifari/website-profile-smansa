@@ -20,6 +20,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { useScrollReveal } from "@/lib/hooks/use-scroll-reveal";
 import {
   partnershipBenefits,
   partnershipDescription,
@@ -43,10 +44,19 @@ const iconMap = {
 };
 
 export function PartnershipContent() {
+  const introRef = useScrollReveal();
+  const typesRef = useScrollReveal();
+  const programsRef = useScrollReveal();
+  const benefitsRef = useScrollReveal();
+  const stepsRef = useScrollReveal();
+
   return (
     <div className="flex flex-col gap-20 font-sans">
       {/* Intro Section */}
-      <section className="relative overflow-hidden rounded-[2.5rem] border border-brand-primary/10 bg-gradient-to-br from-white via-emerald-50/20 to-teal-50/20 p-8 md:p-14 shadow-sm">
+      <section
+        ref={introRef}
+        className="scroll-reveal relative overflow-hidden rounded-[2.5rem] border border-brand-primary/10 bg-gradient-to-br from-white via-emerald-50/20 to-teal-50/20 p-8 md:p-14 shadow-sm"
+      >
         <div className="absolute -right-20 -top-20 size-80 rounded-full bg-brand-primary/5 blur-3xl" />
         <div className="absolute -left-20 -bottom-20 size-80 rounded-full bg-brand-secondary/5 blur-3xl" />
         
@@ -72,7 +82,7 @@ export function PartnershipContent() {
       </section>
 
       {/* Partnership Types Grid */}
-      <section className="space-y-12">
+      <section ref={typesRef} className="scroll-reveal space-y-12">
         <div className="flex flex-col items-center text-center">
           <Badge variant="glass" className="mb-4">Partner Categories</Badge>
           <h3 className="text-3xl font-extrabold text-neutral-900 md:text-4xl">Jenis-Jenis Kemitraan</h3>
@@ -107,7 +117,7 @@ export function PartnershipContent() {
       </section>
 
       {/* Partnership Programs Section */}
-      <section className="space-y-12">
+      <section ref={programsRef} className="scroll-reveal space-y-12">
         <div className="flex flex-col items-center text-center">
           <Badge variant="glass" className="mb-4">Featured Collaborations</Badge>
           <h3 className="text-3xl font-extrabold text-neutral-900 md:text-4xl">Program Kerja Sama</h3>
@@ -140,7 +150,7 @@ export function PartnershipContent() {
       </section>
 
       {/* Benefits for Stakeholders */}
-      <section className="space-y-12">
+      <section ref={benefitsRef} className="scroll-reveal space-y-12">
         <div className="flex flex-col items-center text-center">
           <Badge variant="primary" className="mb-4">Advantages</Badge>
           <h3 className="text-3xl font-extrabold text-neutral-900 md:text-4xl">Keuntungan Kolaborasi</h3>
@@ -169,7 +179,7 @@ export function PartnershipContent() {
       </section>
 
       {/* How to Partner - Steps */}
-      <section className="relative overflow-hidden rounded-[2.5rem] bg-neutral-900 p-8 md:p-14 text-white shadow-2xl">
+      <section ref={stepsRef} className="scroll-reveal relative overflow-hidden rounded-[2.5rem] bg-neutral-900 p-8 md:p-14 text-white shadow-2xl">
         <div className="absolute right-0 top-0 h-full w-1/3 bg-brand-primary/10 blur-[100px] pointer-events-none" />
         <div className="relative grid gap-12 lg:grid-cols-[1fr_1.5fr] lg:items-center">
           <div className="space-y-6">

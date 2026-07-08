@@ -21,6 +21,7 @@ import { useAchievements } from "@/features/prestasi/hooks/use-achievements";
 import type { AchievementFilters } from "@/features/prestasi/hooks/use-achievements";
 import { formatLevel, getLevelColor, formatType, getTypeColor } from "@/features/prestasi/utils/achievement-helpers";
 import { cn } from "@/lib/utils";
+import { useScrollReveal } from "@/lib/hooks/use-scroll-reveal";
 import type { Achievement } from "@/features/prestasi/types/achievement";
 
 interface PrestasiContentProps {
@@ -51,6 +52,10 @@ export function PrestasiContent({
   // Lightbox state
   const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(null);
 
+  const heroRef = useScrollReveal();
+  const filterRef = useScrollReveal();
+  const contentRef = useScrollReveal();
+
   const openLightbox = useCallback((src: string, alt: string) => {
     setLightbox({ src, alt });
   }, []);
@@ -63,7 +68,10 @@ export function PrestasiContent({
     <>
       <div className="flex flex-col gap-12 font-sans">
         {/* ── 1. Hero banner ─────────────────────────────────────────────── */}
-        <section className="relative overflow-hidden rounded-[2.5rem] border border-brand-primary/10 bg-gradient-to-br from-white via-blue-50/20 to-indigo-50/20 p-8 md:p-14 shadow-sm">
+        <section
+          ref={heroRef}
+          className="scroll-reveal relative overflow-hidden rounded-[2.5rem] border border-brand-primary/10 bg-gradient-to-br from-white via-blue-50/20 to-indigo-50/20 p-8 md:p-14 shadow-sm"
+        >
           <div className="pointer-events-none absolute -right-20 -top-20 size-80 rounded-full bg-brand-primary/5 blur-3xl" />
           <div className="pointer-events-none absolute -bottom-20 -left-20 size-80 rounded-full bg-brand-secondary/5 blur-3xl" />
 
@@ -99,7 +107,7 @@ export function PrestasiContent({
         </section>
 
         {/* ── 2. Filter bar ───────────────────────────────────────────────── */}
-        <section>
+        <section ref={filterRef} className="scroll-reveal">
           <SectionHeader
             eyebrow="Daftar Prestasi"
             title="Semua Capaian"
@@ -121,7 +129,7 @@ export function PrestasiContent({
         </section>
 
         {/* ── 3. Content area ─────────────────────────────────────────────── */}
-        <section>
+        <section ref={contentRef} className="scroll-reveal">
 
           {/* ── Loading ──────────────────────────────────────────────────── */}
           {isLoading && <LoadingState />}

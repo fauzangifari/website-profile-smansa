@@ -17,6 +17,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useScrollReveal } from "@/lib/hooks/use-scroll-reveal";
 import {
   historicalFigures,
   historyDescription,
@@ -35,6 +36,9 @@ const iconMap = {
 export function HistoryContent() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [isPaused, setIsPaused] = useState(false);
+  const introRef = useScrollReveal();
+  const timelineRef = useScrollReveal();
+  const leadersRef = useScrollReveal();
 
   // Auto-play logic
   useEffect(() => {
@@ -69,7 +73,10 @@ export function HistoryContent() {
   return (
     <div className="flex flex-col gap-16 font-sans">
       {/* Intro Section */}
-      <section className="relative overflow-hidden rounded-[2rem] border border-brand-primary/10 bg-gradient-to-br from-white via-blue-50/30 to-emerald-50/30 p-8 md:p-12 shadow-sm">
+      <section
+        ref={introRef}
+        className="scroll-reveal relative overflow-hidden rounded-[2rem] border border-brand-primary/10 bg-gradient-to-br from-white via-blue-50/30 to-emerald-50/30 p-8 md:p-12 shadow-sm"
+      >
         <div className="absolute -right-20 -top-20 size-64 rounded-full bg-brand-primary/5 blur-3xl" />
         <div className="relative flex flex-col items-center text-center">
           <Badge variant="primary" className="mb-6 px-4 py-1 text-sm font-bold uppercase tracking-widest">
@@ -87,7 +94,7 @@ export function HistoryContent() {
       </section>
 
       {/* Vertical Timeline */}
-      <section className="relative px-4">
+      <section ref={timelineRef} className="scroll-reveal relative px-4">
         <div className="absolute left-1/2 top-0 h-full w-px -translate-x-1/2 bg-gradient-to-b from-brand-primary/10 via-brand-primary/30 to-transparent md:block hidden" />
         
         <div className="space-y-12 md:space-y-24">
@@ -148,7 +155,7 @@ export function HistoryContent() {
       </section>
 
       {/* Leaders Carousel */}
-      <section className="space-y-12">
+      <section ref={leadersRef} className="scroll-reveal space-y-12">
         <div className="flex flex-col items-center text-center">
           <Badge variant="primary" className="mb-4">Kepemimpinan</Badge>
           <h3 className="text-2xl font-extrabold text-neutral-900 md:text-4xl">Kepala Sekolah Dari Masa ke Masa</h3>

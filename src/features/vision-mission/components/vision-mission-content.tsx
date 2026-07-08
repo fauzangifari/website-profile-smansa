@@ -15,6 +15,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { useScrollReveal } from "@/lib/hooks/use-scroll-reveal";
 import {
   missionItems,
   visionMissionFocusAreas,
@@ -45,10 +46,16 @@ const missionColors = [
 ] as const;
 
 export function VisionMissionContent() {
+  const visiRef = useScrollReveal();
+  const misiRef = useScrollReveal({ stagger: true });
+
   return (
     <div className="flex flex-col gap-8 font-sans">
       {/* Visi Section - Full Width Hero Bento */}
-      <section className="group relative overflow-hidden rounded-[2rem] border border-brand-primary/10 bg-gradient-to-br from-white via-blue-50/30 to-emerald-50/30 p-8 md:p-12 lg:p-16 shadow-sm transition-all duration-500 hover:shadow-xl hover:shadow-brand-primary/5">
+      <section
+        ref={visiRef}
+        className="scroll-reveal group relative overflow-hidden rounded-[2rem] border border-brand-primary/10 bg-gradient-to-br from-white via-blue-50/30 to-emerald-50/30 p-8 md:p-12 lg:p-16 shadow-sm transition-all duration-500 hover:shadow-xl hover:shadow-brand-primary/5"
+      >
         <div className="absolute -right-20 -top-20 size-64 rounded-full bg-brand-primary/5 blur-3xl transition-all duration-700 group-hover:bg-brand-primary/10" />
         <div className="absolute -bottom-20 -left-20 size-64 rounded-full bg-emerald-500/5 blur-3xl transition-all duration-700 group-hover:bg-emerald-500/10" />
         
@@ -72,31 +79,20 @@ export function VisionMissionContent() {
       </section>
 
       {/* Bento Grid Misi */}
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4 lg:grid-rows-2">
+      <div
+        ref={misiRef}
+        className="scroll-reveal-stagger grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4 lg:grid-rows-2"
+      >
 
-        {/* Misi 1 - Feature Card */}
-        <MisiCard index={0} />
-
-        {/* Misi 2 */}
-        <MisiCard index={1} />
-
-        {/* Misi 3 */}
-        <MisiCard index={2} />
-
-        {/* Misi 4 */}
-        <MisiCard index={3} />
-
-        {/* Misi 5 */}
-        <MisiCard index={4} />
-
-        {/* Misi 6 */}
-        <MisiCard index={5} />
-
-        {/* Misi 7 */}
-        <MisiCard index={6} />
-
-        {/* Misi 7 */}
-        <MisiCard index={7} />
+        {Array.from({ length: 8 }).map((_, i) => (
+          <div
+            key={i}
+            className="scroll-reveal h-full"
+            style={{ "--stagger-index": i } as React.CSSProperties}
+          >
+            <MisiCard index={i} />
+          </div>
+        ))}
 
       </div>
     </div>
@@ -118,7 +114,7 @@ function MisiCard({
 
   return (
     <Card className={cn(
-      "group relative flex flex-col justify-between overflow-hidden border-neutral-200/60 bg-white/60 p-6 backdrop-blur-sm transition-all duration-300 hover:border-brand-primary/30 hover:shadow-lg hover:shadow-brand-primary/5",
+      "group relative flex h-full flex-col justify-between overflow-hidden border-neutral-200/60 bg-white/60 p-6 backdrop-blur-sm transition-all duration-300 hover:border-brand-primary/30 hover:shadow-lg hover:shadow-brand-primary/5",
       isFeatured && "md:p-8",
       className
     )}>

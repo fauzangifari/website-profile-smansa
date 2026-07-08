@@ -8,11 +8,20 @@ import type { ReactNode } from "react";
  * Next.js Template component for page transitions.
  * Optimized Curtain Reveal — content renders immediately,
  * curtain is a non-blocking overlay that slides away.
+ *
+ * The curtain only plays on the initial full page load. template.tsx
+ * remounts on every client-side navigation, so a module-level flag
+ * (persists across navigations, resets on a full reload) is used to
+ * skip the animation for prefetched page changes.
  */
+let introPlayed = false;
+
 export default function Template({ children }: { children: ReactNode }) {
-  const [curtainDone, setCurtainDone] = useState(false);
+  const [curtainDone, setCurtainDone] = useState(introPlayed);
 
   useEffect(() => {
+    if (introPlayed) return; // already shown on initial load — don't replay
+    introPlayed = true;
     // Remove curtain after animation completes
     const timer = setTimeout(() => setCurtainDone(true), 1200);
     return () => clearTimeout(timer);

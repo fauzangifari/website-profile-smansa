@@ -20,6 +20,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { useScrollReveal } from "@/lib/hooks/use-scroll-reveal";
 import {
   graduateDimensions,
   kokurikulerDescription,
@@ -39,10 +40,19 @@ const iconMap = {
 };
 
 export function KokurikulerContent() {
+  const introRef = useScrollReveal();
+  const tkaRef = useScrollReveal();
+  const dimensionsRef = useScrollReveal();
+  const projectsRef = useScrollReveal();
+  const ctaRef = useScrollReveal();
+
   return (
     <div className="flex flex-col gap-24 font-sans">
       {/* Introduction */}
-      <section className="relative overflow-hidden rounded-[2.5rem] border border-brand-primary/10 bg-gradient-to-br from-white via-blue-50/20 to-indigo-50/20 p-8 md:p-16 shadow-sm">
+      <section
+        ref={introRef}
+        className="scroll-reveal relative overflow-hidden rounded-[2.5rem] border border-brand-primary/10 bg-gradient-to-br from-white via-blue-50/20 to-indigo-50/20 p-8 md:p-16 shadow-sm"
+      >
         <div className="absolute -right-20 -top-20 size-96 rounded-full bg-brand-primary/5 blur-3xl" />
         <div className="relative flex flex-col items-center text-center">
           <Badge variant="primary" className="mb-6 px-5 py-1.5 text-xs font-bold uppercase tracking-[0.2em]">
@@ -59,7 +69,7 @@ export function KokurikulerContent() {
       </section>
 
       {/* TKA Program Section */}
-      <section className="grid gap-12 lg:grid-cols-2 lg:items-center">
+      <section ref={tkaRef} className="scroll-reveal grid gap-12 lg:grid-cols-2 lg:items-center">
         <div className="space-y-8">
           <div>
             <Badge variant="glass" className="mb-4">Academic Preparation</Badge>
@@ -124,7 +134,7 @@ export function KokurikulerContent() {
       </section>
 
       {/* Graduate Dimensions Grid */}
-      <section className="space-y-12">
+      <section ref={dimensionsRef} className="scroll-reveal space-y-12">
         <div className="flex flex-col items-center text-center">
           <Badge variant="primary" className="mb-4">SMANSA Profile</Badge>
           <h3 className="text-3xl font-extrabold text-neutral-900 md:text-4xl">8 Dimensi Profil Lulusan</h3>
@@ -149,7 +159,7 @@ export function KokurikulerContent() {
       </section>
 
       {/* Projects Section */}
-      <section className="space-y-16">
+      <section ref={projectsRef} className="scroll-reveal space-y-16">
         <div className="flex flex-col items-center text-center">
           <Badge variant="glass" className="mb-4">Creative Projects</Badge>
           <h3 className="text-3xl font-extrabold text-neutral-900 md:text-4xl">Eksplorasi Melalui Proyek</h3>
@@ -190,7 +200,7 @@ export function KokurikulerContent() {
       </section>
 
       {/* Footer Call-to-action */}
-      <section className="relative overflow-hidden rounded-[2.5rem] bg-brand-primary p-12 text-center text-white md:p-20 shadow-2xl">
+      <section ref={ctaRef} className="scroll-reveal relative overflow-hidden rounded-[2.5rem] bg-brand-primary p-12 text-center text-white md:p-20 shadow-2xl">
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10" />
         <div className="relative z-10 flex flex-col items-center">
           <Badge variant="glass" className="mb-8 border-white/20 bg-white/10 text-white">Join the Community</Badge>

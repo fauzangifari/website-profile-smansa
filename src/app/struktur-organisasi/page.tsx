@@ -5,6 +5,7 @@ import { SiteFooter } from "@/components/site/site-footer";
 import { mainNavItems } from "@/config/site";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Reveal } from "@/components/ui/reveal";
 
 export const metadata: Metadata = {
   title: "Struktur Organisasi",
@@ -120,7 +121,7 @@ export default function StrukturOrganisasiPage() {
       >
         <div className="mx-auto max-w-6xl py-8">
           {/* KEPALA SEKOLAH */}
-          <div className="flex justify-center reveal-rise">
+          <Reveal className="flex justify-center">
             <div className="w-full max-w-md">
               <PersonCard
                 isMain
@@ -130,12 +131,12 @@ export default function StrukturOrganisasiPage() {
                 rank="Penata Tingkat I"
               />
             </div>
-          </div>
+          </Reveal>
 
           <Connector />
 
           {/* WAKA */}
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 reveal-rise-delayed">
+          <Reveal className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             <PersonCard
               role="WAKA KURIKULUM"
               name="Aniek Widajanti, M.Pd."
@@ -160,15 +161,12 @@ export default function StrukturOrganisasiPage() {
               nip="NIP 198012032005021007"
               rank="Penata Tingkat I, III/d"
             />
-          </div>
+          </Reveal>
 
           <Connector />
 
           {/* KOORDINATOR & BENDAHARA */}
-          <div
-            className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 reveal-rise-delayed"
-            style={{ animationDelay: "200ms" }}
-          >
+          <Reveal className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             <PersonCard
               role="KOORDINATOR TAS"
               name="Khusnul Sugiarto, S.M."
@@ -193,15 +191,12 @@ export default function StrukturOrganisasiPage() {
               nip="-"
               rank="-"
             />
-          </div>
+          </Reveal>
 
           <Connector />
 
           {/* GURU MATA PELAJARAN */}
-          <div
-            className="reveal-rise-delayed"
-            style={{ animationDelay: "300ms" }}
-          >
+          <Reveal>
             <Card
               variant="glass-strong"
               className="border-white/40 p-8 text-center md:p-12"
@@ -220,15 +215,12 @@ export default function StrukturOrganisasiPage() {
                 ))}
               </div>
             </Card>
-          </div>
+          </Reveal>
 
           <Connector />
 
           {/* SISWA */}
-          <div
-            className="reveal-rise-delayed"
-            style={{ animationDelay: "400ms" }}
-          >
+          <Reveal>
             <Card
               variant="glass-strong"
               className="border-brand-primary/20 bg-brand-primary-soft/30 py-8 text-center backdrop-blur-xl"
@@ -237,7 +229,7 @@ export default function StrukturOrganisasiPage() {
                 SISWA
               </h2>
             </Card>
-          </div>
+          </Reveal>
         </div>
       </PageTemplate>
       <SiteFooter anchorBasePath="/" />
