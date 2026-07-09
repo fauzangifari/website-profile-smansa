@@ -1,11 +1,12 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { CaretDownIcon, List, X } from "@phosphor-icons/react";
+import { CaretDownIcon, List, MagnifyingGlass, X } from "@phosphor-icons/react";
 import { Button } from "@/components/ui/button";
+import { SearchDialog } from "@/features/search/components/search-dialog";
 import type { SiteNavItem } from "@/config/site";
 import { cn } from "@/lib/utils";
 
@@ -24,12 +25,25 @@ function resolveHref(href: string, anchorBasePath?: string) {
 export function AppNavbar({ items, anchorBasePath }: AppNavbarProps) {
   const [open, setOpen] = useState(false);
   const [expandedMobileItem, setExpandedMobileItem] = useState<string | null>(null);
+  const [searchOpen, setSearchOpen] = useState(false);
   const pathname = usePathname();
 
   const closeMobileMenu = () => {
     setOpen(false);
     setExpandedMobileItem(null);
   };
+
+  // Shortcut global Ctrl/⌘+K untuk membuka pencarian.
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        setSearchOpen(true);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   const isItemActive = (item: SiteNavItem): boolean => {
     if (item.label === "Beranda" && pathname === "/") return true;
@@ -51,7 +65,7 @@ export function AppNavbar({ items, anchorBasePath }: AppNavbarProps) {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4 font-sans">
-      <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between rounded-xl bg-white/72 px-4 shadow-md backdrop-blur-2xl transition-all duration-300">
+      <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between rounded-lg bg-white/72 px-4 shadow-md backdrop-blur-2xl transition-all duration-300">
         <Link
           href={resolveHref("#beranda", anchorBasePath)}
           className="flex min-w-0 items-center gap-3"
@@ -121,7 +135,7 @@ export function AppNavbar({ items, anchorBasePath }: AppNavbarProps) {
                 
                 {/* Dropdown */}
                 <div className="invisible absolute left-0 top-full min-w-52 pt-2 opacity-0 transition-all duration-300 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 translate-y-2">
-                  <div className="rounded-xl border border-neutral-200 bg-white/95 p-2 shadow-lg shadow-neutral-900/10 backdrop-blur-xl">
+                  <div className="rounded-lg border border-neutral-200 bg-white/95 p-2 shadow-lg shadow-neutral-900/10 backdrop-blur-xl">
                     <div className="grid gap-1">
                       {item.children?.map((child) => {
                         const childActive = isItemActive(child);
@@ -150,12 +164,15 @@ export function AppNavbar({ items, anchorBasePath }: AppNavbarProps) {
 
         {/* Action Buttons */}
         <div className="hidden items-center gap-2 lg:flex">
-          <Link
-            href={resolveHref("#", anchorBasePath)}
-            className="inline-flex h-10 items-center justify-center rounded-md px-4 text-sm font-semibold text-neutral-700 hover:bg-white/70 hover:text-brand-primary"
+          <button
+            type="button"
+            onClick={() => setSearchOpen(true)}
+            className="inline-flex h-10 items-center gap-2 rounded-md px-4 text-sm font-semibold text-neutral-700 hover:bg-white/70 hover:text-brand-primary"
+            aria-label="Cari"
           >
+            <MagnifyingGlass size={18} weight="bold" />
             Cari
-          </Link>
+          </button>
           <Link
             href={resolveHref("https://spmb.sman1samarinda.sch.id", anchorBasePath)}
             className="inline-flex h-10 items-center justify-center rounded-md bg-brand-primary px-4 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-primary-hover active:scale-95"
@@ -192,8 +209,19 @@ export function AppNavbar({ items, anchorBasePath }: AppNavbarProps) {
             : "opacity-0 -translate-y-2 invisible pointer-events-none"
         )}
       >
-        <div className="rounded-xl border border-white/50 bg-white/72 p-4 shadow-xl backdrop-blur-2xl">
+        <div className="rounded-lg border border-white/50 bg-white/72 p-4 shadow-xl backdrop-blur-2xl">
           <div className="grid gap-1">
+            <button
+              type="button"
+              onClick={() => {
+                closeMobileMenu();
+                setSearchOpen(true);
+              }}
+              className="flex items-center gap-2 rounded-md px-3 py-3 text-left text-sm font-semibold text-neutral-800 transition-colors hover:bg-white/70"
+            >
+              <MagnifyingGlass size={18} weight="bold" />
+              Cari
+            </button>
             {items.map((item) => {
               const hasChildren = Boolean(item.children?.length);
               const isExpanded = expandedMobileItem === item.label;
@@ -275,6 +303,8 @@ export function AppNavbar({ items, anchorBasePath }: AppNavbarProps) {
           </div>
         </div>
       </div>
+
+      <SearchDialog open={searchOpen} onClose={() => setSearchOpen(false)} />
     </header>
   );
 }
