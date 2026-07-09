@@ -90,8 +90,8 @@ const socialLinks = [
 
 const legalLinks: FooterLink[] = [
   { label: "Cookies", href: "#" },
-  { label: "Syarat & Ketentuan", href: "#" },
-  { label: "Kebijakan Privasi", href: "#" },
+  { label: "Syarat & Ketentuan", href: "/terms-of-service" },
+  { label: "Kebijakan Privasi", href: "/privacy-policy" },
 ];
 
 export function SiteFooter({ anchorBasePath }: SiteFooterProps) {
@@ -102,7 +102,7 @@ export function SiteFooter({ anchorBasePath }: SiteFooterProps) {
       <Container className="py-10 md:py-12">
         <section
           aria-label="Identitas sekolah"
-          className="rounded-xl border border-neutral-200 bg-neutral-50 p-5 md:p-6"
+          className="rounded-lg border border-neutral-200 bg-neutral-50 p-5 md:p-6"
         >
           <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center">
             <div className="flex min-w-0 items-start gap-4">
