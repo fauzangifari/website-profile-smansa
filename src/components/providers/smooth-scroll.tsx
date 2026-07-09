@@ -59,7 +59,20 @@ export function SmoothScroll({ children }: SmoothScrollProps) {
       }
     };
 
+    const handleScrollToTop = () => {
+      const lenis = lenisRef.current;
+      if (lenis) {
+        lenis.scrollTo(document.body, {
+          duration: 1.5,
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        });
+      } else {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    };
+
     document.addEventListener("click", handleAnchorClick);
+    window.addEventListener("backToTop", handleScrollToTop);
 
     const initializeSmoothScroll = async () => {
       const [{ default: Lenis }, gsapModule, scrollTriggerModule] =
@@ -148,6 +161,7 @@ export function SmoothScroll({ children }: SmoothScrollProps) {
       cancelled = true;
       window.removeEventListener("load", scheduleSmoothScroll);
       document.removeEventListener("click", handleAnchorClick);
+      window.removeEventListener("backToTop", handleScrollToTop);
       if (idleCallbackId !== undefined && "cancelIdleCallback" in window) {
         window.cancelIdleCallback(idleCallbackId);
       }

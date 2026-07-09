@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 
 import { SmoothScroll } from "@/components/providers/smooth-scroll";
+import { BackToTopButton } from "@/components/site/back-to-top-button";
 import { siteConfig } from "@/config/site";
 
 const plusJakarta = localFont({
@@ -43,6 +44,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <SmoothScroll>{children}</SmoothScroll>
+        <BackToTopButton />
       </body>
     </html>
   );
