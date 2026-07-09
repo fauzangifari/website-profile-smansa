@@ -93,8 +93,30 @@ export function BeritaContent({
     });
   }, [sorted, activeCategory, activeTag, query]);
 
+  const hasRevealed = useRef(false);
+
   useGSAP(
     () => {
+      // Saat filter berubah, animasikan grid dengan fromTo — state akhir
+      // dipaksa opacity:1 tanpa bergantung pada ScrollTrigger, agar kartu
+      // tidak pernah tersangkut tersembunyi (posisi scroll tidak berubah saat
+      // mengklik chip filter, jadi trigger scroll belum tentu ikut memicu).
+      if (hasRevealed.current) {
+        gsap.fromTo(
+          ".reveal-grid-item",
+          { y: 16, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            stagger: 0.05,
+            ease: "power3.out",
+            duration: 0.5,
+          },
+        );
+        return;
+      }
+
+      // Mount awal: entrance untuk featured + controls, dan scroll-reveal grid.
       const tl = gsap.timeline({
         defaults: { ease: "power3.out", duration: 0.8 },
       });
@@ -115,6 +137,7 @@ export function BeritaContent({
         ease: "power3.out",
         duration: 0.6,
       });
+      hasRevealed.current = true;
 
       // Cover images (next/image fill) menggeser tinggi setelah load — hitung
       // ulang posisi trigger agar item grid tidak tersangkut opacity 0.
@@ -122,8 +145,6 @@ export function BeritaContent({
     },
     {
       scope: containerRef,
-      // Re-create reveal saat filter kategori/tag berubah; revertOnUpdate
-      // menghapus opacity:0 inline pada node yang di-reuse (key slug sama).
       dependencies: [activeCategory, activeTag],
       revertOnUpdate: true,
     },
@@ -132,7 +153,7 @@ export function BeritaContent({
   // Error dari server → tampilkan state gagal muat.
   if (error) {
     return (
-      <div className="flex flex-col items-center justify-center gap-4 rounded-2xl border border-dashed border-danger/40 bg-danger/5 px-6 py-16 text-center">
+      <div className="flex flex-col items-center justify-center gap-4 rounded-lg border border-dashed border-danger/40 bg-danger/5 px-6 py-16 text-center">
         <div className="rounded-2xl bg-danger/10 p-4 text-danger">
           <WarningCircle weight="duotone" size={32} />
         </div>
@@ -304,7 +325,7 @@ export function BeritaContent({
             ))}
           </div>
         ) : (
-          <div className="flex flex-col items-center justify-center gap-4 rounded-2xl border border-dashed border-neutral-300 bg-white/40 px-6 py-16 text-center backdrop-blur-xl">
+          <div className="flex flex-col items-center justify-center gap-4 rounded-lg border border-dashed border-neutral-300 bg-white/40 px-6 py-16 text-center backdrop-blur-xl">
             <div className="rounded-2xl bg-brand-primary/10 p-4 text-brand-primary">
               <Newspaper weight="duotone" size={32} />
             </div>
