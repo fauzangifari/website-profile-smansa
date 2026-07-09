@@ -63,6 +63,31 @@ export const ekskulDetails: EkskulDetail[] = [
           role: "Bendahara",
           photo: "https://placehold.co/400x400/003366/FFFFFF.png?text=Keisha+P.",
         },
+        {
+          name: "Dimas Prayoga",
+          role: "Koordinator Riset",
+          photo: "https://placehold.co/400x400/003366/FFFFFF.png?text=Dimas+P.",
+        },
+        {
+          name: "Salsabila Nur Aini",
+          role: "Koordinator Humas",
+          photo: "https://placehold.co/400x400/003366/FFFFFF.png?text=Salsabila+N.",
+        },
+        {
+          name: "Fikri Maulana",
+          role: "Koordinator Acara",
+          photo: "https://placehold.co/400x400/003366/FFFFFF.png?text=Fikri+M.",
+        },
+        {
+          name: "Nabila Syahputri",
+          role: "Anggota",
+          photo: "https://placehold.co/400x400/003366/FFFFFF.png?text=Nabila+S.",
+        },
+        {
+          name: "Rafael Adi Nugroho",
+          role: "Anggota",
+          photo: "https://placehold.co/400x400/003366/FFFFFF.png?text=Rafael+A.",
+        },
       ],
     },
     registrationLink: "https://forms.gle/contoh-pendaftaran-club-ekonomi",

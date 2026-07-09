@@ -1,10 +1,12 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowLeft,
   ArrowSquareOut,
+  CaretDown,
   CalendarBlank,
   Clock,
   MapPin,
@@ -42,6 +44,30 @@ const socialIconMap: Record<
 export function EkskulDetail({ item }: EkskulDetailProps) {
   const bodyRef = useScrollReveal({ stagger: true });
   const asideRef = useScrollReveal();
+  const [showAllMembers, setShowAllMembers] = useState(false);
+
+  const people = [
+    {
+      photo: item.structure.pembina.photo,
+      name: item.structure.pembina.name,
+      jabatan: "Pembina",
+      tierClass: "bg-brand-primary text-white",
+    },
+    {
+      photo: item.structure.ketua.photo,
+      name: item.structure.ketua.name,
+      jabatan: "Ketua",
+      tierClass: "bg-brand-secondary text-white",
+    },
+    ...item.structure.anggota.map((member) => ({
+      photo: member.photo,
+      name: member.name,
+      jabatan: member.role,
+      tierClass: "bg-neutral-800 text-white",
+    })),
+  ];
+  const MEMBER_LIMIT = 8;
+  const visiblePeople = showAllMembers ? people : people.slice(0, MEMBER_LIMIT);
 
   return (
     <article className="space-y-10">
@@ -54,7 +80,7 @@ export function EkskulDetail({ item }: EkskulDetailProps) {
       </Link>
 
       {/* Cover */}
-      <div className="relative aspect-[21/9] overflow-hidden rounded-3xl border border-white/50 shadow-lg shadow-neutral-900/5">
+      <div className="relative aspect-[21/9] overflow-hidden rounded-lg border border-white/50 shadow-lg shadow-neutral-900/5">
         <Image
           src={item.coverImage}
           alt={item.title}
@@ -78,7 +104,7 @@ export function EkskulDetail({ item }: EkskulDetailProps) {
           </section>
 
           {/* Visi & Misi */}
-          <section className="scroll-reveal grid gap-6 rounded-2xl border border-white/50 bg-white/50 p-6 backdrop-blur-xl md:grid-cols-2" style={{ "--stagger-index": 1 } as React.CSSProperties}>
+          <section className="scroll-reveal grid gap-6 rounded-lg border border-white/50 bg-white/50 p-6 backdrop-blur-xl md:grid-cols-2" style={{ "--stagger-index": 1 } as React.CSSProperties}>
             <div className="space-y-3">
               <div className="flex items-center gap-2">
                 <div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-brand-primary-soft text-brand-primary">
@@ -108,74 +134,8 @@ export function EkskulDetail({ item }: EkskulDetailProps) {
             </div>
           </section>
 
-          {/* Struktur Organisasi */}
-          <section className="scroll-reveal space-y-6" style={{ "--stagger-index": 2 } as React.CSSProperties}>
-            <h2 className="text-xl font-bold tracking-tight text-neutral-900 md:text-2xl">
-              Struktur Organisasi
-            </h2>
-
-            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-              {[
-                {
-                  photo: item.structure.pembina.photo,
-                  name: item.structure.pembina.name,
-                  caption: item.structure.pembina.role,
-                  tier: "Pembina",
-                  tierClass: "bg-brand-primary text-white",
-                },
-                {
-                  photo: item.structure.ketua.photo,
-                  name: item.structure.ketua.name,
-                  caption: item.structure.ketua.kelas,
-                  tier: "Ketua",
-                  tierClass: "bg-brand-secondary text-white",
-                },
-                ...item.structure.anggota.map((member) => ({
-                  photo: member.photo,
-                  name: member.name,
-                  caption: member.role,
-                  tier: "Anggota",
-                  tierClass: "bg-neutral-800 text-white",
-                })),
-              ].map((person, i) => (
-                <div
-                  key={i}
-                  className="overflow-hidden rounded-2xl border border-neutral-200 bg-white"
-                >
-                  <div className="relative aspect-square">
-                    <Image
-                      src={person.photo}
-                      alt={person.name}
-                      fill
-                      sizes="(max-width: 1024px) 50vw, 240px"
-                      className="object-cover"
-                    />
-                    <span
-                      className={cn(
-                        "absolute left-2 top-2 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider",
-                        person.tierClass,
-                      )}
-                    >
-                      {person.tier}
-                    </span>
-                  </div>
-                  <div className="space-y-0.5 p-3.5">
-                    <p className="truncate text-sm font-bold text-neutral-900">
-                      {person.name}
-                    </p>
-                    {person.caption ? (
-                      <p className="truncate text-xs text-neutral-500">
-                        {person.caption}
-                      </p>
-                    ) : null}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
-
           {/* Program Kegiatan */}
-          <section className="scroll-reveal space-y-6" style={{ "--stagger-index": 3 } as React.CSSProperties}>
+          <section className="scroll-reveal space-y-6" style={{ "--stagger-index": 2 } as React.CSSProperties}>
             <h2 className="text-xl font-bold tracking-tight text-neutral-900 md:text-2xl">
               Program Kegiatan
             </h2>
@@ -183,7 +143,7 @@ export function EkskulDetail({ item }: EkskulDetailProps) {
               {item.programs.map((program, i) => (
                 <div
                   key={i}
-                  className="overflow-hidden rounded-2xl border border-neutral-200 bg-white"
+                  className="overflow-hidden rounded-lg border border-neutral-200 bg-white"
                 >
                   {program.image ? (
                     <div className="relative aspect-[4/3]">
@@ -210,17 +170,77 @@ export function EkskulDetail({ item }: EkskulDetailProps) {
           </section>
 
           {/* FAQ */}
-          <section className="scroll-reveal space-y-6" style={{ "--stagger-index": 4 } as React.CSSProperties}>
+          <section className="scroll-reveal space-y-6" style={{ "--stagger-index": 3 } as React.CSSProperties}>
             <h2 className="text-xl font-bold tracking-tight text-neutral-900 md:text-2xl">
               Pertanyaan Umum
             </h2>
             <Accordion items={item.faq} />
           </section>
+
+          {/* Struktur Organisasi */}
+          <section className="scroll-reveal space-y-6" style={{ "--stagger-index": 4 } as React.CSSProperties}>
+            <h2 className="text-xl font-bold tracking-tight text-neutral-900 md:text-2xl">
+              Struktur Organisasi
+            </h2>
+
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+              {visiblePeople.map((person, i) => (
+                <div
+                  key={i}
+                  className="overflow-hidden rounded-lg border border-neutral-200 bg-white"
+                >
+                  <div className="relative aspect-square">
+                    <Image
+                      src={person.photo}
+                      alt={person.name}
+                      fill
+                      sizes="(max-width: 1024px) 50vw, 240px"
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="space-y-2 p-3.5">
+                    <p className="truncate text-sm font-bold text-neutral-900">
+                      {person.name}
+                    </p>
+                    <span
+                      className={cn(
+                        "inline-block rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider",
+                        person.tierClass,
+                      )}
+                    >
+                      {person.jabatan}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {people.length > MEMBER_LIMIT ? (
+              <div className="flex justify-center">
+                <button
+                  type="button"
+                  onClick={() => setShowAllMembers((prev) => !prev)}
+                  className="inline-flex items-center gap-2 rounded-full border border-neutral-200 bg-white px-5 py-2.5 text-sm font-semibold text-neutral-700 transition hover:border-brand-primary hover:text-brand-primary"
+                >
+                  {showAllMembers
+                    ? "Tampilkan lebih sedikit"
+                    : `Lihat selengkapnya (${people.length - MEMBER_LIMIT} lainnya)`}
+                  <CaretDown
+                    weight="bold"
+                    className={cn(
+                      "size-4 transition-transform",
+                      showAllMembers && "rotate-180",
+                    )}
+                  />
+                </button>
+              </div>
+            ) : null}
+          </section>
         </div>
 
         <aside ref={asideRef} className="scroll-reveal space-y-6 lg:sticky lg:top-28 lg:self-start">
           {/* Info Ekskul */}
-          <div className="rounded-2xl border border-white/50 bg-white/50 p-6 backdrop-blur-xl">
+          <div className="rounded-lg border border-white/50 bg-white/50 p-6 backdrop-blur-xl">
             <p className="mb-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-500">
               Info Ekskul
             </p>
@@ -256,7 +276,7 @@ export function EkskulDetail({ item }: EkskulDetailProps) {
           </div>
 
           {/* Narahubung */}
-          <div className="rounded-2xl border border-white/50 bg-white/50 p-6 backdrop-blur-xl">
+          <div className="rounded-lg border border-white/50 bg-white/50 p-6 backdrop-blur-xl">
             <p className="mb-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-500">
               Narahubung
             </p>
@@ -307,7 +327,7 @@ export function EkskulDetail({ item }: EkskulDetailProps) {
 
           {/* Media Sosial */}
           {item.socialMedia.length ? (
-            <div className="flex items-center justify-center gap-3 rounded-2xl border border-white/50 bg-white/50 p-4 backdrop-blur-xl">
+            <div className="flex items-center justify-center gap-3 rounded-lg border border-white/50 bg-white/50 p-4 backdrop-blur-xl">
               {item.socialMedia.map((social) => {
                 const Icon = socialIconMap[social.platform];
                 return (

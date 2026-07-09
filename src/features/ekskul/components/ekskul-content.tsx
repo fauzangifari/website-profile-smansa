@@ -84,7 +84,7 @@ export function EkskulContent() {
       {/* ── 1. Hero Stats Banner ─────────────────────────────────────────── */}
       <section
         ref={heroRef}
-        className="scroll-reveal relative overflow-hidden rounded-3xl border border-brand-primary/10 bg-gradient-to-br from-white via-blue-50/30 to-indigo-50/20 p-8 md:p-14"
+        className="scroll-reveal relative overflow-hidden rounded-lg border border-brand-primary/10 bg-gradient-to-br from-white via-blue-50/30 to-indigo-50/20 p-8 md:p-14"
       >
         {/* Background blobs */}
         <div className="pointer-events-none absolute -right-24 -top-24 size-72 rounded-full bg-brand-primary/6 blur-3xl" />
@@ -237,7 +237,7 @@ export function EkskulContent() {
               <p className="text-sm text-neutral-500 -mt-2 ml-11">{category.description}</p>
 
               {/* Activities grid */}
-              <div className="ml-0 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="ml-0 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
                 {category.activities.map((activity) => (
                   <NonAkademikCard key={activity.id} activity={activity} categoryTitle={category.title} />
                 ))}
@@ -315,7 +315,7 @@ function StatPill({
   color: string;
 }) {
   return (
-    <div className="flex items-center gap-3 rounded-2xl border border-neutral-100 bg-white px-5 py-3 shadow-sm">
+    <div className="flex items-center gap-3 rounded-lg border border-neutral-100 bg-white px-5 py-3 shadow-sm">
       <div className={cn("flex size-9 items-center justify-center rounded-xl", statPillColorMap[color] ?? "bg-neutral-100 text-neutral-700")}>
         <Icon size={18} weight="duotone" />
       </div>
@@ -357,7 +357,7 @@ function AkademikCard({
           <h3 className="font-extrabold leading-snug text-neutral-900 transition-colors group-hover:text-brand-primary">
             {club.title}
           </h3>
-          <p className="text-sm leading-relaxed text-neutral-500">{club.description}</p>
+          <p className="line-clamp-3 text-sm leading-relaxed text-neutral-500">{club.description}</p>
         </div>
 
         {/* Hover CTA */}
@@ -385,15 +385,15 @@ function NonAkademikCard({
 }) {
   const Icon = activity.icon;
   return (
-    <Link href={`/ekstrakurikuler/${activity.slug}`}>
+    <Link href={`/ekstrakurikuler/${activity.slug}`} className="block h-full">
       <Card
         variant="glass-soft"
-        className="group flex h-full flex-col gap-4 border border-transparent p-5 transition-all duration-200 hover:border-brand-secondary/20 hover:shadow-lg hover:shadow-brand-secondary/8"
+        className="group flex h-full flex-col gap-5 border border-transparent p-6 transition-all duration-200 hover:border-brand-secondary/20 hover:shadow-lg hover:shadow-brand-secondary/8"
       >
-        {/* Top row */}
+        {/* Top row: icon + badge */}
         <div className="flex items-start justify-between gap-2">
-          <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-brand-secondary/10 text-brand-secondary transition-all duration-200 group-hover:bg-brand-secondary group-hover:text-white">
-            <Icon size={20} weight="duotone" />
+          <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-brand-secondary/10 text-brand-secondary transition-all duration-200 group-hover:bg-brand-secondary group-hover:text-white">
+            <Icon size={22} weight="duotone" />
           </div>
           <Badge variant="neutral" className="shrink-0 text-[10px]">
             {categoryTitle}
@@ -401,11 +401,17 @@ function NonAkademikCard({
         </div>
 
         {/* Content */}
-        <div className="flex flex-col gap-1.5">
-          <h4 className="font-bold leading-snug text-neutral-900 transition-colors group-hover:text-brand-secondary">
+        <div className="flex flex-col gap-2">
+          <h3 className="font-extrabold leading-snug text-neutral-900 transition-colors group-hover:text-brand-secondary">
             {activity.name}
-          </h4>
-          <p className="text-sm leading-relaxed text-neutral-500">{activity.description}</p>
+          </h3>
+          <p className="line-clamp-3 text-sm leading-relaxed text-neutral-500">{activity.description}</p>
+        </div>
+
+        {/* Hover CTA */}
+        <div className="mt-auto flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-brand-secondary opacity-0 transition-all duration-200 group-hover:opacity-100">
+          <span>Pelajari</span>
+          <ArrowRight size={13} weight="bold" />
         </div>
       </Card>
     </Link>
