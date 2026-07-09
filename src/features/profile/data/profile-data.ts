@@ -5,21 +5,21 @@ export const profileParagraphs = [
 
 export const profileImages = [
   {
-    src: "https://www.sman1samarinda.sch.id/public/smansa-profil-body1.jpg",
+    src: "/images/profil/smansa-profil-body1.jpg",
     alt: "Dokumentasi profil SMA Negeri 1 Samarinda",
     label: "Ruang Belajar SMANSA",
     description:
       "Suasana pembelajaran yang menjadi pusat aktivitas akademik siswa.",
   },
   {
-    src: "https://www.sman1samarinda.sch.id/public/smansa-profil-body2.jpg",
+    src: "/images/profil/smansa-profil-body2.jpg",
     alt: "Kegiatan sekolah SMA Negeri 1 Samarinda",
     label: "Kegiatan Sekolah",
     description:
       "Kegiatan sekolah yang mendukung pembentukan karakter dan kolaborasi.",
   },
   {
-    src: "https://www.sman1samarinda.sch.id/public/smansa-profil-body3.jpg",
+    src: "/images/profil/smansa-profil-body3.jpg",
     alt: "Lingkungan SMA Negeri 1 Samarinda",
     label: "Lingkungan Sekolah",
     description:
