@@ -184,7 +184,7 @@ function SectionCard({ section }: { section: TataTertibSection }) {
       variants={cardVariants}
       id={`section-${section.id}`}
       className={cn(
-        "overflow-hidden rounded-2xl border transition-all duration-300",
+        "overflow-hidden rounded-lg border transition-all duration-300",
         colorBg[section.colorClass],
         isOpen ? "shadow-md" : "shadow-sm hover:shadow-md",
       )}
@@ -284,7 +284,7 @@ function SeragamSection() {
     <motion.div
       variants={cardVariants}
       id="section-seragam"
-      className="overflow-hidden rounded-2xl border border-blue-200/60 bg-blue-50 shadow-sm hover:shadow-md transition-all duration-300"
+      className="overflow-hidden rounded-lg border border-blue-200/60 bg-blue-50 shadow-sm hover:shadow-md transition-all duration-300"
     >
       {/* Header */}
       <div className="flex items-center gap-4 p-5 md:p-6">
@@ -367,7 +367,7 @@ function SeragamSection() {
         </AnimatePresence>
 
         {/* Ketentuan umum */}
-        <div className="rounded-xl border border-blue-200/50 bg-blue-50/80 p-4">
+        <div className="rounded-lg border border-blue-200/50 bg-blue-50/80 p-4">
           <p className="mb-3 text-xs font-bold uppercase tracking-widest text-blue-700">
             Ketentuan Umum Seragam
           </p>
@@ -495,7 +495,7 @@ export function TataTertibContent() {
             {tataTertibStats.map((stat) => (
               <div
                 key={stat.label}
-                className="flex flex-col items-center gap-1 rounded-xl border border-brand-primary/15 bg-white/70 px-5 py-4 shadow-sm backdrop-blur-sm"
+                className="flex flex-col items-center gap-1 rounded-lg border border-brand-primary/15 bg-white/70 px-5 py-4 shadow-sm backdrop-blur-sm"
               >
                 <span className="text-3xl font-extrabold leading-none text-brand-primary">
                   {stat.value}
@@ -596,7 +596,7 @@ export function TataTertibContent() {
             ].map((info) => (
               <div
                 key={info.label}
-                className="flex items-start gap-3 rounded-xl border border-neutral-200/70 bg-white/70 p-4 backdrop-blur-sm"
+                className="flex items-start gap-3 rounded-lg border border-neutral-200/70 bg-white/70 p-4 backdrop-blur-sm"
               >
                 <div className="flex shrink-0 size-9 items-center justify-center rounded-lg bg-brand-primary-soft text-brand-primary">
                   <info.icon size={18} weight="duotone" />

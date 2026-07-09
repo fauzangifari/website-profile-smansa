@@ -27,7 +27,7 @@ export function BeritaGallery({ photos, title }: BeritaGalleryProps) {
         href={photo.url}
         target="_blank"
         rel="noopener noreferrer"
-        className="group relative block aspect-[16/9] overflow-hidden rounded-2xl border border-white/50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-primary/30"
+        className="group relative block aspect-[16/9] overflow-hidden rounded-lg border border-white/50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-primary/30"
       >
         <Image
           src={photo.url}
@@ -62,7 +62,7 @@ export function BeritaGallery({ photos, title }: BeritaGalleryProps) {
       }}
     >
       {/* Viewport */}
-      <div className="relative overflow-hidden rounded-2xl border border-white/50">
+      <div className="relative overflow-hidden rounded-lg border border-white/50">
         <div
           className="flex transition-transform duration-500 ease-out"
           style={{ transform: `translateX(-${index * 100}%)` }}

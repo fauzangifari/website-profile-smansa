@@ -100,7 +100,7 @@ export function ContactLocationSection() {
 
               {/* Action Overlay */}
               <div className="absolute bottom-8 left-8 right-8 z-20 flex justify-between items-end pointer-events-none">
-                <div className="bg-white/95 backdrop-blur-sm p-5 rounded-2xl border border-white/80 shadow-xl max-w-[240px] transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-[transform,opacity] duration-500 delay-75">
+                <div className="bg-white/95 backdrop-blur-sm p-5 rounded-lg border border-white/80 shadow-xl max-w-[240px] transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-[transform,opacity] duration-500 delay-75">
                   <p className="text-[10px] font-bold text-brand-primary uppercase tracking-[0.2em] mb-2">Campus Hub</p>
                   <p className="text-xs font-semibold text-neutral-700 leading-relaxed">
                     Jantung pendidikan Kota Samarinda, lokasi strategis dengan akses mudah.

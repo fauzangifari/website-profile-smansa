@@ -24,7 +24,7 @@ export function Accordion({ items, className }: AccordionProps) {
         return (
           <div
             key={i}
-            className="overflow-hidden rounded-2xl border border-white/50 bg-white/50 backdrop-blur-xl"
+            className="overflow-hidden rounded-lg border border-white/50 bg-white/50 backdrop-blur-xl"
           >
             <button
               type="button"

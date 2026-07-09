@@ -23,7 +23,7 @@ export function Card({
   return (
     <div
       className={cn(
-        "rounded-xl p-5 transition-[background-color,border-color,box-shadow,transform] duration-200 ease-out",
+        "rounded-lg p-5 transition-[background-color,border-color,box-shadow,transform] duration-200 ease-out",
         variantClasses[variant],
         className,
       )}

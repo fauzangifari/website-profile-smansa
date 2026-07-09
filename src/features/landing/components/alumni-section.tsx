@@ -53,7 +53,7 @@ export function AlumniSection() {
           {alumniData.map((alumni, index) => (
             <article
               key={alumni.name}
-              className="scroll-reveal group relative overflow-hidden rounded-2xl bg-neutral-800"
+              className="scroll-reveal group relative overflow-hidden rounded-lg bg-neutral-800"
               style={{ "--stagger-index": index } as React.CSSProperties}
             >
               {/* Portrait ratio */}

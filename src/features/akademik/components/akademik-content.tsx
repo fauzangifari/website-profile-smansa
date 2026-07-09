@@ -82,7 +82,7 @@ export function AkademikContent() {
             {akademikBenefits.map((benefit, i) => {
               const IconComponent = iconMap[benefit.icon as keyof typeof iconMap] || Sparkle;
               return (
-                <div key={i} className="flex items-start gap-4 p-4 rounded-2xl transition-all hover:bg-white hover:shadow-xl hover:shadow-neutral-900/5 group border border-transparent hover:border-neutral-100">
+                <div key={i} className="flex items-start gap-4 p-4 rounded-lg transition-all hover:bg-white hover:shadow-xl hover:shadow-neutral-900/5 group border border-transparent hover:border-neutral-100">
                   <div className="mt-1 flex size-10 shrink-0 items-center justify-center rounded-xl bg-brand-primary-soft text-brand-primary group-hover:bg-brand-primary group-hover:text-white transition-all duration-300">
                     <IconComponent size={20} weight="duotone" />
                   </div>

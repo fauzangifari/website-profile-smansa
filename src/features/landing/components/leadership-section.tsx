@@ -118,7 +118,7 @@ function LeadershipCarousel3D({
 
   return (
     <div
-      className="relative h-full min-h-[560px] sm:min-h-[600px] lg:min-h-[620px] overflow-hidden rounded-2xl border border-white/50 bg-white/36 px-3 py-6 shadow-xl shadow-neutral-950/8 backdrop-blur-xl md:px-8"
+      className="relative h-full min-h-[560px] sm:min-h-[600px] lg:min-h-[620px] overflow-hidden rounded-lg border border-white/50 bg-white/36 px-3 py-6 shadow-xl shadow-neutral-950/8 backdrop-blur-xl md:px-8"
       style={{ perspective: "1000px" }}
       aria-roledescription="carousel"
       aria-label={label}
@@ -197,7 +197,7 @@ function LeadershipStaticCard({
   imageSrc?: string;
 }) {
   return (
-    <article className="group relative isolate min-h-[560px] overflow-hidden rounded-2xl border border-white/60 bg-white/50 shadow-xl shadow-neutral-950/12 transition duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-neutral-950/14 sm:min-h-[600px] lg:min-h-[620px]">
+    <article className="group relative isolate min-h-[560px] overflow-hidden rounded-lg border border-white/60 bg-white/50 shadow-xl shadow-neutral-950/12 transition duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-neutral-950/14 sm:min-h-[600px] lg:min-h-[620px]">
       {imageSrc ? (
         <Image
           src={imageSrc}
@@ -212,7 +212,7 @@ function LeadershipStaticCard({
 
       <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/64 via-neutral-950/8 to-white/10" />
       <div className="absolute inset-x-5 bottom-5">
-        <div className="rounded-xl border border-white/54 bg-white/76 p-5 shadow-lg shadow-neutral-950/12 backdrop-blur-2xl md:p-6">
+        <div className="rounded-lg border border-white/54 bg-white/76 p-5 shadow-lg shadow-neutral-950/12 backdrop-blur-2xl md:p-6">
           <p className="truncate text-xs font-extrabold uppercase tracking-[0.14em] text-brand-primary">
             {role}
           </p>
@@ -249,7 +249,7 @@ function LeadershipCarouselCard({
   return (
     <article
       className={cn(
-        "absolute left-1/2 top-1/2 z-10 h-[420px] w-[min(70vw,280px)] overflow-hidden rounded-xl border border-white/60 bg-white shadow-lg transition-[transform,opacity] duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform sm:h-[460px] sm:w-[320px] lg:h-[500px] lg:w-[340px]",
+        "absolute left-1/2 top-1/2 z-10 h-[420px] w-[min(70vw,280px)] overflow-hidden rounded-lg border border-white/60 bg-white shadow-lg transition-[transform,opacity] duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform sm:h-[460px] sm:w-[320px] lg:h-[500px] lg:w-[340px]",
         active ? "z-30" : "z-20 cursor-pointer",
         hidden ? "pointer-events-none opacity-0" : null,
       )}
@@ -301,7 +301,7 @@ function LeadershipFallback({
     <div className="absolute inset-0 bg-[linear-gradient(145deg,#f8fafc_0%,#dbeafe_52%,#ffffff_100%)]">
       <div
         aria-hidden="true"
-        className="absolute inset-8 rounded-xl border border-white/40"
+        className="absolute inset-8 rounded-lg border border-white/40"
       />
       <div
         aria-hidden="true"

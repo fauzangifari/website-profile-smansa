@@ -216,7 +216,7 @@ export function KalenderAkademikContent() {
           </p>
 
           <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
-            <div className="flex flex-col items-center gap-1 rounded-xl border border-brand-primary/15 bg-white/70 px-5 py-4 shadow-sm backdrop-blur-sm">
+            <div className="flex flex-col items-center gap-1 rounded-lg border border-brand-primary/15 bg-white/70 px-5 py-4 shadow-sm backdrop-blur-sm">
               <span className="text-3xl font-extrabold leading-none text-brand-primary">
                 {kalenderStats.gasal.hariEfektif}
               </span>
@@ -224,7 +224,7 @@ export function KalenderAkademikContent() {
                 Hari Efektif Gasal
               </span>
             </div>
-            <div className="flex flex-col items-center gap-1 rounded-xl border border-brand-primary/15 bg-white/70 px-5 py-4 shadow-sm backdrop-blur-sm">
+            <div className="flex flex-col items-center gap-1 rounded-lg border border-brand-primary/15 bg-white/70 px-5 py-4 shadow-sm backdrop-blur-sm">
               <span className="text-3xl font-extrabold leading-none text-brand-primary">
                 {kalenderStats.genap.hariEfektif}
               </span>
@@ -232,7 +232,7 @@ export function KalenderAkademikContent() {
                 Hari Efektif Genap
               </span>
             </div>
-            <div className="flex flex-col items-center gap-1 rounded-xl border border-brand-primary/15 bg-white/70 px-5 py-4 shadow-sm backdrop-blur-sm">
+            <div className="flex flex-col items-center gap-1 rounded-lg border border-brand-primary/15 bg-white/70 px-5 py-4 shadow-sm backdrop-blur-sm">
               <span className="text-3xl font-extrabold leading-none text-brand-secondary">
                 {kalenderStats.total.pekanEfektif}
               </span>
@@ -240,7 +240,7 @@ export function KalenderAkademikContent() {
                 Total Pekan
               </span>
             </div>
-            <div className="flex flex-col items-center gap-1 rounded-xl border border-brand-primary/15 bg-white/70 px-5 py-4 shadow-sm backdrop-blur-sm">
+            <div className="flex flex-col items-center gap-1 rounded-lg border border-brand-primary/15 bg-white/70 px-5 py-4 shadow-sm backdrop-blur-sm">
               <span className="text-3xl font-extrabold leading-none text-brand-secondary">
                 {kalenderStats.total.hariEfektif}
               </span>
@@ -273,7 +273,7 @@ export function KalenderAkademikContent() {
         </div>
 
         {/* The Matrix Table */}
-        <div className="rounded-2xl border border-indigo-200 bg-gradient-to-br from-indigo-100 via-blue-100 to-slate-100 shadow-md overflow-hidden">
+        <div className="rounded-lg border border-indigo-200 bg-gradient-to-br from-indigo-100 via-blue-100 to-slate-100 shadow-md overflow-hidden">
           <div className="overflow-x-auto pb-4 scrollbar-hide">
             <table className="w-full border-collapse text-[10px] sm:text-xs">
               <thead>
@@ -431,7 +431,7 @@ export function KalenderAkademikContent() {
           </div>
 
           {/* Timeline List */}
-          <div className="bg-white/60 backdrop-blur-md border border-neutral-200/50 rounded-2xl p-6 md:p-8 shadow-sm">
+          <div className="bg-white/60 backdrop-blur-md border border-neutral-200/50 rounded-lg p-6 md:p-8 shadow-sm">
             <motion.div
               key={activeSemester}
               initial={{ opacity: 0, y: 10 }}

@@ -108,7 +108,7 @@ export function SchoolMapContent() {
             {schoolMapStats.map((stat) => (
               <div
                 key={stat.label}
-                className="flex flex-col items-center gap-1 rounded-xl border border-brand-primary/15 bg-white/70 px-5 py-4 shadow-sm backdrop-blur-sm"
+                className="flex flex-col items-center gap-1 rounded-lg border border-brand-primary/15 bg-white/70 px-5 py-4 shadow-sm backdrop-blur-sm"
               >
                 <span className="text-3xl font-extrabold leading-none text-brand-primary">
                   {stat.value}
@@ -139,7 +139,7 @@ export function SchoolMapContent() {
 
         <div className="grid gap-5 lg:grid-cols">
           {/* Denah Isometrik */}
-          <div className="group relative overflow-hidden rounded-2xl border border-white/40 bg-white/60 shadow-xl shadow-neutral-900/8 backdrop-blur-sm">
+          <div className="group relative overflow-hidden rounded-lg border border-white/40 bg-white/60 shadow-xl shadow-neutral-900/8 backdrop-blur-sm">
             {/* Zoom button */}
             <button
               type="button"
@@ -195,7 +195,7 @@ export function SchoolMapContent() {
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.94, y: 16 }}
                 transition={{ type: "spring", stiffness: 340, damping: 28 }}
-                className="relative w-full max-w-6xl overflow-hidden rounded-2xl border border-white/20 bg-white shadow-2xl"
+                className="relative w-full max-w-6xl overflow-hidden rounded-lg border border-white/20 bg-white shadow-2xl"
                 onClick={(e) => e.stopPropagation()}
               >
                 <button

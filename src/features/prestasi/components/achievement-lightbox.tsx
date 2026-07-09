@@ -48,7 +48,7 @@ export function AchievementLightbox({
       <div className="absolute inset-0 bg-black/85 backdrop-blur-md" />
 
       {/* Panel */}
-      <div className="relative z-10 flex w-full max-w-3xl flex-col rounded-2xl overflow-hidden shadow-2xl">
+      <div className="relative z-10 flex w-full max-w-3xl flex-col rounded-lg overflow-hidden shadow-2xl">
         {/* Top bar */}
         <div className="flex items-center justify-between bg-neutral-900/95 px-4 py-3 backdrop-blur-sm">
           <div className="flex items-center gap-2 text-white/80">

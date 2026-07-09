@@ -21,7 +21,7 @@ export function VisualPlaceholder({
   return (
     <div
       className={cn(
-        "group/visual relative flex overflow-hidden rounded-xl border shadow-md",
+        "group/visual relative flex overflow-hidden rounded-lg border shadow-md",
         tone === "dark"
           ? "border-white/10 bg-white/10"
           : "border-white/50 bg-white/50",

@@ -14,7 +14,7 @@ export default function PrestasiLoading() {
       </div>
 
       {/* Filter skeleton */}
-      <div className="rounded-2xl border border-neutral-100 bg-white/80 p-5 shadow-sm">
+      <div className="rounded-lg border border-neutral-100 bg-white/80 p-5 shadow-sm">
         <div className="flex flex-col gap-4">
           <div className="h-11 animate-pulse rounded-xl bg-neutral-200" />
           <div className="flex gap-3">

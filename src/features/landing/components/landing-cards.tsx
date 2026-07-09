@@ -193,7 +193,7 @@ export function FacilityCard({
   tone?: Tone;
 }) {
   return (
-    <div className="group relative overflow-hidden rounded-xl transition duration-200 hover:-translate-y-1">
+    <div className="group relative overflow-hidden rounded-lg transition duration-200 hover:-translate-y-1">
       <VisualPlaceholder label={name} src={imageSrc} tone={tone} />
       <div className="absolute inset-x-3 bottom-3 rounded-lg bg-white/72 p-3 backdrop-blur-xl">
         <h3 className="text-sm font-bold text-neutral-900">{name}</h3>

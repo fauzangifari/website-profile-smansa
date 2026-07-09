@@ -50,7 +50,7 @@ export function ReasonsSection() {
             return (
               <div
                 key={index}
-                className="scroll-reveal group glass-soft relative flex flex-col items-center rounded-2xl p-8 text-center transition-[background-color,box-shadow,transform] duration-500 hover:-translate-y-2 hover:bg-white/80 hover:shadow-xl hover:shadow-brand-primary/10"
+                className="scroll-reveal group glass-soft relative flex flex-col items-center rounded-lg p-8 text-center transition-[background-color,box-shadow,transform] duration-500 hover:-translate-y-2 hover:bg-white/80 hover:shadow-xl hover:shadow-brand-primary/10"
                 style={{ "--stagger-index": index } as React.CSSProperties}
               >
                 {/* Decorative background glow for the icon */}

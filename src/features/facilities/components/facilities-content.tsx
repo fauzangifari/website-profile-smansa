@@ -108,7 +108,7 @@ export function FacilitiesContent() {
               {facilitiesStats.map((stat) => (
                 <div
                   key={stat.label}
-                  className="flex flex-col items-center gap-1 rounded-xl border border-brand-primary/15 bg-white/70 px-6 py-4 shadow-sm backdrop-blur-sm"
+                  className="flex flex-col items-center gap-1 rounded-lg border border-brand-primary/15 bg-white/70 px-6 py-4 shadow-sm backdrop-blur-sm"
                 >
                   <span className="text-3xl font-extrabold leading-none text-brand-primary">
                     {stat.value}

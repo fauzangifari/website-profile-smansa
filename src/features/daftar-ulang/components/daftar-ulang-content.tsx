@@ -51,7 +51,7 @@ export function DaftarUlangContent() {
       
       {/* Schedule Section */}
       <section>
-        <div className="bg-white rounded-3xl p-8 md:p-12 shadow-sm border border-neutral-200/60 relative overflow-hidden">
+        <div className="bg-white rounded-lg p-8 md:p-12 shadow-sm border border-neutral-200/60 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-64 h-64 bg-brand-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
           
           <div className="relative z-10 flex flex-col md:flex-row gap-8 items-start md:items-center justify-between">
@@ -68,7 +68,7 @@ export function DaftarUlangContent() {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
-              <div className="flex items-center gap-4 bg-neutral-50 p-4 rounded-2xl border border-neutral-100">
+              <div className="flex items-center gap-4 bg-neutral-50 p-4 rounded-lg border border-neutral-100">
                 <div className="size-12 rounded-xl bg-white shadow-sm flex items-center justify-center text-brand-primary shrink-0">
                   <CalendarBlank size={24} weight="duotone" />
                 </div>
@@ -78,7 +78,7 @@ export function DaftarUlangContent() {
                 </div>
               </div>
               
-              <div className="flex items-center gap-4 bg-neutral-50 p-4 rounded-2xl border border-neutral-100">
+              <div className="flex items-center gap-4 bg-neutral-50 p-4 rounded-lg border border-neutral-100">
                 <div className="size-12 rounded-xl bg-white shadow-sm flex items-center justify-center text-brand-secondary shrink-0">
                   <Clock size={24} weight="duotone" />
                 </div>
@@ -107,7 +107,7 @@ export function DaftarUlangContent() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ delay: index * 0.1 }}
-              className="bg-white border border-neutral-200/60 p-6 sm:p-8 rounded-3xl flex flex-col md:flex-row gap-6 shadow-sm hover:shadow-md transition-shadow"
+              className="bg-white border border-neutral-200/60 p-6 sm:p-8 rounded-lg flex flex-col md:flex-row gap-6 shadow-sm hover:shadow-md transition-shadow"
             >
               <div className="size-14 rounded-2xl bg-neutral-50 border border-neutral-100 flex items-center justify-center shrink-0 text-brand-primary">
                 <req.icon size={28} weight="duotone" />
@@ -167,7 +167,7 @@ export function DaftarUlangContent() {
       </section>
 
       {/* Additional Requirements */}
-      <section className="bg-neutral-900 text-white rounded-3xl p-8 md:p-12 relative overflow-hidden">
+      <section className="bg-neutral-900 text-white rounded-lg p-8 md:p-12 relative overflow-hidden">
         <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(white 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
         <div className="relative z-10 grid md:grid-cols-2 gap-8 md:gap-12">
           <div>
@@ -204,7 +204,7 @@ export function DaftarUlangContent() {
 
       {/* Warning Callout */}
       <section>
-        <div className="bg-red-50 border border-red-200/60 rounded-3xl p-6 md:p-8 flex gap-6 items-start shadow-sm">
+        <div className="bg-red-50 border border-red-200/60 rounded-lg p-6 md:p-8 flex gap-6 items-start shadow-sm">
           <div className="size-12 rounded-2xl bg-red-100 flex items-center justify-center shrink-0 text-red-600">
             <WarningCircle size={28} weight="duotone" />
           </div>

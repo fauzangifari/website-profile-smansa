@@ -114,7 +114,7 @@ export function PrestasiContent({
             description="Telusuri dan filter seluruh prestasi berdasarkan jenis, tingkat, dan tipe peserta."
             className="mb-8"
           />
-          <div className="rounded-2xl border border-neutral-100 bg-white/80 p-5 shadow-sm backdrop-blur-sm">
+          <div className="rounded-lg border border-neutral-100 bg-white/80 p-5 shadow-sm backdrop-blur-sm">
             <AchievementFiltersBar
               filters={filters}
               onFilterChange={updateFilter}
@@ -176,7 +176,7 @@ export function PrestasiContent({
 
 function StatPill({ value, label }: { value: number; label: string }) {
   return (
-    <div className="flex items-center gap-3 rounded-2xl border border-white bg-white/60 px-5 py-3 shadow-sm backdrop-blur-sm">
+    <div className="flex items-center gap-3 rounded-lg border border-white bg-white/60 px-5 py-3 shadow-sm backdrop-blur-sm">
       <p className="text-2xl font-extrabold leading-none text-brand-primary">{value}</p>
       <p className="text-xs font-semibold text-neutral-600">{label}</p>
     </div>
@@ -222,7 +222,7 @@ function LoadingState() {
 function ErrorState({ message }: { message: string }) {
   return (
     <div className={cn(
-      "flex flex-col items-center gap-6 rounded-3xl border border-red-100 py-20 px-8 text-center",
+      "flex flex-col items-center gap-6 rounded-lg border border-red-100 py-20 px-8 text-center",
       "bg-gradient-to-b from-red-50/80 to-white"
     )}>
       {/* Icon */}
@@ -247,7 +247,7 @@ function ErrorState({ message }: { message: string }) {
           <span>Lihat detail error</span>
           <span className="transition-transform group-open:rotate-180 text-[10px]">▼</span>
         </summary>
-        <div className="mt-2 rounded-xl bg-red-50 border border-red-100 px-4 py-3">
+        <div className="mt-2 rounded-lg bg-red-50 border border-red-100 px-4 py-3">
           <code className="text-[11px] text-red-600 font-mono leading-relaxed break-all">
             {message}
           </code>
@@ -276,7 +276,7 @@ function ErrorState({ message }: { message: string }) {
 function EmptyState() {
   return (
     <div className={cn(
-      "flex flex-col items-center gap-6 rounded-3xl border border-neutral-100 py-24 px-8 text-center",
+      "flex flex-col items-center gap-6 rounded-lg border border-neutral-100 py-24 px-8 text-center",
       "bg-gradient-to-b from-neutral-50/60 to-white"
     )}>
       {/* Decorative icon */}
@@ -326,7 +326,7 @@ function FilteredEmptyState({
 
   return (
     <div className={cn(
-      "flex flex-col items-center gap-6 rounded-3xl border border-neutral-100 py-20 px-8 text-center",
+      "flex flex-col items-center gap-6 rounded-lg border border-neutral-100 py-20 px-8 text-center",
       "bg-gradient-to-b from-neutral-50/60 to-white"
     )}>
       {/* Icon */}

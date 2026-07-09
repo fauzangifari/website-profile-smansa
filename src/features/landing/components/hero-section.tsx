@@ -257,7 +257,7 @@ function NodeItem({
     <a
       href={node.href}
       className={cn(
-        "group relative flex w-full flex-col items-start overflow-hidden rounded-2xl border border-white/90 bg-white/40 p-3 shadow-xl shadow-black/5 backdrop-blur-2xl transition-all duration-300 hover:-translate-y-1 hover:border-white hover:bg-white/60 hover:shadow-2xl lg:w-[13.5rem] lg:p-4",
+        "group relative flex w-full flex-col items-start overflow-hidden rounded-lg border border-white/90 bg-white/40 p-3 shadow-xl shadow-black/5 backdrop-blur-2xl transition-all duration-300 hover:-translate-y-1 hover:border-white hover:bg-white/60 hover:shadow-2xl lg:w-[13.5rem] lg:p-4",
         isActive && "border-brand-primary/40 bg-white/70 ring-2 ring-brand-primary/10",
         getNodeToneClasses(node.tone),
         isActive && getActiveNodeToneClasses(node.tone)

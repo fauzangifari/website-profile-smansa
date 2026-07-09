@@ -35,7 +35,7 @@ export function ProfileImageGallery({ images }: ProfileImageGalleryProps) {
 
   return (
     <section ref={galleryRef} className="scroll-reveal mt-2 lg:mt-0" aria-label="Galeri profil sekolah">
-      <div className="rounded-xl border border-neutral-200 bg-white p-3 shadow-md shadow-neutral-900/10 md:p-4">
+      <div className="rounded-lg border border-neutral-200 bg-white p-3 shadow-sm shadow-neutral-900/5 md:p-4">
         <div className="grid gap-3 md:grid-cols-[minmax(0,1fr)_9.5rem]">
           <div
             role="button"
@@ -47,7 +47,7 @@ export function ProfileImageGallery({ images }: ProfileImageGalleryProps) {
                 showNextImage();
               }
             }}
-            className="group relative aspect-[4/5.5] min-h-[26rem] overflow-hidden rounded-xl bg-neutral-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-primary"
+            className="group relative aspect-[4/5.5] min-h-[26rem] overflow-hidden rounded-lg bg-neutral-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-primary"
             aria-label="Ganti foto utama"
           >
             <Image

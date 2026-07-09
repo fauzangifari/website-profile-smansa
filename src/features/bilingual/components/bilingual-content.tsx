@@ -132,11 +132,11 @@ export function BilingualContent() {
                 Program kami didukung oleh institusi global terkemuka untuk memastikan kualitas kurikulum dan jangkauan koneksi internasional yang nyata.
               </p>
               <div className="grid grid-cols-2 gap-6 pt-4">
-                 <div className="flex flex-col gap-2 p-4 rounded-xl border border-white/60 bg-white/40 backdrop-blur-sm">
+                 <div className="flex flex-col gap-2 p-4 rounded-lg border border-white/60 bg-white/40 backdrop-blur-sm">
                     <span className="text-[10px] font-bold uppercase tracking-widest text-brand-primary">Partner Jepang</span>
                     <span className="text-sm font-extrabold text-neutral-900">METI & Monbukagakusho</span>
                  </div>
-                 <div className="flex flex-col gap-2 p-4 rounded-xl border border-white/60 bg-white/40 backdrop-blur-sm">
+                 <div className="flex flex-col gap-2 p-4 rounded-lg border border-white/60 bg-white/40 backdrop-blur-sm">
                     <span className="text-[10px] font-bold uppercase tracking-widest text-brand-primary">Psychology Consultant</span>
                     <span className="text-sm font-extrabold text-neutral-900">PT. Mustika</span>
                  </div>
@@ -198,7 +198,7 @@ export function BilingualContent() {
                     "ml-16 md:ml-0 w-full md:w-[42%]",
                     isEven ? "md:text-right" : "md:text-left"
                   )}>
-                    <div className="group relative overflow-hidden rounded-2xl border border-white/60 bg-white/50 p-6 shadow-xl shadow-neutral-900/5 backdrop-blur-md transition-all hover:bg-white/80">
+                    <div className="group relative overflow-hidden rounded-lg border border-white/60 bg-white/50 p-6 shadow-xl shadow-neutral-900/5 backdrop-blur-md transition-all hover:bg-white/80">
                       <div className={cn(
                         "flex items-center gap-2 mb-3",
                         isEven ? "md:flex-row-reverse" : "md:flex-row"

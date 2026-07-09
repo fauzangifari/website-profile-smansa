@@ -75,7 +75,7 @@ function BeritaListSkeleton() {
   return (
     <div className="flex flex-col gap-12">
       {/* Featured skeleton */}
-      <div className="grid gap-0 overflow-hidden rounded-3xl border border-neutral-100 bg-white/80 shadow-sm lg:grid-cols-[1.1fr_1fr]">
+      <div className="grid gap-0 overflow-hidden rounded-lg border border-neutral-100 bg-white/80 shadow-sm lg:grid-cols-[1.1fr_1fr]">
         <div className="h-64 w-full animate-pulse bg-neutral-200 lg:h-full" />
         <div className="flex flex-col justify-center gap-4 p-8 md:p-10">
           <div className="h-6 w-28 animate-pulse rounded-full bg-neutral-200" />

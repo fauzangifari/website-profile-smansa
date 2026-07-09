@@ -40,7 +40,7 @@ const proseClass =
   "[&_ol]:mb-5 [&_ol]:list-decimal [&_ol]:space-y-1.5 [&_ol]:pl-6 " +
   "[&_li]:leading-7 [&_li]:marker:text-brand-primary " +
   "[&_blockquote]:my-6 [&_blockquote]:border-l-4 [&_blockquote]:border-brand-primary/40 [&_blockquote]:pl-4 [&_blockquote]:italic [&_blockquote]:text-neutral-600 " +
-  "[&_img]:my-6 [&_img]:w-full [&_img]:rounded-2xl [&_img]:border [&_img]:border-white/50 " +
+  "[&_img]:my-6 [&_img]:w-full [&_img]:rounded-lg [&_img]:border [&_img]:border-white/50 " +
   "[&_figure]:my-6 [&_figcaption]:mt-2 [&_figcaption]:text-center [&_figcaption]:text-xs [&_figcaption]:text-neutral-500 " +
   "[&_hr]:my-8 [&_hr]:border-neutral-200";
 
@@ -86,7 +86,7 @@ export function BeritaDetail({ item, related }: BeritaDetailProps) {
       {/* Cover */}
       <div
         ref={coverRef}
-        className="scroll-reveal relative aspect-[21/9] overflow-hidden rounded-3xl border border-white/50 shadow-lg shadow-neutral-900/5"
+        className="scroll-reveal relative aspect-[21/9] overflow-hidden rounded-lg border border-white/50 shadow-lg shadow-neutral-900/5"
       >
         <Image
           src={item.coverImageUrl}
@@ -121,7 +121,7 @@ export function BeritaDetail({ item, related }: BeritaDetailProps) {
 
         <aside ref={asideRef} className="scroll-reveal space-y-6 lg:sticky lg:top-28 lg:self-start">
           {/* Info ringkas */}
-          <div className="rounded-2xl border border-white/50 bg-white/50 p-6 backdrop-blur-xl">
+          <div className="rounded-lg border border-white/50 bg-white/50 p-6 backdrop-blur-xl">
             <p className="mb-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-500">
               Informasi
             </p>
@@ -164,7 +164,7 @@ export function BeritaDetail({ item, related }: BeritaDetailProps) {
 
           {/* Lampiran (pdf/doc/docx) */}
           {lampiran.length ? (
-            <div className="rounded-2xl border border-white/50 bg-white/50 p-6 backdrop-blur-xl">
+            <div className="rounded-lg border border-white/50 bg-white/50 p-6 backdrop-blur-xl">
               <p className="mb-4 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-500">
                 <DownloadSimple weight="duotone" className="size-4 text-brand-primary" />
                 Lampiran
@@ -177,7 +177,7 @@ export function BeritaDetail({ item, related }: BeritaDetailProps) {
                       target="_blank"
                       rel="noopener noreferrer"
                       download=""
-                      className="group flex items-center gap-3 rounded-xl border border-neutral-200 bg-white px-3.5 py-3 transition hover:border-brand-primary/40 hover:bg-brand-primary/5"
+                      className="group flex items-center gap-3 rounded-lg border border-neutral-200 bg-white px-3.5 py-3 transition hover:border-brand-primary/40 hover:bg-brand-primary/5"
                     >
                       <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-brand-primary/10 text-brand-primary">
                         <FileArrowDown weight="duotone" size={20} />
@@ -203,7 +203,7 @@ export function BeritaDetail({ item, related }: BeritaDetailProps) {
 
           {/* Tags */}
           {item.tags?.length ? (
-            <div className="rounded-2xl border border-white/50 bg-white/50 p-6 backdrop-blur-xl">
+            <div className="rounded-lg border border-white/50 bg-white/50 p-6 backdrop-blur-xl">
               <p className="mb-4 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-500">
                 <Tag weight="duotone" className="size-4 text-brand-primary" />
                 Tag

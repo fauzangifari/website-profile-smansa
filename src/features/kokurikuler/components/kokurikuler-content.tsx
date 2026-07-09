@@ -127,7 +127,7 @@ export function KokurikulerContent() {
             className="object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-          <div className="absolute bottom-8 left-8 right-8 rounded-xl border border-white/30 bg-white/20 p-6 backdrop-blur-xl">
+          <div className="absolute bottom-8 left-8 right-8 rounded-lg border border-white/30 bg-white/20 p-6 backdrop-blur-xl">
              <p className="text-sm font-bold text-white">"Success is where preparation and opportunity meet."</p>
           </div>
         </div>
