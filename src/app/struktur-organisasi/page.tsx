@@ -6,35 +6,12 @@ import { mainNavItems } from "@/config/site";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Reveal } from "@/components/ui/reveal";
+import { MapelChips } from "./mapel-chips";
 
 export const metadata: Metadata = {
   title: "Struktur Organisasi",
   description: "Struktur Organisasi SMA Negeri 1 Samarinda",
 };
-
-const mapel = [
-  "Pendidikan Agama Islam",
-  "Pendidikan Agama Kristen",
-  "Pendidikan Agama Katholik",
-  "Pendidikan Agama Hindu",
-  "Pendidikan Pancasila dan Kewarganegaraan",
-  "Bahasa Indonesia",
-  "Bahasa Inggris",
-  "Bahasa Jerman",
-  "Matematika",
-  "Sejarah",
-  "Pendidikan Jasmani, Olahraga, dan Kesehatan",
-  "Seni Budaya",
-  "Prakarya dan Kewirausahaan",
-  "Informatika",
-  "Fisika",
-  "Kimia",
-  "Biologi",
-  "Geografi",
-  "Sosiologi",
-  "Ekonomi",
-  "Bimbingan Konseling",
-];
 
 const getInitials = (name: string) => {
   if (name === "-" || !name) return "?";
@@ -175,9 +152,9 @@ export default function StrukturOrganisasiPage() {
             />
             <PersonCard
               role="BENDAHARA"
-              name="Mila Susan Shofiani, S.Pd."
-              nip="NIPPPK 199505032023212021"
-              rank="Guru Ahli Pertama"
+              name="Chairunisa Puspanegara, S.Pd."
+              nip="NIPPPK 198411042025212021"
+              rank="Pengatur Muda"
             />
             <PersonCard
               role="KOORDINATOR PERPUSTAKAAN"
@@ -187,9 +164,9 @@ export default function StrukturOrganisasiPage() {
             />
             <PersonCard
               role="KEPALA LABORATORIUM"
-              name="-"
-              nip="-"
-              rank="-"
+              name="Mila Susan Shofiani, S.Pd."
+              nip="NIPPPK 199505032023212021"
+              rank="Guru Ahli Pertama"
             />
           </Reveal>
 
@@ -204,16 +181,7 @@ export default function StrukturOrganisasiPage() {
               <h2 className="mb-8 text-2xl font-black tracking-tight text-neutral-900 md:text-3xl">
                 GURU MATA PELAJARAN
               </h2>
-              <div className="flex flex-wrap justify-center gap-3">
-                {mapel.map((item) => (
-                  <div
-                    key={item}
-                    className="rounded-full border border-white/50 bg-white/50 px-4 py-2 text-sm font-medium text-neutral-700 shadow-sm backdrop-blur-sm transition-colors hover:bg-white/80"
-                  >
-                    {item}
-                  </div>
-                ))}
-              </div>
+              <MapelChips />
             </Card>
           </Reveal>
 
