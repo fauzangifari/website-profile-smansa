@@ -138,7 +138,7 @@ export function ProfileVideoSection({
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.92, y: 15 }}
                 transition={{ type: "spring", stiffness: 350, damping: 28 }}
-                className="relative w-full max-w-5xl aspect-video overflow-hidden rounded-2xl border border-white/10 bg-black shadow-[0_24px_80px_rgba(0,0,0,0.8)]"
+                className="relative w-full max-w-5xl aspect-video overflow-hidden rounded-lg border border-white/10 bg-black shadow-[0_24px_80px_rgba(0,0,0,0.8)]"
                 onClick={(e) => e.stopPropagation()}
               >
                 {/* Close Button */}
@@ -154,7 +154,7 @@ export function ProfileVideoSection({
                 {/* YouTube Video IFrame */}
                 <div className="w-full h-full">
                   <iframe
-                    src={`https://www.youtube.com/embed/MSMoXCRDlUI?si=5IQGYLb4l3S5sW8T?autoplay=1&rel=0&modestbranding=1`}
+                    src={`https://www.youtube.com/embed/${youtubeVideoId}?autoplay=1&rel=0&modestbranding=1`}
                     title="YouTube video player"
                     frameBorder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

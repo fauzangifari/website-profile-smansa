@@ -29,32 +29,61 @@ export const profileImages = [
 
 export const profileStats = [
   {
-    value: "1k+",
+    value: "1.000+",
     label: "Siswa/siswi",
     description: "Komunitas belajar aktif di SMA Negeri 1 Samarinda.",
   },
   {
     value: "#1",
     label: "Prestasi",
-    description: "Semangat pengembangan sekolah dan pembelajaran progresif.",
+    description: "Semangat berprestasi dan pembelajaran yang progresif.",
   },
 ];
 
-export const profileSummaryCards = [
+export type ProfileSummaryCard = {
+  iconName: "sejarah" | "visi-misi" | "struktur" | "alumni";
+  label: string;
+  title: string;
+  description: string;
+  href: string;
+  cta: string;
+};
+
+export const profileSummaryCards: ProfileSummaryCard[] = [
   {
+    iconName: "sejarah",
     label: "Sejarah",
     title: "Perjalanan SMANSA sejak 1953",
     description:
-      "SMA Negeri 1 Samarinda berdiri dari perjuangan para tokoh masyarakat untuk menghadirkan sekolah lanjutan atas di Samarinda, lalu terus berkembang menjadi salah satu pusat pendidikan penting di Kalimantan Timur.",
+      "Berdiri dari perjuangan para tokoh masyarakat untuk menghadirkan sekolah lanjutan atas di Samarinda, lalu tumbuh menjadi salah satu pusat pendidikan penting di Kalimantan Timur.",
     href: "/sejarah",
-    cta: "Baca Sejarah",
+    cta: "Baca sejarah",
   },
   {
+    iconName: "visi-misi",
     label: "Visi & Misi",
     title: "Arah pendidikan dan karakter sekolah",
     description:
-      "Visi dan misi SMANSA menegaskan komitmen sekolah untuk menjadi ruang belajar unggul, berkarakter, berwawasan global, adaptif terhadap teknologi, demokratis, dan peduli lingkungan.",
+      "Komitmen SMANSA menjadi ruang belajar unggul, berkarakter, berwawasan global, adaptif terhadap teknologi, demokratis, dan peduli lingkungan.",
     href: "/visi-misi",
-    cta: "Lihat Visi Misi",
+    cta: "Lihat visi & misi",
+  },
+  {
+    iconName: "struktur",
+    label: "Struktur Organisasi",
+    title: "Susunan kepemimpinan sekolah",
+    description:
+      "Kepala sekolah, wakil, dan tenaga pendidik yang menjalankan tata kelola dan keseharian akademik SMA Negeri 1 Samarinda.",
+    href: "/struktur-organisasi",
+    cta: "Lihat struktur",
+  },
+  {
+    iconName: "alumni",
+    label: "Alumni",
+    title: "Jejak lulusan SMANSA",
+    description:
+      "Kisah dan pencapaian alumni SMA Negeri 1 Samarinda yang berkiprah di berbagai bidang dan penjuru negeri.",
+    href: "/alumni",
+    cta: "Lihat alumni",
   },
 ];
