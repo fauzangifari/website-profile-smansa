@@ -10,6 +10,7 @@ import { MapelChips } from "./mapel-chips";
 
 export const metadata: Metadata = {
   title: "Struktur Organisasi",
+  alternates: { canonical: "/struktur-organisasi" },
   description: "Struktur Organisasi SMA Negeri 1 Samarinda",
 };
 

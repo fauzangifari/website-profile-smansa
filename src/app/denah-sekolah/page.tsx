@@ -6,7 +6,8 @@ import { mainNavItems } from "@/config/site";
 import { SchoolMapContent } from "@/features/school-map/components/school-map-content";
 
 export const metadata: Metadata = {
-  title: "Denah Sekolah — SMA Negeri 1 Samarinda",
+  title: "Denah Sekolah",
+  alternates: { canonical: "/denah-sekolah" },
   description:
     "Jelajahi denah dan peta kampus SMA Negeri 1 Samarinda. Temukan lokasi gedung sekolah, cafetaria, perpustakaan, laboratorium, masjid, auditorium, dan seluruh fasilitas kampus SMANSA.",
 };

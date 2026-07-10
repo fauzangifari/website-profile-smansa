@@ -8,6 +8,7 @@ import { BeritaDetail } from "@/features/berita/components/berita-detail";
 import { getBeritaBySlug, getBeritaList } from "@/features/berita/api/get-berita";
 import { getRelatedBerita } from "@/features/berita/utils/berita-helpers";
 import type { BeritaListItem } from "@/features/berita/types/berita";
+import { JsonLd, newsArticleSchema, breadcrumbSchema } from "@/lib/seo/json-ld";
 
 type BeritaDetailPageProps = {
   params: Promise<{ slug: string }>;
@@ -21,17 +22,19 @@ export async function generateMetadata({
 
   if (!item) {
     return {
-      title: "Berita Tidak Ditemukan — SMA Negeri 1 Samarinda",
+      title: "Berita Tidak Ditemukan",
       description: "Berita yang Anda cari tidak ditemukan.",
     };
   }
 
   return {
-    title: `${item.title} — SMA Negeri 1 Samarinda`,
+    title: item.title,
     description: item.excerpt,
+    alternates: { canonical: `/berita/${slug}` },
     openGraph: {
       title: item.title,
       description: item.excerpt,
+      url: `/berita/${slug}`,
       images: [{ url: item.coverImageUrl }],
       type: "article",
       publishedTime: item.publishedAt,
@@ -59,8 +62,24 @@ export default async function BeritaDetailPage({
   }
   const related = getRelatedBerita(list, slug, 3);
 
+  const breadcrumbs = [
+    { label: "Beranda", href: "/" },
+    { label: "Berita", href: "/berita" },
+    { label: item.title },
+  ];
+
   return (
     <>
+      <JsonLd
+        data={newsArticleSchema({
+          title: item.title,
+          description: item.excerpt,
+          slug,
+          image: item.coverImageUrl,
+          publishedAt: item.publishedAt,
+        })}
+      />
+      <JsonLd data={breadcrumbSchema(breadcrumbs)} />
       <AppNavbar items={mainNavItems} anchorBasePath="/" />
       <PageTemplate
         eyebrow={item.category.name}
@@ -68,11 +87,7 @@ export default async function BeritaDetailPage({
         description={item.excerpt}
         variant="glass"
         backgroundImage={item.coverImageUrl}
-        breadcrumbs={[
-          { label: "Beranda", href: "/" },
-          { label: "Berita", href: "/berita" },
-          { label: item.title },
-        ]}
+        breadcrumbs={breadcrumbs}
       >
         <BeritaDetail item={item} related={related} />
       </PageTemplate>

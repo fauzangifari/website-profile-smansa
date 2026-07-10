@@ -54,7 +54,7 @@ const proseClass =
 
 // Prose ringkas untuk kartu Visi & Misi (font lebih kecil).
 const proseClassCompact =
-  "text-sm leading-relaxed text-neutral-600 " +
+  "text-sm leading-relaxed text-neutral-600 break-words [overflow-wrap:anywhere] " +
   "[&_p]:mb-3 [&_p:last-child]:mb-0 " +
   "[&_strong]:font-semibold [&_strong]:text-neutral-900 " +
   "[&_ul]:space-y-2 [&_ul]:pl-0 [&_ul]:list-none " +
@@ -99,14 +99,20 @@ export function EkskulDetail({ item }: EkskulDetailProps) {
 
       {/* Cover */}
       <div className="relative aspect-[21/9] overflow-hidden rounded-lg border border-white/50 shadow-lg shadow-neutral-900/5">
-        <Image
-          src={item.imageUrl}
-          alt={item.title}
-          fill
-          sizes="(max-width: 1280px) 100vw, 1200px"
-          className="object-cover"
-          priority
-        />
+        {item.imageUrl ? (
+          <Image
+            src={item.imageUrl}
+            alt={item.title}
+            fill
+            sizes="(max-width: 1280px) 100vw, 1200px"
+            className="object-cover"
+            priority
+          />
+        ) : (
+          <div className="flex size-full items-center justify-center bg-gradient-to-br from-brand-primary-soft via-blue-50 to-indigo-50 text-brand-primary/40">
+            <Compass size={56} weight="duotone" />
+          </div>
+        )}
       </div>
 
       {/* Body + sidebar */}
@@ -128,37 +134,42 @@ export function EkskulDetail({ item }: EkskulDetailProps) {
           {/* Visi & Misi */}
           {hasVisiMisi ? (
             <section
-              className="scroll-reveal grid gap-6 rounded-lg border border-white/50 bg-white/50 p-6 backdrop-blur-xl md:grid-cols-2"
+              className="scroll-reveal space-y-6"
               style={{ "--stagger-index": 1 } as React.CSSProperties}
             >
-              {item.visionHtml ? (
-                <div className="space-y-3">
-                  <div className="flex items-center gap-2">
-                    <div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-brand-primary-soft text-brand-primary">
-                      <Target size={18} weight="duotone" />
+              <h2 className="text-xl font-bold tracking-tight text-neutral-900 md:text-2xl">
+                Visi &amp; Misi
+              </h2>
+              <div className="grid gap-6 rounded-lg border border-white/50 bg-white/50 p-6 backdrop-blur-xl md:grid-cols-2">
+                {item.visionHtml ? (
+                  <div className="min-w-0 space-y-3">
+                    <div className="flex items-center gap-2">
+                      <div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-brand-primary-soft text-brand-primary">
+                        <Target size={18} weight="duotone" />
+                      </div>
+                      <h3 className="text-lg font-bold text-neutral-900">Visi</h3>
                     </div>
-                    <h2 className="text-lg font-bold text-neutral-900">Visi</h2>
+                    <div
+                      className={proseClassCompact}
+                      dangerouslySetInnerHTML={{ __html: item.visionHtml }}
+                    />
                   </div>
-                  <div
-                    className={proseClassCompact}
-                    dangerouslySetInnerHTML={{ __html: item.visionHtml }}
-                  />
-                </div>
-              ) : null}
-              {item.missionHtml ? (
-                <div className="space-y-3">
-                  <div className="flex items-center gap-2">
-                    <div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-brand-primary-soft text-brand-primary">
-                      <Compass size={18} weight="duotone" />
+                ) : null}
+                {item.missionHtml ? (
+                  <div className="min-w-0 space-y-3">
+                    <div className="flex items-center gap-2">
+                      <div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-brand-primary-soft text-brand-primary">
+                        <Compass size={18} weight="duotone" />
+                      </div>
+                      <h3 className="text-lg font-bold text-neutral-900">Misi</h3>
                     </div>
-                    <h2 className="text-lg font-bold text-neutral-900">Misi</h2>
+                    <div
+                      className={proseClassCompact}
+                      dangerouslySetInnerHTML={{ __html: item.missionHtml }}
+                    />
                   </div>
-                  <div
-                    className={proseClassCompact}
-                    dangerouslySetInnerHTML={{ __html: item.missionHtml }}
-                  />
-                </div>
-              ) : null}
+                ) : null}
+              </div>
             </section>
           ) : null}
 
@@ -232,13 +243,19 @@ export function EkskulDetail({ item }: EkskulDetailProps) {
                     className="overflow-hidden rounded-lg border border-neutral-200 bg-white"
                   >
                     <div className="relative aspect-square">
-                      <Image
-                        src={person.photo}
-                        alt={person.name}
-                        fill
-                        sizes="(max-width: 1024px) 50vw, 240px"
-                        className="object-cover"
-                      />
+                      {person.photo ? (
+                        <Image
+                          src={person.photo}
+                          alt={person.name}
+                          fill
+                          sizes="(max-width: 1024px) 50vw, 240px"
+                          className="object-cover"
+                        />
+                      ) : (
+                        <div className="flex size-full items-center justify-center bg-gradient-to-br from-brand-primary-soft via-blue-50 to-indigo-50 text-2xl font-extrabold text-brand-primary/40">
+                          {person.name.charAt(0).toUpperCase()}
+                        </div>
+                      )}
                     </div>
                     <div className="space-y-2 p-3.5">
                       <p className="truncate text-sm font-bold text-neutral-900">

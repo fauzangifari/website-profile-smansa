@@ -6,7 +6,8 @@ import { mainNavItems } from "@/config/site";
 import { VisionMissionContent } from "@/features/vision-mission/components/vision-mission-content";
 
 export const metadata: Metadata = {
-  title: "Visi & Misi SMA Negeri 1 Samarinda",
+  title: "Visi & Misi",
+  alternates: { canonical: "/visi-misi" },
   description:
     "Visi dan misi SMA Negeri 1 Samarinda sebagai arah pengembangan karakter, pembelajaran, teknologi, lingkungan, dan kesiapan masa depan.",
 };

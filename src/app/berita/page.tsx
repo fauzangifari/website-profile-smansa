@@ -10,7 +10,8 @@ import { getBeritaList } from "@/features/berita/api/get-berita";
 import type { BeritaListItem } from "@/features/berita/types/berita";
 
 export const metadata: Metadata = {
-  title: "Berita — SMA Negeri 1 Samarinda",
+  title: "Berita",
+  alternates: { canonical: "/berita" },
   description:
     "Kabar terbaru, liputan kegiatan, dan publikasi resmi SMA Negeri 1 Samarinda untuk siswa, orang tua, dan masyarakat.",
 };

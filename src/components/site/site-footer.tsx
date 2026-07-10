@@ -10,6 +10,7 @@ import {
   YoutubeLogoIcon,
 } from "@phosphor-icons/react/dist/ssr";
 import { Container } from "@/components/ui/container";
+import { siteConfig } from "@/config/site";
 
 type SiteFooterProps = {
   anchorBasePath?: string;
@@ -68,25 +69,14 @@ const importantLinks: FooterLink[] = [
   { label: "Kontak", href: "#kontak" },
 ];
 
+// Diambil dari siteConfig.social; entri kosong ("") disembunyikan.
 const socialLinks = [
-  {
-    label: "Facebook",
-    href: "https://www.facebook.com/",
-    icon: FacebookLogoIcon,
-  },
-  { label: "X", href: "https://x.com/", icon: XLogoIcon },
-  {
-    label: "LinkedIn",
-    href: "https://www.linkedin.com/",
-    icon: LinkedinLogoIcon,
-  },
-  { label: "YouTube", href: "https://www.youtube.com/", icon: YoutubeLogoIcon },
-  {
-    label: "Instagram",
-    href: "https://www.instagram.com/",
-    icon: InstagramLogoIcon,
-  },
-];
+  { label: "Facebook", href: siteConfig.social.facebook, icon: FacebookLogoIcon },
+  { label: "X", href: siteConfig.social.x, icon: XLogoIcon },
+  { label: "LinkedIn", href: siteConfig.social.linkedin, icon: LinkedinLogoIcon },
+  { label: "YouTube", href: siteConfig.social.youtube, icon: YoutubeLogoIcon },
+  { label: "Instagram", href: siteConfig.social.instagram, icon: InstagramLogoIcon },
+].filter((item) => item.href);
 
 const legalLinks: FooterLink[] = [
   { label: "Cookies", href: "#" },

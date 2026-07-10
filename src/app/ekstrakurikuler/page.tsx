@@ -8,7 +8,8 @@ import { getEkstrakurikulerList } from "@/features/ekskul/api/get-ekskul";
 import type { ExtracurricularListItem } from "@/features/ekskul/types/ekskul-detail";
 
 export const metadata: Metadata = {
-  title: "Ekstrakurikuler — SMA Negeri 1 Samarinda",
+  title: "Ekstrakurikuler",
+  alternates: { canonical: "/ekstrakurikuler" },
   description:
     "Jelajahi seluruh program ekstrakurikuler SMAN 1 Samarinda. Temukan club sains, olahraga, seni budaya, teknologi, dan keagamaan yang tepat untukmu.",
 };

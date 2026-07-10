@@ -4,6 +4,7 @@ import type {
   ExtracurricularListItem,
   ExtracurricularListResponse,
 } from "@/features/ekskul/types/ekskul-detail";
+import { normalizeMediaUrl } from "@/lib/utils";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3000";
 
@@ -33,7 +34,10 @@ export async function getEkstrakurikulerList(params?: {
     throw new Error(data.message ?? "Respons API tidak berhasil");
   }
 
-  return data.result;
+  return data.result.map((item) => ({
+    ...item,
+    imageUrl: normalizeMediaUrl(item.imageUrl) ?? "",
+  }));
 }
 
 export async function getEkstrakurikulerBySlug(
@@ -60,5 +64,25 @@ export async function getEkstrakurikulerBySlug(
     return null;
   }
 
-  return data.result;
+  const detail = data.result;
+
+  // Bersihkan URL media (mengatasi double-slash dari CDN yang memicu 403).
+  return {
+    ...detail,
+    imageUrl: normalizeMediaUrl(detail.imageUrl) ?? "",
+    advisor: detail.advisor
+      ? {
+          ...detail.advisor,
+          photoUrl: normalizeMediaUrl(detail.advisor.photoUrl) ?? "",
+        }
+      : null,
+    members: detail.members.map((member) => ({
+      ...member,
+      photoUrl: normalizeMediaUrl(member.photoUrl) ?? "",
+    })),
+    programs: detail.programs.map((program) => ({
+      ...program,
+      imageUrl: normalizeMediaUrl(program.imageUrl) ?? "",
+    })),
+  };
 }

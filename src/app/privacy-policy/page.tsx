@@ -6,6 +6,7 @@ import { PrivacyPolicyView } from "@/features/privacy-policy/components/privacy-
 
 export const metadata: Metadata = {
   title: "Kebijakan Privasi",
+  alternates: { canonical: "/privacy-policy" },
   description:
     "Kebijakan Privasi SMA Negeri 1 Samarinda — mencakup aplikasi SIMSDIG dan website profil sekolah: data yang dikumpulkan, cara penggunaan, keamanan, retensi, serta hak Anda sebagai subjek data. Tersedia dalam Bahasa Indonesia dan English.",
 };

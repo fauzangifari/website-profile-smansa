@@ -6,7 +6,8 @@ import { mainNavItems } from "@/config/site";
 import { AlumniContent } from "@/features/alumni/components/alumni-content";
 
 export const metadata: Metadata = {
-  title: "Alumni — SMA Negeri 1 Samarinda",
+  title: "Alumni",
+  alternates: { canonical: "/alumni" },
   description:
     "Jejaring alumni SMA Negeri 1 Samarinda. Bergabung dengan ikatan alumni, lihat statistik, dan telusuri direktori lulusan berdasarkan universitas, pekerjaan, dan angkatan.",
 };

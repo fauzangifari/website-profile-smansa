@@ -6,7 +6,8 @@ import { mainNavItems } from "@/config/site";
 import { PartnershipContent } from "@/features/partnership/components/partnership-content";
 
 export const metadata: Metadata = {
-  title: "Kemitraan SMA Negeri 1 Samarinda",
+  title: "Kemitraan",
+  alternates: { canonical: "/kemitraan" },
   description:
     "Eksplorasi kolaborasi strategis SMAN 1 Samarinda dengan berbagai mitra untuk meningkatkan kualitas pendidikan dan prestasi siswa.",
 };

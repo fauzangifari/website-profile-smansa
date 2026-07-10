@@ -6,7 +6,8 @@ import { mainNavItems } from "@/config/site";
 import { DaftarUlangContent } from "@/features/daftar-ulang/components/daftar-ulang-content";
 
 export const metadata: Metadata = {
-  title: "Daftar Ulang — SMA Negeri 1 Samarinda",
+  title: "Daftar Ulang",
+  alternates: { canonical: "/daftar-ulang" },
   description:
     "Informasi dan persyaratan daftar ulang bagi calon peserta didik baru SMA Negeri 1 Samarinda Tahun Ajaran 2026/2027.",
 };
