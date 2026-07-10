@@ -188,13 +188,19 @@ function EkskulCard({
       >
         {/* Cover */}
         <div className="relative aspect-[16/10] overflow-hidden">
-          <Image
-            src={item.imageUrl}
-            alt={item.title}
-            fill
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"
-            className="object-cover transition-transform duration-300 group-hover:scale-105"
-          />
+          {item.imageUrl ? (
+            <Image
+              src={item.imageUrl}
+              alt={item.title}
+              fill
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"
+              className="object-cover transition-transform duration-300 group-hover:scale-105"
+            />
+          ) : (
+            <div className="flex size-full items-center justify-center bg-gradient-to-br from-brand-primary-soft via-blue-50 to-indigo-50 text-brand-primary/40">
+              <Sparkle size={40} weight="duotone" />
+            </div>
+          )}
           <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/20 to-transparent opacity-0 transition-opacity duration-200 group-hover:opacity-100" />
         </div>
 
