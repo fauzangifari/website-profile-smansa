@@ -6,7 +6,8 @@ import { mainNavItems } from "@/config/site";
 import { TataTertibContent } from "@/features/tata-tertib/components/tata-tertib-content";
 
 export const metadata: Metadata = {
-  title: "Tata Tertib — SMA Negeri 1 Samarinda",
+  title: "Tata Tertib",
+  alternates: { canonical: "/tata-tertib" },
   description:
     "Tata Tertib Murid SMA Negeri 1 Samarinda Tahun Ajaran 2024/2025. Panduan lengkap mengenai peraturan seragam, kegiatan belajar mengajar, penampilan, larangan, barang razia, dan sanksi yang berlaku di lingkungan SMANSA.",
 };

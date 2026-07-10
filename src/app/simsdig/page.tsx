@@ -7,6 +7,7 @@ import { SimsdigContent } from "@/features/simsdig/components/simsdig-content";
 
 export const metadata: Metadata = {
   title: "SIMSDIG — Sistem Informasi Manajemen Sekolah Digital",
+  alternates: { canonical: "/simsdig" },
   description:
     "SIMSDIG (Sistem Informasi Manajemen Sekolah Digital) SMA Negeri 1 Samarinda sedang dalam pengembangan. Segera hadir untuk pengelolaan sekolah yang lebih terintegrasi.",
 };

@@ -6,7 +6,8 @@ import { mainNavItems } from "@/config/site";
 import { BilingualContent } from "@/features/bilingual/components/bilingual-content";
 
 export const metadata: Metadata = {
-  title: "Program Bilingual SMA Negeri 1 Samarinda",
+  title: "Program Bilingual",
+  alternates: { canonical: "/bilingual" },
   description:
     "Pelajari lebih lanjut tentang Program Bilingual di SMAN 1 Samarinda yang mengintegrasikan kecakapan multibahasa dan wawasan global.",
 };

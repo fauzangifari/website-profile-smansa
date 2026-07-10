@@ -6,7 +6,8 @@ import { mainNavItems } from "@/config/site";
 import { FacilitiesContent } from "@/features/facilities/components/facilities-content";
 
 export const metadata: Metadata = {
-  title: "Sarana & Prasarana SMA Negeri 1 Samarinda",
+  title: "Sarana & Prasarana",
+  alternates: { canonical: "/sarana-prasarana" },
   description:
     "Temukan fasilitas lengkap dan modern SMA Negeri 1 Samarinda — laboratorium, perpustakaan, ruang multimedia, masjid, kafetaria, dan berbagai sarana penunjang pendidikan berkualitas.",
 };

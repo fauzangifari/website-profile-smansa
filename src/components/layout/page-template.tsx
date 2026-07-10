@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Container } from "@/components/ui/container";
+import { JsonLd, breadcrumbSchema } from "@/lib/seo/json-ld";
 import { cn } from "@/lib/utils";
 
 type BreadcrumbItem = {
@@ -44,6 +45,9 @@ export function PageTemplate({
 }: PageTemplateProps) {
   const isGlass = variant === "glass";
   const showCard = !isGlass && contentSurface === "card";
+  // Guard against empty-string sources (e.g. API items without a cover):
+  // an empty `src` triggers a browser refetch warning and renders no banner.
+  const heroImage = backgroundImage || "/images/hero/background-hero.jpg";
 
   return (
     <main
@@ -65,7 +69,7 @@ export function PageTemplate({
       <section className="relative h-[50svh] min-h-[440px] max-h-[560px] overflow-hidden md:min-h-[460px]">
         <div className="absolute inset-0">
           <Image
-            src={backgroundImage}
+            src={heroImage}
             alt={backgroundAlt}
             fill
             preload
@@ -80,6 +84,7 @@ export function PageTemplate({
           <div className="w-full max-w-3xl rounded-lg border border-white/70 bg-white/82 p-5 shadow-lg shadow-neutral-900/10 backdrop-blur-2xl md:p-7 lg:p-8">
             {breadcrumbs?.length ? (
               <nav aria-label="Breadcrumb" className="mb-4">
+                <JsonLd data={breadcrumbSchema(breadcrumbs)} />
                 <ol className="flex flex-wrap items-center gap-2 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-neutral-600">
                   {breadcrumbs.map((item, index) => {
                     const isLast = index === breadcrumbs.length - 1;

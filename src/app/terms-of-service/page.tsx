@@ -6,6 +6,7 @@ import { TermsOfServiceView } from "@/features/terms-of-service/components/terms
 
 export const metadata: Metadata = {
   title: "Syarat & Ketentuan",
+  alternates: { canonical: "/terms-of-service" },
   description:
     "Syarat & Ketentuan SMA Negeri 1 Samarinda — mencakup aplikasi SIMSDIG dan website profil sekolah: aturan penggunaan, hak dan kewajiban pengguna, hak kekayaan intelektual, batasan tanggung jawab, serta penghentian akun. Tersedia dalam Bahasa Indonesia dan English.",
 };

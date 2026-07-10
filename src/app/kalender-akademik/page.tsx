@@ -6,7 +6,8 @@ import { mainNavItems } from "@/config/site";
 import { KalenderAkademikContent } from "@/features/akademik/components/kalender-akademik-content";
 
 export const metadata: Metadata = {
-  title: "Kalender Akademik — SMA Negeri 1 Samarinda",
+  title: "Kalender Akademik",
+  alternates: { canonical: "/kalender-akademik" },
   description:
     "Kalender Pendidikan dan Akademik SMA Negeri 1 Samarinda Tahun Ajaran 2026/2027. Jadwal efektif belajar, libur semester, asesmen, dan agenda sekolah lainnya.",
 };

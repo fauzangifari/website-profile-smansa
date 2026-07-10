@@ -6,7 +6,8 @@ import { mainNavItems } from "@/config/site";
 import { HistoryContent } from "@/features/history/components/history-content";
 
 export const metadata: Metadata = {
-  title: "Sejarah SMA Negeri 1 Samarinda",
+  title: "Sejarah",
+  alternates: { canonical: "/sejarah" },
   description:
     "Telusuri jejak sejarah SMA Negeri 1 Samarinda sejak berdiri pada tahun 1953 hingga menjadi sekolah unggulan di Kalimantan Timur.",
 };

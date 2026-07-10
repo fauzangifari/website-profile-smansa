@@ -9,7 +9,42 @@ export const siteConfig = {
   shortName: "SMANSA",
   description:
     "Website profile SMA Negeri 1 Samarinda sebagai pusat informasi sekolah, program, prestasi, fasilitas, berita, alumni, dan SPMB.",
-};
+  url:
+    process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ??
+    "https://www.sman1samarinda.sch.id",
+  keywords: [
+    "SMA Negeri 1 Samarinda",
+    "SMAN 1 Samarinda",
+    "SMANSA Samarinda",
+    "SMA Samarinda",
+    "sekolah menengah atas Samarinda",
+    "SPMB Samarinda",
+    "profil sekolah Samarinda",
+  ],
+  // Data organisasi — dipakai untuk structured data (JSON-LD) & kontak.
+  organization: {
+    logo: "/images/brand/logo.png",
+    email: "info@sman1samarinda.sch.id",
+    phone: "+62-541-741305",
+    address: {
+      street: "Jl. Drs. H. Anang Hasyim, Air Hitam",
+      locality: "Kota Samarinda",
+      region: "Kalimantan Timur",
+      postalCode: "75124",
+      country: "ID",
+    },
+  },
+  // TODO: ganti dengan URL akun media sosial resmi sekolah.
+  // Dipakai di footer & sebagai `sameAs` pada JSON-LD organisasi.
+  // Kosongkan ("") entri yang belum punya akun agar tidak ditampilkan.
+  social: {
+    facebook: "https://www.facebook.com/",
+    x: "https://x.com/",
+    linkedin: "https://www.linkedin.com/",
+    youtube: "https://www.youtube.com/",
+    instagram: "https://www.instagram.com/",
+  },
+} as const;
 
 export const mainNavItems: SiteNavItem[] = [
   { label: "Beranda", href: "/" },

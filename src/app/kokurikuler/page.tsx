@@ -6,7 +6,8 @@ import { mainNavItems } from "@/config/site";
 import { KokurikulerContent } from "@/features/kokurikuler/components/kokurikuler-content";
 
 export const metadata: Metadata = {
-  title: "Kokurikuler SMA Negeri 1 Samarinda",
+  title: "Kokurikuler",
+  alternates: { canonical: "/kokurikuler" },
   description:
     "Eksplorasi program kokurikuler SMAN 1 Samarinda yang berfokus pada penguatan karakter, persiapan akademik, dan proyek kreatif siswa.",
 };

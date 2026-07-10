@@ -25,7 +25,8 @@ import {
 } from "@/features/profile/data/profile-data";
 
 export const metadata: Metadata = {
-  title: "Profil SMA Negeri 1 Samarinda",
+  title: "Profil",
+  alternates: { canonical: "/profil" },
   description:
     "Profil SMA Negeri 1 Samarinda sebagai sekolah yang berkomitmen menyediakan pendidikan berkualitas bagi semua siswa.",
 };

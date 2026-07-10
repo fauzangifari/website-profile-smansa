@@ -17,18 +17,49 @@ const plusJakarta = localFont({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteConfig.url),
   title: {
     default: `${siteConfig.name} | ${siteConfig.shortName}`,
     template: `%s | ${siteConfig.shortName}`,
   },
   description: siteConfig.description,
+  keywords: [...siteConfig.keywords],
+  applicationName: siteConfig.shortName,
+  authors: [{ name: siteConfig.name, url: siteConfig.url }],
+  creator: siteConfig.name,
+  publisher: siteConfig.name,
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: `${siteConfig.name} | ${siteConfig.shortName}`,
     description:
       "Profil resmi SMA Negeri 1 Samarinda dengan tampilan modern, informatif, dan responsif.",
-    siteName: "SMANSA",
+    url: siteConfig.url,
+    siteName: siteConfig.shortName,
     locale: "id_ID",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${siteConfig.name} | ${siteConfig.shortName}`,
+    description:
+      "Profil resmi SMA Negeri 1 Samarinda dengan tampilan modern, informatif, dan responsif.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+  // Token verifikasi diisi lewat env; jika kosong, Next tidak merender tag-nya.
+  verification: {
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
   },
 };
 
