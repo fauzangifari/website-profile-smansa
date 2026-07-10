@@ -1,53 +1,87 @@
-export interface EkskulSchedule {
-  days: string[];
-  time: string;
-  location?: string;
+// Tipe data Ekstrakurikuler — mengikuti envelope API publik SIMS
+// (sama bentuk dengan BeritaResponse / AchievementResponse).
+// List:   GET /api/public/extracurriculars        → result: ExtracurricularListItem[]
+// Detail: GET /api/public/extracurriculars/{slug} → result: ExtracurricularDetail
+
+export interface ExtracurricularListItem {
+  id: string;
+  slug: string;
+  title: string;
+  shortDescription: string;
+  imageUrl: string;
 }
 
-export interface EkskulSocialMedia {
-  platform: "instagram" | "tiktok" | "youtube" | "whatsapp" | "website";
-  handle: string;
-  url: string;
-}
-
-export interface EkskulOrganizationMember {
+export interface ExtracurricularAdvisor {
   name: string;
-  role: string;
-  photo: string;
+  photoUrl: string;
 }
 
-export interface EkskulOrganizationStructure {
-  pembina: { name: string; role?: string; photo: string };
-  ketua: { name: string; kelas?: string; photo: string };
-  anggota: EkskulOrganizationMember[];
+export interface ExtracurricularMember {
+  name: string;
+  role: string; // "HEAD" | "VICE" | "MEMBER" | ...
+  roleLabel: string;
+  photoUrl: string;
 }
 
-export interface EkskulProgram {
+export interface ExtracurricularSchedule {
+  dayOfWeek: number; // 0=Minggu ... 6=Sabtu (konvensi JS getDay)
+  startTime: string;
+  endTime: string;
+  location: string;
+}
+
+export interface ExtracurricularProgram {
   title: string;
   description: string;
-  image?: string;
+  imageUrl: string;
 }
 
-export interface EkskulFaq {
+export interface ExtracurricularFaq {
   question: string;
   answer: string;
 }
 
-export interface EkskulDetail {
+export interface ExtracurricularDetail {
+  id: string;
   slug: string;
   title: string;
-  category: "akademik" | "non-akademik";
-  categoryLabel: string;
   shortDescription: string;
-  description: string[];
-  coverImage: string;
-  schedule: EkskulSchedule[];
-  socialMedia: EkskulSocialMedia[];
-  vision: string;
-  mission: string[];
-  structure: EkskulOrganizationStructure;
-  registrationLink?: string;
-  contact: { phone: string; email: string };
-  programs: EkskulProgram[];
-  faq: EkskulFaq[];
+  contentHtml: string;
+  visionHtml: string;
+  missionHtml: string;
+  imageUrl: string;
+  registrationUrl: string;
+  contactPhone: string;
+  contactEmail: string;
+  instagramUrl: string;
+  whatsappUrl: string;
+  youtubeUrl: string;
+  facebookUrl: string;
+  advisor: ExtracurricularAdvisor | null;
+  members: ExtracurricularMember[];
+  schedules: ExtracurricularSchedule[];
+  programs: ExtracurricularProgram[];
+  faqs: ExtracurricularFaq[];
+}
+
+export interface ExtracurricularMeta {
+  total?: number;
+  page?: number;
+  limit?: number;
+}
+
+export interface ExtracurricularListResponse {
+  success: boolean;
+  message: string;
+  meta: ExtracurricularMeta;
+  errors: unknown[];
+  result: ExtracurricularListItem[];
+}
+
+export interface ExtracurricularDetailResponse {
+  success: boolean;
+  message: string;
+  meta: ExtracurricularMeta;
+  errors: unknown[];
+  result: ExtracurricularDetail;
 }
