@@ -1,5 +1,4 @@
 import { mainNavItems, type SiteNavItem } from "@/config/site";
-import { ekskulDetails } from "@/features/ekskul/data/ekskul-detail-data";
 import { NON_AKADEMIK_CATEGORIES } from "@/features/non-akademik/data/non-akademik-data";
 
 export type SearchEntry = {
@@ -50,13 +49,6 @@ const pageEntries: SearchEntry[] = dedupeByHref([
   ...EXTRA_PAGES,
 ]);
 
-const ekskulEntries: SearchEntry[] = ekskulDetails.map((ekskul) => ({
-  title: ekskul.title,
-  description: ekskul.shortDescription,
-  href: `/ekstrakurikuler/${ekskul.slug}`,
-  group: "Ekstrakurikuler",
-}));
-
 // Aktivitas non-akademik mengarah ke halaman daftar ekstrakurikuler; nama
 // aktivitas disimpan sebagai keyword agar "basket", "rohis", dll. ketemu.
 const kegiatanEntries: SearchEntry[] = NON_AKADEMIK_CATEGORIES.flatMap(
@@ -72,6 +64,5 @@ const kegiatanEntries: SearchEntry[] = NON_AKADEMIK_CATEGORIES.flatMap(
 
 export const searchIndex: SearchEntry[] = [
   ...pageEntries,
-  ...ekskulEntries,
   ...kegiatanEntries,
 ];

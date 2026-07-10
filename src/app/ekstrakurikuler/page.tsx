@@ -4,14 +4,27 @@ import { AppNavbar } from "@/components/site/app-navbar";
 import { SiteFooter } from "@/components/site/site-footer";
 import { mainNavItems } from "@/config/site";
 import { EkskulContent } from "@/features/ekskul/components/ekskul-content";
+import { getEkstrakurikulerList } from "@/features/ekskul/api/get-ekskul";
+import type { ExtracurricularListItem } from "@/features/ekskul/types/ekskul-detail";
 
 export const metadata: Metadata = {
   title: "Ekstrakurikuler — SMA Negeri 1 Samarinda",
   description:
-    "Jelajahi seluruh program ekstrakurikuler akademik dan non-akademik SMAN 1 Samarinda. Temukan club sains, olahraga, seni budaya, teknologi, dan keagamaan yang tepat untukmu.",
+    "Jelajahi seluruh program ekstrakurikuler SMAN 1 Samarinda. Temukan club sains, olahraga, seni budaya, teknologi, dan keagamaan yang tepat untukmu.",
 };
 
-export default function EkskulPage() {
+export default async function EkskulPage() {
+  let items: ExtracurricularListItem[] = [];
+  let error: string | null = null;
+
+  try {
+    items = await getEkstrakurikulerList();
+  } catch (err) {
+    console.error("Gagal mengambil data ekstrakurikuler di server:", err);
+    error =
+      err instanceof Error ? err.message : "Gagal memuat data ekstrakurikuler.";
+  }
+
   return (
     <>
       <AppNavbar items={mainNavItems} anchorBasePath="/" />
@@ -25,7 +38,7 @@ export default function EkskulPage() {
           { label: "Ekstrakurikuler" },
         ]}
       >
-        <EkskulContent />
+        <EkskulContent items={items} error={error} />
       </PageTemplate>
       <SiteFooter anchorBasePath="/" />
     </>

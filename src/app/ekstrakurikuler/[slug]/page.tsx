@@ -5,22 +5,17 @@ import { AppNavbar } from "@/components/site/app-navbar";
 import { SiteFooter } from "@/components/site/site-footer";
 import { mainNavItems } from "@/config/site";
 import { EkskulDetail } from "@/features/ekskul/components/ekskul-detail";
-import { ekskulDetails } from "@/features/ekskul/data/ekskul-detail-data";
-import { getEkskulBySlug } from "@/features/ekskul/utils/ekskul-helpers";
+import { getEkstrakurikulerBySlug } from "@/features/ekskul/api/get-ekskul";
 
 type EkskulDetailPageProps = {
   params: Promise<{ slug: string }>;
 };
 
-export function generateStaticParams() {
-  return ekskulDetails.map((item) => ({ slug: item.slug }));
-}
-
 export async function generateMetadata({
   params,
 }: EkskulDetailPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const item = getEkskulBySlug(slug);
+  const item = await getEkstrakurikulerBySlug(slug);
 
   if (!item) {
     return {
@@ -35,7 +30,7 @@ export async function generateMetadata({
     openGraph: {
       title: item.title,
       description: item.shortDescription,
-      images: [{ url: item.coverImage }],
+      images: item.imageUrl ? [{ url: item.imageUrl }] : undefined,
       type: "article",
     },
   };
@@ -45,7 +40,7 @@ export default async function EkskulDetailPage({
   params,
 }: EkskulDetailPageProps) {
   const { slug } = await params;
-  const item = getEkskulBySlug(slug);
+  const item = await getEkstrakurikulerBySlug(slug);
 
   if (!item) {
     notFound();
@@ -55,11 +50,11 @@ export default async function EkskulDetailPage({
     <>
       <AppNavbar items={mainNavItems} anchorBasePath="/" />
       <PageTemplate
-        eyebrow={item.categoryLabel}
+        eyebrow="Ekstrakurikuler"
         title={item.title}
         description={item.shortDescription}
         variant="glass"
-        backgroundImage={item.coverImage}
+        backgroundImage={item.imageUrl}
         breadcrumbs={[
           { label: "Beranda", href: "/" },
           { label: "Ekstrakurikuler", href: "/ekstrakurikuler" },
