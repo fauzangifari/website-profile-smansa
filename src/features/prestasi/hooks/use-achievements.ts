@@ -1,7 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { getAchievements } from "@/features/prestasi/api/get-achievements";
+import { useCallback, useMemo, useState } from "react";
 import type { Achievement } from "@/features/prestasi/types/achievement";
 
 export type AchievementSort = "newest" | "oldest" | "rank";
@@ -22,52 +21,8 @@ const INITIAL_FILTERS: AchievementFilters = {
   sort: "newest",
 };
 
-export function useAchievements(
-  initialData: Achievement[] = [],
-  initialError: string | null = null,
-  initialDataFetched = false
-) {
-  const [data, setData] = useState<Achievement[]>(initialData);
-  // isLoading hanya true jika data belum pernah di-fetch sama sekali
-  // (bukan karena result kosong)
-  const [isLoading, setIsLoading] = useState(!initialDataFetched && !initialError);
-  const [error, setError] = useState<string | null>(initialError);
+export function useAchievements(data: Achievement[] = []) {
   const [filters, setFilters] = useState<AchievementFilters>(INITIAL_FILTERS);
-
-  useEffect(() => {
-    // Jika data sudah di-fetch dari server-side (termasuk result kosong),
-    // atau ada error server-side — jangan fetch ulang dari client
-    if (initialDataFetched || initialError) {
-      setData(initialData);
-      setError(initialError);
-      setIsLoading(false);
-      return;
-    }
-
-    let cancelled = false;
-
-    async function fetch() {
-      setIsLoading(true);
-      setError(null);
-      try {
-        const result = await getAchievements();
-        if (!cancelled) setData(result);
-      } catch (err) {
-        if (!cancelled) {
-          setError(
-            err instanceof Error ? err.message : "Terjadi kesalahan."
-          );
-        }
-      } finally {
-        if (!cancelled) setIsLoading(false);
-      }
-    }
-
-    fetch();
-    return () => {
-      cancelled = true;
-    };
-  }, [initialData, initialError]);
 
   // ── Derived filter options (unique values from data) ──────────────────────
   const availableTypes = useMemo(
@@ -139,8 +94,6 @@ export function useAchievements(
   return {
     data,
     filteredData,
-    isLoading,
-    error,
     filters,
     updateFilter,
     resetFilters,

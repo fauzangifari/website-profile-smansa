@@ -3,16 +3,13 @@
 import { useState, useCallback } from "react";
 import {
   Trophy,
-  SmileyMeh,
   WarningCircle,
-  SpinnerGap,
   ArrowClockwise,
   WifiSlash,
   MagnifyingGlass,
   X,
 } from "@phosphor-icons/react";
 import { Badge } from "@/components/ui/badge";
-import { Card } from "@/components/ui/card";
 import { SectionHeader } from "@/components/ui/section-header";
 import { AchievementCard } from "@/features/prestasi/components/achievement-card";
 import { AchievementFiltersBar } from "@/features/prestasi/components/achievement-filters";
@@ -25,20 +22,16 @@ import { useScrollReveal } from "@/lib/hooks/use-scroll-reveal";
 import type { Achievement } from "@/features/prestasi/types/achievement";
 
 interface PrestasiContentProps {
-  initialData?: Achievement[];
-  initialError?: string | null;
-  initialDataFetched?: boolean;
+  data?: Achievement[];
+  error?: string | null;
 }
 
 export function PrestasiContent({
-  initialData = [],
-  initialError = null,
-  initialDataFetched = false,
+  data = [],
+  error = null,
 }: PrestasiContentProps) {
   const {
     filteredData,
-    isLoading,
-    error,
     filters,
     updateFilter,
     resetFilters,
@@ -47,7 +40,7 @@ export function PrestasiContent({
     totalCount,
     availableTypes,
     availableLevels,
-  } = useAchievements(initialData, initialError, initialDataFetched);
+  } = useAchievements(data);
 
   // Lightbox state
   const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(null);
@@ -92,7 +85,7 @@ export function PrestasiContent({
             </p>
 
             {/* Stats pills — only when data exists */}
-            {!isLoading && !error && totalCount > 0 && (
+            {!error && totalCount > 0 && (
               <div className="flex flex-wrap justify-center gap-3 pt-2">
                 <StatPill value={totalCount} label="Total Prestasi" />
                 {availableLevels.includes("NASIONAL") || availableLevels.includes("INTERNASIONAL") ? (
@@ -131,22 +124,19 @@ export function PrestasiContent({
         {/* ── 3. Content area ─────────────────────────────────────────────── */}
         <section ref={contentRef} className="scroll-reveal">
 
-          {/* ── Loading ──────────────────────────────────────────────────── */}
-          {isLoading && <LoadingState />}
-
           {/* ── Error ────────────────────────────────────────────────────── */}
-          {!isLoading && error && <ErrorState message={error} />}
+          {error && <ErrorState message={error} />}
 
           {/* ── Empty (no data at all) ────────────────────────────────────── */}
-          {!isLoading && !error && totalCount === 0 && <EmptyState />}
+          {!error && totalCount === 0 && <EmptyState />}
 
           {/* ── Empty filtered (filter active, no results) ────────────────── */}
-          {!isLoading && !error && totalCount > 0 && filteredData.length === 0 && (
+          {!error && totalCount > 0 && filteredData.length === 0 && (
             <FilteredEmptyState filters={filters} onReset={resetFilters} />
           )}
 
           {/* ── Achievement grid ─────────────────────────────────────────── */}
-          {!isLoading && !error && filteredData.length > 0 && (
+          {!error && filteredData.length > 0 && (
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {filteredData.map((achievement) => (
                 <AchievementCard
@@ -179,40 +169,6 @@ function StatPill({ value, label }: { value: number; label: string }) {
     <div className="flex items-center gap-3 rounded-lg border border-white bg-white/60 px-5 py-3 shadow-sm backdrop-blur-sm">
       <p className="text-2xl font-extrabold leading-none text-brand-primary">{value}</p>
       <p className="text-xs font-semibold text-neutral-600">{label}</p>
-    </div>
-  );
-}
-
-// ── Loading State ─────────────────────────────────────────────────────────────
-
-function LoadingState() {
-  return (
-    <div className="space-y-6">
-      {/* Subtle loading indicator */}
-      <div className="flex items-center gap-2.5 text-neutral-400">
-        <SpinnerGap size={16} className="animate-spin text-brand-primary" />
-        <span className="text-sm font-medium">Memuat data prestasi…</span>
-      </div>
-
-      {/* Skeleton card grid */}
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {Array.from({ length: 6 }).map((_, i) => (
-          <Card key={i} variant="glass-soft" className="flex flex-col gap-0 overflow-hidden p-0">
-            {/* Thumbnail skeleton */}
-            <div className="w-full animate-pulse bg-neutral-200" style={{ aspectRatio: "4/3" }} />
-            {/* Body skeleton */}
-            <div className="flex flex-col gap-3 p-4">
-              <div className="h-4 w-3/4 animate-pulse rounded-md bg-neutral-200" />
-              <div className="h-3.5 w-full animate-pulse rounded-md bg-neutral-200" />
-              <div className="mt-1 flex flex-col gap-2 border-t border-neutral-100 pt-3">
-                <div className="h-3 w-1/2 animate-pulse rounded-md bg-neutral-100" />
-                <div className="h-3 w-2/3 animate-pulse rounded-md bg-neutral-100" />
-                <div className="h-3 w-1/3 animate-pulse rounded-md bg-neutral-100" />
-              </div>
-            </div>
-          </Card>
-        ))}
-      </div>
     </div>
   );
 }

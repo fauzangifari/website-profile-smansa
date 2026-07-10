@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
@@ -52,53 +51,17 @@ function mapBeritaItem(post: BeritaListItem) {
   };
 }
 
-export function NewsSection() {
+type NewsSectionProps = {
+  achievements: Achievement[];
+  berita: BeritaListItem[];
+};
+
+export function NewsSection({
+  achievements = [],
+  berita = [],
+}: NewsSectionProps) {
   const headerRef = useScrollReveal();
   const contentRef = useScrollReveal({ stagger: true });
-
-  const [achievements, setAchievements] = useState<Achievement[]>([]);
-  const [isLoadingAchievements, setIsLoadingAchievements] = useState(true);
-
-  const [berita, setBerita] = useState<BeritaListItem[]>([]);
-  const [isLoadingBerita, setIsLoadingBerita] = useState(true);
-
-  useEffect(() => {
-    let mounted = true;
-    fetch("/api/prestasi")
-      .then((res) => {
-        if (!res.ok) throw new Error("Network response was not ok");
-        return res.json();
-      })
-      .then((data) => {
-        if (mounted) setAchievements(data);
-      })
-      .catch((error) => console.error("Failed to load achievements", error))
-      .finally(() => {
-        if (mounted) setIsLoadingAchievements(false);
-      });
-    return () => {
-      mounted = false;
-    };
-  }, []);
-
-  useEffect(() => {
-    let mounted = true;
-    fetch("/api/berita")
-      .then((res) => {
-        if (!res.ok) throw new Error("Network response was not ok");
-        return res.json();
-      })
-      .then((data) => {
-        if (mounted && Array.isArray(data)) setBerita(data);
-      })
-      .catch((error) => console.error("Failed to load berita", error))
-      .finally(() => {
-        if (mounted) setIsLoadingBerita(false);
-      });
-    return () => {
-      mounted = false;
-    };
-  }, []);
 
   const beritaItems = berita.filter((post) => !isPengumuman(post));
   const pengumumanItems = berita.filter(isPengumuman);
@@ -138,76 +101,62 @@ export function NewsSection() {
             let isGroupEmpty = false;
 
             if (group.key === "prestasi") {
-              if (isLoadingAchievements) {
-                renderItems = ["skeleton", "skeleton", "skeleton"];
-              } else {
-                const mappedAchievements = achievements.slice(0, 3).map((ach) => ({
-                  title: ach.name,
-                  date: new Date(ach.date).toLocaleDateString("id-ID", {
-                    day: "numeric",
-                    month: "long",
-                    year: "numeric",
-                  }),
-                  imageSrc: ach.photoUrl || placeholderImages.achievement,
-                  excerpt: `Tingkat: ${ach.level} • Penyelenggara: ${ach.organizer}`,
-                  href: `#prestasi`,
-                }));
+              const mappedAchievements = achievements.slice(0, 3).map((ach) => ({
+                title: ach.name,
+                date: new Date(ach.date).toLocaleDateString("id-ID", {
+                  day: "numeric",
+                  month: "long",
+                  year: "numeric",
+                }),
+                imageSrc: ach.photoUrl || placeholderImages.achievement,
+                excerpt: `Tingkat: ${ach.level} • Penyelenggara: ${ach.organizer}`,
+                href: `#prestasi`,
+              }));
 
-                isGroupEmpty = mappedAchievements.length === 0;
+              isGroupEmpty = mappedAchievements.length === 0;
 
-                if (!isGroupEmpty) {
-                  renderItems = [
-                    ...mappedAchievements,
-                    ...Array(3 - mappedAchievements.length).fill(null),
-                  ];
-                }
+              if (!isGroupEmpty) {
+                renderItems = [
+                  ...mappedAchievements,
+                  ...Array(3 - mappedAchievements.length).fill(null),
+                ];
               }
             }
 
             if (group.key === "berita") {
-              if (isLoadingBerita) {
-                renderItems = ["skeleton", "skeleton", "skeleton"];
-              } else {
-                const mappedBerita = beritaItems.slice(0, 3).map(mapBeritaItem);
+              const mappedBerita = beritaItems.slice(0, 3).map(mapBeritaItem);
 
-                isGroupEmpty = mappedBerita.length === 0;
+              isGroupEmpty = mappedBerita.length === 0;
 
-                if (!isGroupEmpty) {
-                  renderItems = [
-                    ...mappedBerita,
-                    ...Array(3 - mappedBerita.length).fill(null),
-                  ];
-                }
+              if (!isGroupEmpty) {
+                renderItems = [
+                  ...mappedBerita,
+                  ...Array(3 - mappedBerita.length).fill(null),
+                ];
               }
             }
 
             if (group.key === "pengumuman") {
-              if (isLoadingBerita) {
-                renderItems = ["skeleton", "skeleton", "skeleton"];
-              } else {
-                const mappedPengumuman = pengumumanItems
-                  .slice(0, 3)
-                  .map(mapBeritaItem);
+              const mappedPengumuman = pengumumanItems
+                .slice(0, 3)
+                .map(mapBeritaItem);
 
-                isGroupEmpty = mappedPengumuman.length === 0;
+              isGroupEmpty = mappedPengumuman.length === 0;
 
-                if (!isGroupEmpty) {
-                  renderItems = [
-                    ...mappedPengumuman,
-                    ...Array(3 - mappedPengumuman.length).fill(null),
-                  ];
-                }
+              if (!isGroupEmpty) {
+                renderItems = [
+                  ...mappedPengumuman,
+                  ...Array(3 - mappedPengumuman.length).fill(null),
+                ];
               }
             }
 
             const totalItemsCount =
-              group.key === "prestasi" && !isLoadingAchievements
+              group.key === "prestasi"
                 ? achievements.length
-                : group.key === "berita" && !isLoadingBerita
+                : group.key === "berita"
                   ? beritaItems.length
-                  : group.key === "pengumuman" && !isLoadingBerita
-                    ? pengumumanItems.length
-                    : group.items.length;
+                  : pengumumanItems.length;
 
             return (
               <div
