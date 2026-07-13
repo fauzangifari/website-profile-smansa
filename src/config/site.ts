@@ -56,6 +56,8 @@ export const mainNavItems: SiteNavItem[] = [
       { label: "Sejarah", href: "/sejarah" },
       { label: "Visi & Misi", href: "/visi-misi" },
       { label: "Struktur Organisasi", href: "/struktur-organisasi" },
+      { label: "Direktori Guru", href: "/direktori-guru" },
+      { label: "Direktori Tendik", href: "/direktori-tendik" },
       { label: "Denah Sekolah", href: "/denah-sekolah" },
       { label: "Sarana dan Prasarana", href: "/sarana-prasarana" },
       { label: "Tata Tertib", href: "/tata-tertib" },
