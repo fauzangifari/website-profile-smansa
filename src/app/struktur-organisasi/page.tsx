@@ -6,6 +6,7 @@ import { mainNavItems } from "@/config/site";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Reveal } from "@/components/ui/reveal";
+import { orgMembers } from "@/features/struktur-organisasi/data/struktur-data";
 import { MapelChips } from "./mapel-chips";
 
 export const metadata: Metadata = {
@@ -84,6 +85,10 @@ function Connector() {
 }
 
 export default function StrukturOrganisasiPage() {
+  const kepala = orgMembers.filter((member) => member.group === "kepala");
+  const waka = orgMembers.filter((member) => member.group === "waka");
+  const koordinator = orgMembers.filter((member) => member.group === "koordinator");
+
   return (
     <>
       <AppNavbar items={mainNavItems} anchorBasePath="/" />
@@ -101,13 +106,16 @@ export default function StrukturOrganisasiPage() {
           {/* KEPALA SEKOLAH */}
           <Reveal className="flex justify-center">
             <div className="w-full max-w-md">
-              <PersonCard
-                isMain
-                role="Plt. KEPALA SEKOLAH"
-                name="Syawal Arifin, S.S., M.Pd."
-                nip="NIP 198202012011011003"
-                rank="Penata Tingkat I"
-              />
+              {kepala.map((member) => (
+                <PersonCard
+                  key={member.name}
+                  isMain
+                  role={member.role}
+                  name={member.name}
+                  nip={member.nip}
+                  rank={member.rank}
+                />
+              ))}
             </div>
           </Reveal>
 
@@ -115,60 +123,30 @@ export default function StrukturOrganisasiPage() {
 
           {/* WAKA */}
           <Reveal className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            <PersonCard
-              role="WAKA KURIKULUM"
-              name="Aniek Widajanti, M.Pd."
-              nip="NIP 196802101988112001"
-              rank="Pembina Tingkat I, IV/b"
-            />
-            <PersonCard
-              role="WAKA HUMAS"
-              name="Hermawati, S.Pd."
-              nip="NIP 197311202000122002"
-              rank="Pembina Tingkat I, IV/b"
-            />
-            <PersonCard
-              role="WAKA SARPRAS"
-              name="Ali Mursid, S.Pd., M.Pd."
-              nip="NIP 197004181994011002"
-              rank="Pembina Utama Muda, IV/c"
-            />
-            <PersonCard
-              role="WAKA KESISWAAN"
-              name="Syodiqul Huda, S.Pd., M.Pd."
-              nip="NIP 198012032005021007"
-              rank="Penata Tingkat I, III/d"
-            />
+            {waka.map((member) => (
+              <PersonCard
+                key={member.name}
+                role={member.role}
+                name={member.name}
+                nip={member.nip}
+                rank={member.rank}
+              />
+            ))}
           </Reveal>
 
           <Connector />
 
           {/* KOORDINATOR & BENDAHARA */}
           <Reveal className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            <PersonCard
-              role="KOORDINATOR TAS"
-              name="Khusnul Sugiarto, S.M."
-              nip="NIPPPK 199502162025211013"
-              rank="Operator Layanan Operasional"
-            />
-            <PersonCard
-              role="BENDAHARA"
-              name="Chairunisa Puspanegara, S.Pd."
-              nip="NIPPPK 198411042025212021"
-              rank="Pengatur Muda"
-            />
-            <PersonCard
-              role="KOORDINATOR PERPUSTAKAAN"
-              name="Bagus Baskoro K.R., S.Pd."
-              nip="NIPPPK 199212142022211006"
-              rank="Guru Ahli Pertama"
-            />
-            <PersonCard
-              role="KEPALA LABORATORIUM"
-              name="Mila Susan Shofiani, S.Pd."
-              nip="NIPPPK 199505032023212021"
-              rank="Guru Ahli Pertama"
-            />
+            {koordinator.map((member) => (
+              <PersonCard
+                key={member.name}
+                role={member.role}
+                name={member.name}
+                nip={member.nip}
+                rank={member.rank}
+              />
+            ))}
           </Reveal>
 
           <Connector />
