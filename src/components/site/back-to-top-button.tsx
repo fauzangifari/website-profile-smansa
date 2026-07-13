@@ -24,7 +24,7 @@ export function BackToTopButton() {
   return (
     <div
       className={cn(
-        "fixed bottom-6 right-6 z-50 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]",
+        "fixed bottom-24 right-6 z-50 transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]",
         visible
           ? "opacity-100 translate-y-0 pointer-events-auto"
           : "opacity-0 translate-y-4 pointer-events-none",
