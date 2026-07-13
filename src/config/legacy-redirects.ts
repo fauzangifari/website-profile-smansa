@@ -93,9 +93,9 @@ const beritaSlugs = [
 const pageMappings: Array<[string, string]> = [
   ["/visimisi", "/visi-misi"],
   ["/kepemimpinan", "/struktur-organisasi"],
-  ["/direktori-guru", "/struktur-organisasi"],
-  ["/direktori-tenaga-kependidikan", "/struktur-organisasi"],
-  ["/teachers", "/struktur-organisasi"],
+  // /direktori-guru kini punya halaman sendiri (slug sama), jadi tanpa entri redirect.
+  ["/direktori-tenaga-kependidikan", "/direktori-tendik"],
+  ["/teachers", "/direktori-guru"],
   ["/sekolah", "/profil"],
   ["/pusat-informasi", "/berita"],
   ["/news", "/berita"],
