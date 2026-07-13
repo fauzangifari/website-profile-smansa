@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   title: "SIMSDIG — Sistem Informasi Manajemen Sekolah Digital",
   alternates: { canonical: "/simsdig" },
   description:
-    "SIMSDIG (Sistem Informasi Manajemen Sekolah Digital) SMA Negeri 1 Samarinda sedang dalam pengembangan. Segera hadir untuk pengelolaan sekolah yang lebih terintegrasi.",
+    "SIMSDIG (Sistem Informasi Manajemen Sekolah Digital) SMA Negeri 1 Samarinda — satu ekosistem terintegrasi melalui dashboard web, aplikasi Android, dan iOS.",
 };
 
 export default function SimsdigPage() {
@@ -19,7 +19,7 @@ export default function SimsdigPage() {
       <PageTemplate
         eyebrow="Aplikasi Kami"
         title="SIMSDIG"
-        description="Sistem Informasi Manajemen Sekolah Digital SMA Negeri 1 Samarinda — platform terpadu yang sedang kami kembangkan."
+        description="Sistem Informasi Manajemen Sekolah Digital SMA Negeri 1 Samarinda — satu platform terpadu yang terintegrasi lewat dashboard web, aplikasi Android, dan iOS."
         variant="glass"
         breadcrumbs={[
           { label: "Beranda", href: "/" },
