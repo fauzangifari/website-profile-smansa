@@ -4,8 +4,20 @@ import type {
   BeritaListItem,
   BeritaListResponse,
 } from "@/features/berita/types/berita";
+import { normalizeMediaUrl } from "@/lib/utils";
+import { sanitizeCmsHtml } from "@/lib/sanitize-html";
+import { placeholderImages } from "@/features/landing/data/landing-data";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3000";
+
+// Cover dari API bisa kosong ("") atau punya double-slash yang memicu 403 CDN.
+// Normalisasi + fallback placeholder agar next/image tak pernah menerima "".
+function withCover<T extends { coverImageUrl: string }>(item: T): T {
+  return {
+    ...item,
+    coverImageUrl: normalizeMediaUrl(item.coverImageUrl) ?? placeholderImages.news,
+  };
+}
 
 export async function getBeritaList(params?: {
   page?: number;
@@ -33,7 +45,7 @@ export async function getBeritaList(params?: {
     throw new Error(data.message ?? "Respons API tidak berhasil");
   }
 
-  return data.result;
+  return data.result.map(withCover);
 }
 
 export async function getBeritaBySlug(
@@ -60,5 +72,9 @@ export async function getBeritaBySlug(
     return null;
   }
 
-  return data.result;
+  // Sanitasi HTML CMS sebelum sampai ke komponen (anti stored-XSS).
+  return withCover({
+    ...data.result,
+    contentHtml: sanitizeCmsHtml(data.result.contentHtml),
+  });
 }

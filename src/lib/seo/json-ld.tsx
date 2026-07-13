@@ -8,9 +8,23 @@ export function JsonLd({ data }: { data: Record<string, unknown> }) {
   return (
     <script
       type="application/ld+json"
-      // JSON.stringify sudah meng-escape karakter; aman untuk data terstruktur.
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+      dangerouslySetInnerHTML={{ __html: serializeJsonLd(data) }}
     />
+  );
+}
+
+/**
+ * Serialize objek JSON-LD untuk disematkan di dalam `<script>`.
+ *
+ * PENTING: `JSON.stringify` TIDAK meng-escape `<` maupun `/`, sehingga nilai
+ * dari CMS yang berisi `</script>` bisa menutup blok skrip lebih awal dan
+ * membuka jalur XSS. Kita escape `<`, `>`, `&`, serta pemisah baris U+2028/
+ * U+2029 (valid di JSON tapi ilegal di literal JS) menjadi escape `\uXXXX`.
+ */
+function serializeJsonLd(data: Record<string, unknown>): string {
+  return JSON.stringify(data).replace(
+    /[<>&\u2028\u2029]/g,
+    (ch) => "\\u" + ch.charCodeAt(0).toString(16).padStart(4, "0"),
   );
 }
 

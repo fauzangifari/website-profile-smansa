@@ -5,6 +5,7 @@ import type {
   ExtracurricularListResponse,
 } from "@/features/ekskul/types/ekskul-detail";
 import { normalizeMediaUrl } from "@/lib/utils";
+import { sanitizeCmsHtml } from "@/lib/sanitize-html";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3000";
 
@@ -66,9 +67,13 @@ export async function getEkstrakurikulerBySlug(
 
   const detail = data.result;
 
-  // Bersihkan URL media (mengatasi double-slash dari CDN yang memicu 403).
+  // Bersihkan URL media (mengatasi double-slash dari CDN yang memicu 403) &
+  // sanitasi HTML CMS sebelum sampai ke komponen (anti stored-XSS).
   return {
     ...detail,
+    contentHtml: sanitizeCmsHtml(detail.contentHtml),
+    visionHtml: sanitizeCmsHtml(detail.visionHtml),
+    missionHtml: sanitizeCmsHtml(detail.missionHtml),
     imageUrl: normalizeMediaUrl(detail.imageUrl) ?? "",
     advisor: detail.advisor
       ? {
