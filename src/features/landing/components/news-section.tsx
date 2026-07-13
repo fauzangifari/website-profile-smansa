@@ -37,7 +37,7 @@ const toneClasses = {
 } as const;
 
 // Post SIMS dibagi berdasarkan kategori: yang berkategori "pengumuman" masuk
-// grup Pengumuman, sisanya masuk grup Berita. Keduanya menuju /berita/[slug].
+// grup Pengumuman, sisanya masuk grup Berita. Keduanya menuju /posts/[slug].
 const isPengumuman = (post: BeritaListItem) =>
   post.category?.slug?.toLowerCase() === "pengumuman";
 
@@ -47,7 +47,7 @@ function mapBeritaItem(post: BeritaListItem) {
     date: formatTanggal(post.publishedAt),
     imageSrc: post.coverImageUrl,
     excerpt: post.excerpt,
-    href: `/berita/${post.slug}`,
+    href: `/posts/${post.slug}`,
   };
 }
 
@@ -327,7 +327,7 @@ export function NewsSection({
 
         <div className="mt-7 flex justify-center md:mt-10">
           <a
-            href="/berita"
+            href="/posts"
             className="inline-flex h-12 items-center justify-center rounded-full bg-brand-primary px-8 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-brand-primary-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-primary"
           >
             Lihat Semua Informasi

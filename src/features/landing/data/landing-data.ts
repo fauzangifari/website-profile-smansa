@@ -355,7 +355,7 @@ export const newsSectionGroups = [
     eyebrow: "Kabar Sekolah",
     description:
       "Kumpulan kabar terbaru seputar kegiatan, layanan, dan publikasi resmi SMANSA.",
-    href: "/berita",
+    href: "/posts",
     tone: "primary",
     items: [
       {
@@ -425,7 +425,7 @@ export const newsSectionGroups = [
     eyebrow: "Informasi Penting",
     description:
       "Pengumuman administrasi, agenda penting, dan informasi layanan untuk siswa dan orang tua.",
-    href: "/berita?kategori=pengumuman",
+    href: "/posts?kategori=pengumuman",
     tone: "success",
     items: [
       {

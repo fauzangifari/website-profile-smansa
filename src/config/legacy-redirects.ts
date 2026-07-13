@@ -21,7 +21,7 @@ import type { Redirect } from "next/dist/lib/load-custom-routes";
 const STATUS_301 = 301 as const;
 
 /**
- * Grup A — 58 artikel berita lama: `/{slug}` -> `/berita/{slug}`.
+ * Grup A — 58 artikel berita lama: `/{slug}` -> `/posts/{slug}`.
  * Slug SIMS = slug WordPress lama (persis), jadi mapping 1:1.
  */
 const beritaSlugs = [
@@ -97,9 +97,9 @@ const pageMappings: Array<[string, string]> = [
   ["/direktori-tenaga-kependidikan", "/direktori-tendik"],
   ["/teachers", "/direktori-guru"],
   ["/sekolah", "/profil"],
-  ["/pusat-informasi", "/berita"],
-  ["/news", "/berita"],
-  ["/events", "/berita"],
+  ["/pusat-informasi", "/posts"],
+  ["/news", "/posts"],
+  ["/events", "/posts"],
   ["/alumni-club", "/alumni"],
 ];
 
@@ -234,7 +234,7 @@ export const legacyRedirects: Redirect[] = [
   // Grup A — berita per-artikel
   ...beritaSlugs.map((slug) => ({
     source: `/${slug}`,
-    destination: `/berita/${slug}`,
+    destination: `/posts/${slug}`,
     statusCode: STATUS_301,
   })),
 
@@ -274,8 +274,12 @@ export const legacyRedirects: Redirect[] = [
   })),
 
   // Grup G — namespace taxonomy WordPress (wildcard aman)
-  { source: "/category/:slug*", destination: "/berita", statusCode: STATUS_301 },
-  { source: "/tag/:slug*", destination: "/berita", statusCode: STATUS_301 },
+  { source: "/category/:slug*", destination: "/posts", statusCode: STATUS_301 },
+  { source: "/tag/:slug*", destination: "/posts", statusCode: STATUS_301 },
   { source: "/member/:slug*", destination: "/struktur-organisasi", statusCode: STATUS_301 },
   { source: "/author/:slug*", destination: "/", statusCode: STATUS_301 },
+
+  // Grup H — slug lama /berita dipindah ke /posts (jaga bookmark & SEO lama).
+  { source: "/berita", destination: "/posts", statusCode: STATUS_301 },
+  { source: "/berita/:slug*", destination: "/posts/:slug*", statusCode: STATUS_301 },
 ];

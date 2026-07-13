@@ -17,7 +17,7 @@ type BeritaCardProps = {
 export function BeritaCard({ item, className }: BeritaCardProps) {
   return (
     <Link
-      href={`/berita/${item.slug}`}
+      href={`/posts/${item.slug}`}
       className={cn(
         "group flex h-full flex-col overflow-hidden rounded-lg border border-white/50 bg-white/40 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-white/70 hover:bg-white/60 hover:shadow-xl hover:shadow-neutral-900/5 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-primary/30",
         className,

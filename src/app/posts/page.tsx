@@ -11,14 +11,14 @@ import type { BeritaListItem } from "@/features/berita/types/berita";
 
 export const metadata: Metadata = {
   title: "Berita",
-  alternates: { canonical: "/berita" },
+  alternates: { canonical: "/posts" },
   description:
     "Kabar terbaru, liputan kegiatan, dan publikasi resmi SMA Negeri 1 Samarinda untuk siswa, orang tua, dan masyarakat.",
 };
 
 // Loader async dibungkus <Suspense> agar skeleton hanya berlaku untuk daftar
-// berita ini — TIDAK melebar ke route /berita/[slug] (yang butuh status 404
-// benar saat notFound()). Route /berita/loading.tsx sengaja tidak dipakai.
+// berita ini — TIDAK melebar ke route /posts/[slug] (yang butuh status 404
+// benar saat notFound()). Route /posts/loading.tsx sengaja tidak dipakai.
 async function BeritaListLoader({
   initialCategory,
   initialTag,

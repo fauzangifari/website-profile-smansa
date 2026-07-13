@@ -4,7 +4,6 @@ import { useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import {
   ArrowRight,
@@ -36,9 +35,10 @@ type BeritaContentProps = {
   initialTag?: string;
 };
 
-gsap.registerPlugin(ScrollTrigger);
-
 const ALL = "semua" as const;
+
+// Jumlah kartu yang dirender per batch (render bertahap agar halaman ringan).
+const BATCH = 9;
 
 export function BeritaContent({
   data,
@@ -54,6 +54,7 @@ export function BeritaContent({
     initialTag || null,
   );
   const [query, setQuery] = useState("");
+  const [visibleCount, setVisibleCount] = useState(BATCH);
 
   const sorted = useMemo(() => sortByPublishedDesc(data), [data]);
   const categories = useMemo(() => getBeritaCategories(data), [data]);
@@ -93,61 +94,93 @@ export function BeritaContent({
     });
   }, [sorted, activeCategory, activeTag, query]);
 
+  // Render bertahap: hanya potong sebanyak `visibleCount` kartu pertama.
+  const visible = useMemo(
+    () => filtered.slice(0, visibleCount),
+    [filtered, visibleCount],
+  );
+  const hasMore = visibleCount < filtered.length;
+  const remaining = filtered.length - visible.length;
+
+  // Reset ke batch pertama setiap kali hasil filter berubah (kategori/tag/cari),
+  // agar daftar selalu mulai lagi dari atas. Menyesuaikan state saat render
+  // (pola resmi React) alih-alih useEffect, untuk menghindari render berantai.
+  const filterKey = `${activeCategory}|${activeTag ?? ""}|${query}`;
+  const [prevFilterKey, setPrevFilterKey] = useState(filterKey);
+  if (filterKey !== prevFilterKey) {
+    setPrevFilterKey(filterKey);
+    setVisibleCount(BATCH);
+  }
+
   const hasRevealed = useRef(false);
+  // Jumlah kartu yang sudah dianimasikan; dipakai untuk menganimasi HANYA
+  // kartu batch baru saat lazy-load menambah `visibleCount`.
+  const animatedCount = useRef(BATCH);
 
   useGSAP(
     () => {
-      // Saat filter berubah, animasikan grid dengan fromTo — state akhir
-      // dipaksa opacity:1 tanpa bergantung pada ScrollTrigger, agar kartu
-      // tidak pernah tersangkut tersembunyi (posisi scroll tidak berubah saat
-      // mengklik chip filter, jadi trigger scroll belum tentu ikut memicu).
+      // Saat filter berubah, animasikan grid hanya dengan geser Y (TANPA
+      // opacity). Kartu tak pernah disembunyikan lewat opacity, jadi mustahil
+      // tersangkut fade/tak terlihat bila tween ter-interupsi.
       if (hasRevealed.current) {
-        gsap.fromTo(
-          ".reveal-grid-item",
-          { y: 16, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            stagger: 0.05,
-            ease: "power3.out",
-            duration: 0.5,
-          },
-        );
+        gsap.from(".reveal-grid-item", {
+          y: 16,
+          stagger: 0.05,
+          ease: "power3.out",
+          duration: 0.5,
+        });
         return;
       }
 
-      // Mount awal: entrance untuk featured + controls, dan scroll-reveal grid.
+      // Mount awal: featured + controls fade-in, lalu kartu grid HANYA geser Y
+      // (tanpa opacity). Kartu grid tak pernah disembunyikan lewat opacity,
+      // jadi selalu terlihat sejak awal — tak bergantung ScrollTrigger, posisi
+      // fold, maupun penyelesaian tween. Batch berikutnya ditangani useGSAP
+      // kedua (lazy-load).
       const tl = gsap.timeline({
         defaults: { ease: "power3.out", duration: 0.8 },
       });
-      tl.from(".reveal-featured", { y: 30, opacity: 0 }).from(
-        ".reveal-controls",
-        { y: 20, opacity: 0 },
-        "-=0.5",
-      );
-      gsap.from(".reveal-grid-item", {
-        scrollTrigger: {
-          trigger: ".reveal-grid",
-          start: "top 95%",
-          once: true,
-        },
-        y: 24,
-        opacity: 0,
-        stagger: 0.08,
-        ease: "power3.out",
-        duration: 0.6,
-      });
+      tl.from(".reveal-featured", { y: 30, opacity: 0 })
+        .from(".reveal-controls", { y: 20, opacity: 0 }, "-=0.5")
+        .from(
+          ".reveal-grid-item",
+          { y: 24, stagger: 0.08, duration: 0.6 },
+          "-=0.3",
+        );
       hasRevealed.current = true;
-
-      // Cover images (next/image fill) menggeser tinggi setelah load — hitung
-      // ulang posisi trigger agar item grid tidak tersangkut opacity 0.
-      ScrollTrigger.refresh();
     },
     {
       scope: containerRef,
       dependencies: [activeCategory, activeTag],
       revertOnUpdate: true,
     },
+  );
+
+  // Animasi masuk untuk kartu batch baru (lazy-load). Blok useGSAP utama hanya
+  // menyentuh kartu yang ada saat mount / ganti filter, sehingga kartu yang
+  // di-append muncul mendadak. Di sini kita animasikan HANYA node baru
+  // (indeks >= jumlah yang sudah dianimasikan sebelumnya).
+  useGSAP(
+    () => {
+      const start = animatedCount.current;
+      animatedCount.current = visibleCount;
+      // Lewati saat mount awal (start === visibleCount) & saat reset filter
+      // (visibleCount mengecil) — kedua kasus itu sudah ditangani blok utama.
+      if (visibleCount <= start) return;
+
+      const nodes = containerRef.current?.querySelectorAll(".reveal-grid-item");
+      if (!nodes) return;
+      const fresh = Array.from(nodes).slice(start);
+      if (fresh.length === 0) return;
+
+      gsap.from(fresh, {
+        y: 24,
+        stagger: 0.08,
+        ease: "power3.out",
+        duration: 0.6,
+      });
+    },
+    { scope: containerRef, dependencies: [visibleCount] },
   );
 
   // Error dari server → tampilkan state gagal muat.
@@ -184,32 +217,34 @@ export function BeritaContent({
       {featured && !hasUrlFilter ? (
         <section className="reveal-featured relative">
           <div className="pointer-events-none absolute -inset-4 rounded-[2rem] bg-gradient-to-tr from-brand-primary/15 via-transparent to-brand-accent/10 blur-2xl opacity-60" />
-          <GlassCard className="relative overflow-hidden border-white/40 p-0 shadow-2xl backdrop-blur-3xl">
+          <GlassCard className="relative overflow-hidden rounded-2xl border-white/40 p-0 shadow-2xl backdrop-blur-3xl">
             <div className="grid gap-0 lg:grid-cols-[1.1fr_1fr]">
-              <div className="relative aspect-[4/3] overflow-hidden">
-                <Image
-                  src={featured.coverImageUrl}
-                  alt={featured.title}
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="object-cover"
-                  priority
-                />
-                <BeritaTemplateOverlay
-                  categorySlug={featured.category.slug}
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                />
-                {featured.pinned ? (
-                  <div className="absolute left-4 top-4 z-20 flex items-center gap-2">
-                    <Badge
-                      variant="glass"
-                      className="flex items-center gap-1.5 px-3 py-1"
-                    >
-                      <PushPin weight="fill" className="size-3.5 text-brand-primary" />
-                      Disematkan
-                    </Badge>
-                  </div>
-                ) : null}
+              <div className="p-3 md:p-4">
+                <div className="relative aspect-[4/3] overflow-hidden rounded-xl ring-2 ring-brand-primary/25 shadow-md">
+                  <Image
+                    src={featured.coverImageUrl}
+                    alt={featured.title}
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    className="object-cover"
+                    priority
+                  />
+                  <BeritaTemplateOverlay
+                    categorySlug={featured.category.slug}
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                  />
+                  {featured.pinned ? (
+                    <div className="absolute left-4 top-4 z-20 flex items-center gap-2">
+                      <Badge
+                        variant="glass"
+                        className="flex items-center gap-1.5 px-3 py-1"
+                      >
+                        <PushPin weight="fill" className="size-3.5 text-brand-primary" />
+                        Disematkan
+                      </Badge>
+                    </div>
+                  ) : null}
+                </div>
               </div>
 
               <div className="flex flex-col justify-center gap-5 p-7 md:p-10">
@@ -238,7 +273,7 @@ export function BeritaContent({
 
                 <div>
                   <Link
-                    href={`/berita/${featured.slug}`}
+                    href={`/posts/${featured.slug}`}
                     className="group inline-flex h-13 items-center justify-center gap-2 rounded-md bg-brand-primary px-6 text-base font-semibold text-white shadow-lg shadow-brand-primary/20 transition duration-200 ease-out hover:bg-brand-primary-hover focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-primary/30"
                   >
                     Baca selengkapnya
@@ -315,15 +350,31 @@ export function BeritaContent({
       {/* Grid */}
       <section>
         {filtered.length > 0 ? (
-          <div className="reveal-grid grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {filtered.map((item) => (
-              <BeritaCard
-                key={item.slug}
-                item={item}
-                className="reveal-grid-item"
-              />
-            ))}
-          </div>
+          <>
+            <div className="reveal-grid grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {visible.map((item) => (
+                <BeritaCard
+                  key={item.slug}
+                  item={item}
+                  className="reveal-grid-item"
+                />
+              ))}
+            </div>
+
+            {hasMore ? (
+              <div className="mt-10 flex justify-center">
+                <Button
+                  variant="outline"
+                  onClick={() => setVisibleCount((count) => count + BATCH)}
+                >
+                  Muat lebih banyak
+                  <span className="font-semibold text-neutral-500">
+                    ({remaining} lagi)
+                  </span>
+                </Button>
+              </div>
+            ) : null}
+          </>
         ) : (
           <div className="flex flex-col items-center justify-center gap-4 rounded-lg border border-dashed border-neutral-300 bg-white/40 px-6 py-16 text-center backdrop-blur-xl">
             <div className="rounded-2xl bg-brand-primary/10 p-4 text-brand-primary">
@@ -353,7 +404,7 @@ export function BeritaContent({
 
       {sorted.length > 0 ? (
         <p className="text-center text-xs text-neutral-400">
-          Menampilkan {filtered.length} dari {sorted.length} berita ·{" "}
+          Menampilkan {visible.length} dari {filtered.length} berita ·{" "}
           <Link href="/" className="underline hover:text-brand-primary">
             Kembali ke Beranda
           </Link>

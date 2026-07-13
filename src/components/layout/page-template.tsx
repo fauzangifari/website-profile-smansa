@@ -28,6 +28,12 @@ type PageTemplateProps = {
    * background — useful for pages that provide their own section surfaces.
    */
   contentSurface?: "card" | "bare";
+  /**
+   * Hero banner size. "default" is the tall fixed-height banner. "compact"
+   * lets the banner hug the title block so the title sits at the top with the
+   * cover image only as a background band (used by the berita/posts detail).
+   */
+  heroSize?: "default" | "compact";
 };
 
 export function PageTemplate({
@@ -42,9 +48,11 @@ export function PageTemplate({
   contentClassName,
   variant = "default",
   contentSurface = "card",
+  heroSize = "default",
 }: PageTemplateProps) {
   const isGlass = variant === "glass";
   const showCard = !isGlass && contentSurface === "card";
+  const isCompactHero = heroSize === "compact";
   // Guard against empty-string sources (e.g. API items without a cover):
   // an empty `src` triggers a browser refetch warning and renders no banner.
   const heroImage = backgroundImage || "/images/hero/background-hero.jpg";
@@ -66,7 +74,14 @@ export function PageTemplate({
         </div>
       )}
 
-      <section className="relative h-[50svh] min-h-[440px] max-h-[560px] overflow-hidden md:min-h-[460px]">
+      <section
+        className={cn(
+          "relative overflow-hidden",
+          isCompactHero
+            ? ""
+            : "h-[50svh] min-h-[440px] max-h-[560px] md:min-h-[460px]",
+        )}
+      >
         <div className="absolute inset-0">
           <Image
             src={heroImage}
@@ -80,7 +95,12 @@ export function PageTemplate({
           <div className="section-grid-accent absolute inset-0 opacity-20" />
         </div>
 
-        <Container className="relative z-10 flex h-full items-start pb-8 pt-28 md:pb-10 md:pt-32">
+        <Container
+          className={cn(
+            "relative z-10 flex items-start pb-8 pt-28 md:pb-10 md:pt-32",
+            !isCompactHero && "h-full",
+          )}
+        >
           <div className="w-full max-w-3xl rounded-lg border border-white/70 bg-white/82 p-5 shadow-lg shadow-neutral-900/10 backdrop-blur-2xl md:p-7 lg:p-8">
             {breadcrumbs?.length ? (
               <nav aria-label="Breadcrumb" className="mb-4">

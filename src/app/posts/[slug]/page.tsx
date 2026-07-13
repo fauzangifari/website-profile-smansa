@@ -30,11 +30,11 @@ export async function generateMetadata({
   return {
     title: item.title,
     description: item.excerpt,
-    alternates: { canonical: `/berita/${slug}` },
+    alternates: { canonical: `/posts/${slug}` },
     openGraph: {
       title: item.title,
       description: item.excerpt,
-      url: `/berita/${slug}`,
+      url: `/posts/${slug}`,
       images: [{ url: item.coverImageUrl }],
       type: "article",
       publishedTime: item.publishedAt,
@@ -64,7 +64,7 @@ export default async function BeritaDetailPage({
 
   const breadcrumbs = [
     { label: "Beranda", href: "/" },
-    { label: "Berita", href: "/berita" },
+    { label: "Berita", href: "/posts" },
     { label: item.title },
   ];
 
@@ -88,6 +88,7 @@ export default async function BeritaDetailPage({
         variant="glass"
         backgroundImage={item.coverImageUrl}
         breadcrumbs={breadcrumbs}
+        heroSize="compact"
       >
         <BeritaDetail item={item} related={related} />
       </PageTemplate>
