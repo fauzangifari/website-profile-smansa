@@ -9,6 +9,7 @@ export const missionItems = [
     number: "01",
     title: "Akhlak dan Ketakwaan",
     theme: "Karakter",
+    image: "/images/hero/ilustrasi-karakter.jpg",
     description:
       "Membentuk murid yang beriman, bertakwa kepada Tuhan Yang Maha Esa, dan berakhlak mulia sesuai nilai-nilai delapan dimensi profil lulusan.",
   },
@@ -16,6 +17,7 @@ export const missionItems = [
     number: "02",
     title: "Pembelajaran Mendalam",
     theme: "Akademik",
+    image: "/images/hero/ilustrasi-akademik.jpg",
     description:
       "Menyelenggarakan pembelajaran mendalam yang humanis, adaptif dan berbasis teknologi guna menghasilkan murid unggul dalam bidang akademik maupun non-akademik.",
   },
@@ -23,6 +25,7 @@ export const missionItems = [
     number: "03",
     title: "Keterampilan Abad Ini",
     theme: "Kompetensi",
+    image: "/images/hero/ilustrasi-kompetensi.jpg",
     description:
       "Mengembangkan keterampilan berpikir kritis, kreatif, komunikatif, dan kolaboratif melalui pembelajaran intrakurikuler, ekstrakurikuler, serta kokulikuler.",
   },
@@ -30,6 +33,7 @@ export const missionItems = [
     number: "04",
     title: "Sekolah Aman dan Inklusif",
     theme: "Iklim Sekolah",
+    image: "/images/hero/ilustrasi-iklim-sekolah.jpg",
     description:
       "Menciptakan budaya sekolah yang ramah anak, aman, inklusif, serta mendukung tumbuh kembang murid secara optimal.",
   },
@@ -37,6 +41,7 @@ export const missionItems = [
     number: "05",
     title: "Gotong Royong",
     theme: "Komunitas",
+    image: "/images/hero/ilustrasi-gotong-royong.jpg",
     description:
       "Menumbuhkan semangat gotong royong, kepedulian sosial, dan kebersamaan seluruh warga sekolah dalam membangun iklim sekolah yang harmonis.",
   },
@@ -44,6 +49,7 @@ export const missionItems = [
     number: "06",
     title: "Literasi Digital",
     theme: "Teknologi",
+    image: "/images/hero/ilustrasi-teknologi.jpg",
     description:
       "Mengembangkan literasi digital dan kesiapan menghadapi era globalisasi dengan tetap menjunjung tinggi nilai budaya bangsa.",
   },
@@ -51,6 +57,7 @@ export const missionItems = [
     number: "07",
     title: "Sekolah Hijau",
     theme: "Lingkungan",
+    image: "/images/hero/ilustrasi-sekolah-hijau.jpg",
     description:
       "Menanamkan sikap peduli lingkungan melalui berbagai program sekolah berwawasan ekologi demi terciptanya sekolah hijau dan berkelanjutan.",
   },
@@ -58,6 +65,7 @@ export const missionItems = [
     number: "08",
     title: "Adaptif Masa Depan",
     theme: "Inovasi",
+    image: "/images/hero/ilustrasi-inovasi.jpg",
     description:
       "Mendorong keterbukaan terhadap perubahan, inovasi, dan pengembangan diri dalam menghadapi tantangan masa depan.",
   },

@@ -32,19 +32,37 @@ export function HeroSection() {
 
     syncHash();
 
+    // Lacak rasio visibilitas tiap section agar bisa memilih yang paling
+    // dominan sekaligus MENGOSONGKAN status aktif saat tak ada yang terlihat
+    // (mis. saat kembali ke hero). Tanpa ini badge "Aktif" menempel permanen.
+    const visibleRatios = new Map<string, number>();
+
+    const syncActiveFromView = () => {
+      let bestId = "";
+      let bestRatio = 0;
+      visibleRatios.forEach((ratio, id) => {
+        if (ratio > bestRatio) {
+          bestRatio = ratio;
+          bestId = id;
+        }
+      });
+      setActiveHref(bestId ? `#${bestId}` : "");
+    };
+
     const observer = new IntersectionObserver(
       (entries) => {
-        const visibleEntry = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-
-        if (visibleEntry?.target.id) {
-          setActiveHref(`#${visibleEntry.target.id}`);
-        }
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            visibleRatios.set(entry.target.id, entry.intersectionRatio);
+          } else {
+            visibleRatios.delete(entry.target.id);
+          }
+        });
+        syncActiveFromView();
       },
       {
         rootMargin: "-30% 0px -45% 0px",
-        threshold: [0.15, 0.35, 0.55],
+        threshold: [0, 0.15, 0.35, 0.55],
       }
     );
 
@@ -60,7 +78,7 @@ export function HeroSection() {
   return (
     <section
       id="beranda"
-      className="relative flex min-h-[100svh] items-center justify-center overflow-hidden bg-neutral-50 px-0 pb-16 pt-24 sm:pb-20 sm:pt-28 lg:min-h-[100svh] lg:h-auto lg:py-20"
+      className="relative flex min-h-[100svh] items-center justify-center overflow-hidden bg-neutral-50 px-0 pb-16 pt-24 sm:pb-20 sm:pt-28 md:pt-32 md:pb-24 lg:min-h-[100svh] lg:h-auto lg:py-20"
     >
       {/* Background Image with Controlled Overlay */}
       <div className="absolute inset-0 z-0">
@@ -78,7 +96,7 @@ export function HeroSection() {
         <div className="absolute inset-0 bg-white/35 backdrop-blur-[10px]" />
       </div>
 
-      <div className="relative z-10 mx-auto grid h-full w-full max-w-7xl grid-cols-1 items-center gap-16 px-4 sm:px-6 lg:grid-cols-[1fr_1fr] lg:px-8">
+      <div className="relative z-10 mx-auto grid h-full w-full max-w-7xl grid-cols-1 items-center gap-10 px-4 sm:gap-12 sm:px-6 md:gap-14 lg:grid-cols-[1fr_1fr] lg:gap-16 lg:px-8">
         {/* Left Side: Information */}
         <div className="flex w-full flex-col items-center text-center animate-in fade-in slide-in-from-bottom-4 duration-700 lg:items-start lg:text-left">
           <HeroTitle />
@@ -97,7 +115,7 @@ function HeroTitle() {
   return (
     <div className="hero-title relative z-20 w-full max-w-2xl">
       {/* Dynamic Badge */}
-      <div className="mb-8 inline-flex items-center gap-2 rounded-full bg-white/50 px-4 py-1.5 backdrop-blur-xl shadow-sm">
+      <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-white/50 px-4 py-1.5 backdrop-blur-xl shadow-sm sm:mb-8">
         <div className="flex size-6 items-center justify-center rounded-full bg-brand-primary text-white shadow-sm">
           <ShieldCheckIcon size={14} weight="bold" />
         </div>
@@ -106,29 +124,29 @@ function HeroTitle() {
         </span>
       </div>
 
-      <h1 className="text-[clamp(2.5rem,7vw,4.5rem)] font-extrabold leading-[1.05] tracking-tighter text-neutral-900">
+      <h1 className="text-balance text-[clamp(2.25rem,7vw,4.5rem)] font-extrabold leading-[1.05] tracking-tighter text-neutral-900">
         SMA NEGERI 1 <br />
         <span className="text-brand-primary drop-shadow-sm">
           SAMARINDA
         </span>
       </h1>
 
-      <p className="mt-8 max-w-lg text-base font-medium leading-relaxed text-neutral-700 sm:text-lg lg:text-xl">
+      <p className="mt-6 max-w-lg text-base font-medium leading-relaxed text-neutral-700 sm:mt-8 sm:text-lg lg:text-xl">
         Unggul dalam prestasi, karakter, dan kolaborasi untuk membangun masa depan generasi bangsa.
       </p>
 
       {/* CTA Buttons */}
-      <div className="mt-10 flex flex-wrap items-center justify-center gap-4 lg:justify-start">
+      <div className="mt-8 flex w-full flex-col items-stretch gap-3 sm:mt-10 sm:w-auto sm:flex-row sm:flex-wrap sm:items-center sm:justify-center sm:gap-4 lg:justify-start">
         <a
           href="#tentang"
-          className="group flex items-center gap-2 rounded-full bg-brand-primary px-8 py-4 text-base font-bold text-white shadow-lg shadow-brand-primary/20 transition-all hover:bg-brand-primary-hover hover:shadow-brand-primary-active hover:-translate-y-0.5 active:translate-y-0"
+          className="group flex w-full items-center justify-center gap-2 rounded-full bg-brand-primary px-8 py-4 text-base font-bold text-white shadow-lg shadow-brand-primary/20 transition-all hover:bg-brand-primary-hover hover:shadow-brand-primary-active hover:-translate-y-0.5 active:translate-y-0 sm:w-auto"
         >
           Jelajahi Profil
           <ArrowRight size={20} weight="bold" className="transition-transform group-hover:translate-x-1" />
         </a>
         <a
           href="#spmb"
-          className="flex items-center gap-2 rounded-full border border-white/80 bg-white/60 px-8 py-4 text-base font-bold text-neutral-800 backdrop-blur-xl transition-all hover:bg-white/90 hover:shadow-md hover:-translate-y-0.5 active:translate-y-0"
+          className="flex w-full items-center justify-center gap-2 rounded-full border border-white/80 bg-white/60 px-8 py-4 text-base font-bold text-neutral-800 backdrop-blur-xl transition-all hover:bg-white/90 hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 sm:w-auto"
         >
           Informasi SPMB
         </a>
@@ -150,7 +168,7 @@ function HeroConstellation({ activeHref }: { activeHref: string }) {
 
   return (
     <div className="flex w-full flex-col items-center justify-center lg:h-full">
-      <div className="relative mx-auto flex h-[350px] w-full max-w-lg items-center justify-center sm:h-[420px] lg:h-[min(70svh,500px)] lg:max-w-3xl">
+      <div className="relative mx-auto flex w-full max-w-lg items-center justify-center py-6 sm:py-8 md:py-10 lg:h-[min(70svh,500px)] lg:max-w-3xl lg:py-0">
         {/* Connecting Lines for Desktop */}
         <svg
           className="absolute inset-0 h-full w-full pointer-events-none hidden lg:block"
@@ -195,7 +213,7 @@ function HeroConstellation({ activeHref }: { activeHref: string }) {
         </svg>
 
         {/* Central Logo Container */}
-        <div className="absolute left-1/2 top-1/2 z-30 -translate-x-1/2 -translate-y-1/2">
+        <div className="relative z-30 lg:absolute lg:left-1/2 lg:top-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2">
           <div className="relative">
             {/* Static Rings for elegant look */}
             <div className="absolute inset-[-30%] rounded-full border border-brand-primary/10" />
@@ -203,7 +221,7 @@ function HeroConstellation({ activeHref }: { activeHref: string }) {
 
             <a
               href="#tentang"
-              className="group relative flex size-28 items-center justify-center rounded-full bg-white/90 shadow-2xl shadow-brand-primary/10 backdrop-blur-3xl ring-1 ring-white transition-all duration-300 hover:scale-105 sm:size-36 lg:size-48"
+              className="group relative flex size-28 items-center justify-center rounded-full bg-white/90 shadow-2xl shadow-brand-primary/10 backdrop-blur-3xl ring-1 ring-white transition-all duration-300 hover:scale-105 sm:size-36 md:size-40 lg:size-48"
             >
               <div className="absolute inset-2 rounded-full border border-brand-primary/10" />
               <div className="absolute inset-0 rounded-full bg-brand-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -237,7 +255,7 @@ function HeroConstellation({ activeHref }: { activeHref: string }) {
       </div>
 
       {/* Mobile Grid Layout */}
-      <div className="z-40 mt-8 grid w-full grid-cols-2 gap-3 px-2 sm:grid-cols-3 sm:gap-4 lg:hidden">
+      <div className="z-40 mx-auto mt-6 grid w-full max-w-md grid-cols-2 gap-3 px-2 sm:mt-8 sm:max-w-xl sm:grid-cols-3 sm:gap-4 md:max-w-2xl md:gap-5 lg:hidden">
         {heroNodes.map((node) => (
           <NodeItem key={node.label} node={node} isActive={node.href === activeHref} />
         ))}
@@ -257,7 +275,7 @@ function NodeItem({
     <a
       href={node.href}
       className={cn(
-        "group relative flex w-full flex-col items-start overflow-hidden rounded-lg border border-white/90 bg-white/40 p-3 shadow-xl shadow-black/5 backdrop-blur-2xl transition-all duration-300 hover:-translate-y-1 hover:border-white hover:bg-white/60 hover:shadow-2xl lg:w-[13.5rem] lg:p-4",
+        "group relative flex w-full flex-col items-start overflow-hidden rounded-lg border border-white/90 bg-white/40 p-3 shadow-xl shadow-black/5 backdrop-blur-2xl transition-all duration-300 hover:-translate-y-1 hover:border-white hover:bg-white/60 hover:shadow-2xl md:p-3.5 lg:w-[13.5rem] lg:p-4",
         isActive && "border-brand-primary/40 bg-white/70 ring-2 ring-brand-primary/10",
         getNodeToneClasses(node.tone),
         isActive && getActiveNodeToneClasses(node.tone)
