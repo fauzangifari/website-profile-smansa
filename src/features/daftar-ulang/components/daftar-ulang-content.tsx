@@ -8,52 +8,34 @@ import {
   WarningCircle,
   FileText,
   Link as LinkIcon,
-  CheckCircle
+  CheckCircle,
+  type Icon,
 } from "@phosphor-icons/react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
+import {
+  daftarUlangAdditional,
+  daftarUlangRequirements,
+  daftarUlangSchedule,
+  daftarUlangWarning,
+  type DaftarUlangRequirement,
+} from "@/features/daftar-ulang/data/daftar-ulang-data";
 
-const requirements = [
-  {
-    title: "Surat Keterangan Bebas Narkoba",
-    description: "Opsional pada saat daftar ulang, namun wajib diserahkan paling lambat satu bulan setelah daftar ulang.",
-    icon: FileText,
-  },
-  {
-    title: "Surat Pernyataan Keaslian Berkas SPMB",
-    description: "Wajib diisi, ditandatangani, dan diserahkan.",
-    icon: FileText,
-    downloadLabel: "Unduh Template",
-    downloadHref: "/documents/surat-pernyataan-keaslian-berkas.docx"
-  },
-  {
-    title: "Surat Pernyataan Mematuhi Tata Tertib Sekolah",
-    description: "Tata tertib dapat dilihat di halaman Tata Tertib SMANSA.",
-    icon: FileText,
-    downloadLabel: "Unduh Template",
-    downloadHref: "/documents/surat-pernyataan-mematuhi-tata-tertib.docx",
-    externalLink: "/tata-tertib",
-    externalLinkLabel: "Lihat Tata Tertib"
-  },
-  {
-    title: "Bukti Formulir Daftar Ulang",
-    description: "Telah mengisi formulir daftar ulang online melalui portal SIMS.",
-    icon: CheckCircle,
-    externalLink: "https://sims.sman1samarinda.sch.id/enrollment",
-    externalLinkLabel: "Isi Formulir Online"
-  }
-];
+// Resolve nama ikon (string di data plain) → komponen Phosphor (client-only).
+const ICON_MAP: Record<DaftarUlangRequirement["iconName"], Icon> = {
+  FileText,
+  CheckCircle,
+};
 
 export function DaftarUlangContent() {
   return (
     <div className="w-full max-w-5xl mx-auto space-y-16">
-      
+
       {/* Schedule Section */}
       <section>
         <div className="bg-white rounded-lg p-8 md:p-12 shadow-sm border border-neutral-200/60 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-64 h-64 bg-brand-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3" />
-          
+
           <div className="relative z-10 flex flex-col md:flex-row gap-8 items-start md:items-center justify-between">
             <div>
               <Badge variant="primary" className="mb-4 text-brand-primary border-brand-primary/20 bg-brand-primary/5">
@@ -74,17 +56,17 @@ export function DaftarUlangContent() {
                 </div>
                 <div>
                   <p className="text-sm font-medium text-neutral-500">Tanggal</p>
-                  <p className="font-bold text-neutral-900">6–8 Juli 2026</p>
+                  <p className="font-bold text-neutral-900">{daftarUlangSchedule.tanggal}</p>
                 </div>
               </div>
-              
+
               <div className="flex items-center gap-4 bg-neutral-50 p-4 rounded-lg border border-neutral-100">
                 <div className="size-12 rounded-xl bg-white shadow-sm flex items-center justify-center text-brand-secondary shrink-0">
                   <Clock size={24} weight="duotone" />
                 </div>
                 <div>
                   <p className="text-sm font-medium text-neutral-500">Waktu</p>
-                  <p className="font-bold text-neutral-900">08.00–13.00 WITA</p>
+                  <p className="font-bold text-neutral-900">{daftarUlangSchedule.waktu}</p>
                 </div>
               </div>
             </div>
@@ -100,8 +82,10 @@ export function DaftarUlangContent() {
         </div>
 
         <div className="grid gap-6">
-          {requirements.map((req, index) => (
-            <motion.div 
+          {daftarUlangRequirements.map((req, index) => {
+            const ReqIcon = ICON_MAP[req.iconName];
+            return (
+            <motion.div
               key={index}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -110,9 +94,9 @@ export function DaftarUlangContent() {
               className="bg-white border border-neutral-200/60 p-6 sm:p-8 rounded-lg flex flex-col md:flex-row gap-6 shadow-sm hover:shadow-md transition-shadow"
             >
               <div className="size-14 rounded-2xl bg-neutral-50 border border-neutral-100 flex items-center justify-center shrink-0 text-brand-primary">
-                <req.icon size={28} weight="duotone" />
+                <ReqIcon size={28} weight="duotone" />
               </div>
-              
+
               <div className="flex-1 space-y-4">
                 <div>
                   <div className="flex items-center gap-3 mb-1">
@@ -129,9 +113,9 @@ export function DaftarUlangContent() {
                 {(req.downloadHref || req.externalLink) && (
                   <div className="flex flex-wrap items-center gap-3 pl-9">
                     {req.downloadHref && (
-                      <Button 
-                        variant="secondary" 
-                        size="sm" 
+                      <Button
+                        variant="secondary"
+                        size="sm"
                         className="rounded-xl bg-brand-primary/10 text-brand-primary hover:bg-brand-primary hover:text-white"
                         iconLeft={<DownloadSimple size={16} />}
                         onClick={() => {
@@ -144,11 +128,11 @@ export function DaftarUlangContent() {
                         {req.downloadLabel}
                       </Button>
                     )}
-                    
+
                     {req.externalLink && (
-                      <Button 
-                        variant="outline" 
-                        size="sm" 
+                      <Button
+                        variant="outline"
+                        size="sm"
                         className="rounded-xl border-neutral-200 text-neutral-700 hover:bg-neutral-50"
                         iconLeft={<LinkIcon size={16} />}
                         onClick={() => {
@@ -162,7 +146,8 @@ export function DaftarUlangContent() {
                 )}
               </div>
             </motion.div>
-          ))}
+            );
+          })}
         </div>
       </section>
 
@@ -176,28 +161,19 @@ export function DaftarUlangContent() {
               Hal-hal teknis yang perlu diperhatikan saat hadir ke sekolah untuk daftar ulang.
             </p>
           </div>
-          
+
           <ul className="space-y-6">
-            <li className="flex gap-4">
-              <div className="size-10 rounded-full bg-white/10 flex items-center justify-center shrink-0">
-                <CheckCircle size={20} weight="fill" className="text-emerald-400" />
-              </div>
-              <div>
-                <p className="font-medium text-white/90">Hadir Secara Langsung</p>
-                <p className="text-sm text-neutral-400 mt-1">Calon peserta didik wajib hadir secara langsung saat proses daftar ulang (tidak boleh diwakilkan sepenuhnya).</p>
-              </div>
-            </li>
-            <li className="flex gap-4">
-              <div className="size-10 rounded-full bg-white/10 flex items-center justify-center shrink-0">
-                <CheckCircle size={20} weight="fill" className="text-emerald-400" />
-              </div>
-              <div>
-                <p className="font-medium text-white/90">Warna Map Pemberkasan</p>
-                <p className="text-sm text-neutral-400 mt-1">
-                  Membawa map berwarna <strong className="text-red-400">merah</strong> untuk peserta didik laki-laki dan map berwarna <strong className="text-blue-400">biru</strong> untuk peserta didik perempuan.
-                </p>
-              </div>
-            </li>
+            {daftarUlangAdditional.map((item) => (
+              <li key={item.title} className="flex gap-4">
+                <div className="size-10 rounded-full bg-white/10 flex items-center justify-center shrink-0">
+                  <CheckCircle size={20} weight="fill" className="text-emerald-400" />
+                </div>
+                <div>
+                  <p className="font-medium text-white/90">{item.title}</p>
+                  <p className="text-sm text-neutral-400 mt-1">{item.description}</p>
+                </div>
+              </li>
+            ))}
           </ul>
         </div>
       </section>
@@ -211,7 +187,7 @@ export function DaftarUlangContent() {
           <div>
             <h4 className="text-lg font-bold text-red-900 mb-2">Peringatan Penting</h4>
             <p className="text-red-800 leading-relaxed">
-              Calon peserta didik yang tidak melakukan daftar ulang sesuai jadwal yang telah ditentukan akan dianggap mengundurkan diri dan tidak dinyatakan sebagai peserta didik SMA Negeri 1 Samarinda.
+              {daftarUlangWarning}
             </p>
           </div>
         </div>
