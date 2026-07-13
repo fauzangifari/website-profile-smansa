@@ -21,7 +21,7 @@ import {
 } from "@phosphor-icons/react";
 import { Badge } from "@/components/ui/badge";
 import { Accordion } from "@/components/ui/accordion";
-import { cn } from "@/lib/utils";
+import { cn, safeHref } from "@/lib/utils";
 import { useScrollReveal } from "@/lib/hooks/use-scroll-reveal";
 import type { ExtracurricularDetail } from "@/features/ekskul/types/ekskul-detail";
 import {
@@ -383,7 +383,7 @@ export function EkskulDetail({ item }: EkskulDetailProps) {
           {/* CTA Daftar */}
           {item.registrationUrl ? (
             <a
-              href={item.registrationUrl}
+              href={safeHref(item.registrationUrl) ?? "#"}
               target="_blank"
               rel="noopener noreferrer"
               className="group flex h-14 w-full items-center justify-center gap-2 rounded-2xl bg-brand-primary px-6 font-extrabold text-white shadow-xl shadow-brand-primary/20 transition-all hover:scale-[1.02] active:scale-95"
@@ -401,7 +401,7 @@ export function EkskulDetail({ item }: EkskulDetailProps) {
                 return (
                   <a
                     key={social.platform}
-                    href={social.url}
+                    href={safeHref(social.url) ?? "#"}
                     target="_blank"
                     rel="noopener noreferrer"
                     title={social.platform}
