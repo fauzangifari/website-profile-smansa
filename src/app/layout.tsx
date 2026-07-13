@@ -4,6 +4,7 @@ import "./globals.css";
 
 import { SmoothScroll } from "@/components/providers/smooth-scroll";
 import { BackToTopButton } from "@/components/site/back-to-top-button";
+import { ChatWidget } from "@/features/chatbot/components/chat-widget";
 import { siteConfig } from "@/config/site";
 
 const plusJakarta = localFont({
@@ -76,6 +77,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <SmoothScroll>{children}</SmoothScroll>
         <BackToTopButton />
+        <ChatWidget />
       </body>
     </html>
   );
