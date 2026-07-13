@@ -92,7 +92,7 @@ export function newsArticleSchema(article: {
       : {}),
     mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": `${siteConfig.url}/berita/${article.slug}`,
+      "@id": `${siteConfig.url}/posts/${article.slug}`,
     },
     author: { "@type": "Organization", name: siteConfig.name },
     publisher: {

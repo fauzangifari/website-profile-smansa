@@ -11,6 +11,7 @@ import {
   Tag,
 } from "@phosphor-icons/react";
 import { Badge } from "@/components/ui/badge";
+import { safeHref } from "@/lib/utils";
 import { useScrollReveal } from "@/lib/hooks/use-scroll-reveal";
 import { ShareButton } from "@/features/berita/components/share-button";
 import { BeritaCard } from "@/features/berita/components/berita-card";
@@ -58,7 +59,7 @@ export function BeritaDetail({ item, related }: BeritaDetailProps) {
   return (
     <article className="space-y-10">
       <Link
-        href="/berita"
+        href="/posts"
         className="inline-flex items-center gap-2 text-sm font-semibold text-neutral-600 transition hover:text-brand-primary"
       >
         <ArrowLeft weight="bold" className="size-4" />
@@ -68,7 +69,7 @@ export function BeritaDetail({ item, related }: BeritaDetailProps) {
       {/* Meta row (judul & excerpt sudah tampil di hero PageTemplate) */}
       <header className="flex flex-wrap items-center gap-x-4 gap-y-2">
         <Link
-          href={`/berita?kategori=${item.category.slug}`}
+          href={`/posts?kategori=${item.category.slug}`}
           className="transition hover:opacity-80"
         >
           <Badge variant="primary" className="px-3 py-1">
@@ -147,7 +148,7 @@ export function BeritaDetail({ item, related }: BeritaDetailProps) {
                   <dt className="text-neutral-500">Kategori</dt>
                   <dd className="font-semibold text-neutral-900">
                     <Link
-                      href={`/berita?kategori=${item.category.slug}`}
+                      href={`/posts?kategori=${item.category.slug}`}
                       className="transition hover:text-brand-primary"
                     >
                       {item.category.name}
@@ -158,7 +159,7 @@ export function BeritaDetail({ item, related }: BeritaDetailProps) {
             </dl>
 
             <div className="mt-6 border-t border-neutral-200/60 pt-6">
-              <ShareButton title={item.title} path={`/berita/${item.slug}`} />
+              <ShareButton title={item.title} path={`/posts/${item.slug}`} />
             </div>
           </div>
 
@@ -173,7 +174,7 @@ export function BeritaDetail({ item, related }: BeritaDetailProps) {
                 {lampiran.map((att, i) => (
                   <li key={`${att.url}-${i}`}>
                     <a
-                      href={att.url}
+                      href={safeHref(att.url) ?? "#"}
                       target="_blank"
                       rel="noopener noreferrer"
                       download=""
@@ -212,7 +213,7 @@ export function BeritaDetail({ item, related }: BeritaDetailProps) {
                 {item.tags.map((tag) => (
                   <Link
                     key={tag.id}
-                    href={`/berita?tag=${tag.slug}`}
+                    href={`/posts?tag=${tag.slug}`}
                     className="rounded-full bg-brand-primary/10 px-3 py-1 text-xs font-medium text-brand-primary transition hover:bg-brand-primary/20"
                   >
                     #{tag.name}
@@ -232,7 +233,7 @@ export function BeritaDetail({ item, related }: BeritaDetailProps) {
               Berita Lainnya
             </h2>
             <Link
-              href="/berita"
+              href="/posts"
               className="shrink-0 text-sm font-semibold text-brand-primary hover:underline"
             >
               Lihat semua

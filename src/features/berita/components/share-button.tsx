@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 
 type ShareButtonProps = {
   title: string;
-  /** Path relatif, mis. "/berita/slug". URL absolut disusun saat runtime. */
+  /** Path relatif, mis. "/posts/slug". URL absolut disusun saat runtime. */
   path: string;
 };
 

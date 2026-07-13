@@ -42,7 +42,7 @@ const staticRoutes: Array<{
   { path: "/prestasi", changeFrequency: "weekly", priority: 0.8 },
   { path: "/kalender-akademik", changeFrequency: "monthly", priority: 0.6 },
   { path: "/alumni", changeFrequency: "monthly", priority: 0.6 },
-  { path: "/berita", changeFrequency: "daily", priority: 0.9 },
+  { path: "/posts", changeFrequency: "daily", priority: 0.9 },
   { path: "/kokurikuler", changeFrequency: "monthly", priority: 0.6 },
   { path: "/bilingual", changeFrequency: "monthly", priority: 0.6 },
   { path: "/simsdig", changeFrequency: "monthly", priority: 0.5 },
@@ -66,7 +66,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   try {
     const berita = await fetchAllPaginated(getBeritaList);
     beritaEntries = berita.map((post) => ({
-      url: `${BASE}/berita/${post.slug}`,
+      url: `${BASE}/posts/${post.slug}`,
       lastModified: post.publishedAt ? new Date(post.publishedAt) : now,
       changeFrequency: "weekly",
       priority: 0.7,
