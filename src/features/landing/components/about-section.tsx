@@ -1,15 +1,13 @@
 "use client";
 
-import { useRef } from "react";
+import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
-import { GlassCard } from "@/components/ui/card";
 import { Container } from "@/components/ui/container";
-import { cn } from "@/lib/utils";
 import {
   missionItems,
   visionStatement,
 } from "@/features/vision-mission/data/vision-mission-data";
-import { Quotes, CheckCircle, ArrowRight } from "@phosphor-icons/react";
+import { Quotes, ArrowRight } from "@phosphor-icons/react";
 import { useScrollReveal } from "@/lib/hooks/use-scroll-reveal";
 
 export function AboutSection() {
@@ -55,24 +53,33 @@ export function AboutSection() {
             className="scroll-reveal-stagger grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4"
           >
             {missionItems.map((mission, index) => (
-              <GlassCard
+              <article
                 key={index}
-                className="scroll-reveal group relative flex flex-col p-6 transition-[background-color,box-shadow,transform] duration-300 hover:-translate-y-1.5 hover:bg-white hover:shadow-xl hover:shadow-brand-primary/5"
+                className="scroll-reveal group relative isolate flex aspect-[3/2] flex-col overflow-hidden rounded-lg border border-white/50 shadow-lg shadow-neutral-950/10 transition-[box-shadow,transform] duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-brand-primary/15"
                 style={{ "--stagger-index": index } as React.CSSProperties}
               >
-                <div className="mb-4 flex size-10 items-center justify-center rounded-xl bg-brand-primary/10 text-brand-primary group-hover:bg-brand-primary group-hover:text-white transition-colors duration-300">
-                  <span className="text-sm font-extrabold">{index + 1}</span>
+                <Image
+                  src={mission.image}
+                  alt={mission.title}
+                  fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                  className="object-cover transition duration-700 ease-out group-hover:scale-[1.06]"
+                />
+
+                <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/85 via-neutral-950/30 to-neutral-950/5" />
+
+                <div className="relative z-10 mt-auto flex flex-col items-start gap-2 p-5">
+                  <span className="flex size-9 items-center justify-center rounded-xl border border-white/30 bg-white/15 text-sm font-extrabold text-white backdrop-blur-sm transition-colors duration-300 group-hover:bg-brand-primary group-hover:border-brand-primary">
+                    {index + 1}
+                  </span>
+                  <h4 className="text-lg font-bold leading-snug text-white drop-shadow-sm">
+                    {mission.title}
+                  </h4>
+                  <p className="text-xs font-semibold uppercase tracking-wide text-white/80">
+                    {mission.theme}
+                  </p>
                 </div>
-                <h4 className="text-base font-bold leading-snug text-neutral-900 transition-colors">
-                  {mission.title}
-                </h4>
-                <p className="mt-1 text-xs font-semibold uppercase tracking-wide text-brand-primary/80">
-                  {mission.theme}
-                </p>
-                <div className="absolute bottom-4 right-4 opacity-0 transition-opacity group-hover:opacity-100">
-                  <CheckCircle size={20} weight="fill" className="text-brand-primary/20" />
-                </div>
-              </GlassCard>
+              </article>
             ))}
           </div>
 
