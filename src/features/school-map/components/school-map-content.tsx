@@ -137,7 +137,7 @@ export function SchoolMapContent() {
           </p>
         </div>
 
-        <div className="grid gap-5 lg:grid-cols">
+        <div className="grid gap-5 lg:grid-cols-2">
           {/* Denah Isometrik */}
           <div className="group relative overflow-hidden rounded-lg border border-white/40 bg-white/60 shadow-xl shadow-neutral-900/8 backdrop-blur-sm">
             {/* Zoom button */}
@@ -168,6 +168,42 @@ export function SchoolMapContent() {
             <div className="border-t border-white/40 bg-white/50 px-5 py-3 backdrop-blur-sm">
               <p className="text-xs font-semibold text-neutral-600">
                 Ilustrasi Isometrik Kampus SMANSA — Klik "Perbesar" untuk melihat detail
+              </p>
+            </div>
+          </div>
+
+          {/* Peta Google Maps */}
+          <div className="group relative overflow-hidden rounded-lg border border-white/40 bg-white/60 shadow-xl shadow-neutral-900/8 backdrop-blur-sm">
+            {/* Buka di Google Maps */}
+            <a
+              href="https://maps.app.goo.gl/SBYvmw3tKYMniqxd8"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="absolute right-4 top-4 z-10 flex items-center gap-1.5 rounded-full border border-white/60 bg-white/80 px-3.5 py-2 text-xs font-bold text-neutral-700 shadow-md backdrop-blur-md transition hover:bg-white hover:text-brand-primary"
+              aria-label="Buka lokasi di Google Maps"
+            >
+              <ArrowSquareOut size={15} weight="bold" />
+              <span>Google Maps</span>
+            </a>
+
+            <div className="relative aspect-[16/9] w-full overflow-hidden">
+              <iframe
+                src={googleMapsEmbedUrl}
+                title="Lokasi SMA Negeri 1 Samarinda di Google Maps"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                loading="lazy"
+                allowFullScreen
+                referrerPolicy="no-referrer-when-downgrade"
+                className="absolute inset-0 size-full"
+              />
+            </div>
+
+            {/* Caption bar */}
+            <div className="border-t border-white/40 bg-white/50 px-5 py-3 backdrop-blur-sm">
+              <p className="text-xs font-semibold text-neutral-600">
+                Lokasi Kampus SMANSA — Klik tombol Google Maps untuk membuka rute
               </p>
             </div>
           </div>
