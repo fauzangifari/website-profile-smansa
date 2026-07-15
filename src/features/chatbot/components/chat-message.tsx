@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { ChatCircleDots } from "@phosphor-icons/react";
 
+import { ChatbotMark } from "@/features/chatbot/components/chatbot-mark";
 import { cn, safeHref } from "@/lib/utils";
 import type { ChatRole } from "@/features/chatbot/types/chat";
 
@@ -10,13 +10,12 @@ export function BotAvatar({ className }: { className?: string }) {
   return (
     <span
       className={cn(
-        "grid size-7 shrink-0 place-items-center rounded-full text-white shadow-sm shadow-brand-primary/30",
-        "bg-gradient-to-br from-primary-400 to-primary-600",
+        "block size-7 shrink-0 overflow-hidden rounded-full shadow-sm shadow-brand-primary/30",
         className,
       )}
       aria-hidden="true"
     >
-      <ChatCircleDots size={16} weight="fill" />
+      <ChatbotMark className="size-full" />
     </span>
   );
 }

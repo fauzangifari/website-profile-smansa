@@ -6,7 +6,6 @@ import {
   BookOpen,
   Buildings,
   CalendarBlank,
-  ChatCircleDots,
   ClipboardText,
   Clock,
   MapPin,
@@ -17,6 +16,7 @@ import {
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
 import { BotAvatar, ChatMessage } from "@/features/chatbot/components/chat-message";
+import { ChatbotMark } from "@/features/chatbot/components/chatbot-mark";
 import { suggestedQuestions } from "@/features/chatbot/data/suggested-questions";
 import type { ChatMessage as ChatMessageType } from "@/features/chatbot/types/chat";
 import { cn } from "@/lib/utils";
@@ -189,27 +189,14 @@ export function ChatWidget() {
             transition={panelTransition}
             className={cn(
               "group fixed bottom-6 right-6 z-[200] flex items-center justify-center",
-              "size-14 rounded-full text-white",
-              "bg-gradient-to-br from-primary-400 via-brand-primary to-primary-600",
+              "size-12 rounded-full",
               "shadow-xl shadow-brand-primary/40",
               "transition-transform hover:scale-110 active:scale-95",
               "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-primary",
             )}
             aria-label="Buka Asisten SMANSA"
           >
-            {/* Pulse ring — dinonaktifkan saat reduce-motion */}
-            {!reduceMotion ? (
-              <span
-                className="absolute inset-0 -z-10 rounded-full bg-brand-primary/40 motion-safe:animate-ping"
-                aria-hidden="true"
-              />
-            ) : null}
-            <ChatCircleDots size={26} weight="fill" className="transition-transform group-hover:rotate-6" />
-            {/* Badge aksen untuk menarik perhatian */}
-            <span
-              className="absolute right-1 top-1 size-3 rounded-full border-2 border-white bg-brand-accent"
-              aria-hidden="true"
-            />
+            <ChatbotMark className="size-full transition-transform group-hover:rotate-6" />
           </motion.button>
         )}
       </AnimatePresence>
@@ -241,8 +228,8 @@ export function ChatWidget() {
                 className="pointer-events-none absolute -right-8 -top-10 size-32 rounded-full bg-white/10 blur-2xl"
                 aria-hidden="true"
               />
-              <span className="grid size-10 shrink-0 place-items-center rounded-full bg-white/20 ring-1 ring-white/30 backdrop-blur-sm">
-                <ChatCircleDots size={22} weight="fill" />
+              <span className="block size-10 shrink-0 overflow-hidden rounded-full ring-1 ring-white/40">
+                <ChatbotMark className="size-full" />
               </span>
               <div className="min-w-0 flex-1">
                 <p className="text-sm font-semibold leading-tight">Asisten SMANSA</p>

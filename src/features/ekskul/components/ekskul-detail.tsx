@@ -22,6 +22,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Accordion } from "@/components/ui/accordion";
 import { cn, safeHref } from "@/lib/utils";
+import { cmsProseClass } from "@/lib/cms-prose";
 import { useScrollReveal } from "@/lib/hooks/use-scroll-reveal";
 import type { ExtracurricularDetail } from "@/features/ekskul/types/ekskul-detail";
 import {
@@ -34,23 +35,6 @@ import {
 type EkskulDetailProps = {
   item: ExtracurricularDetail;
 };
-
-// Styling konten HTML (contentHtml/visionHtml/missionHtml) tanpa plugin
-// typography — pakai descendant variant Tailwind v4 (sama pola dengan berita).
-const proseClass =
-  "max-w-none text-base leading-8 text-neutral-700 " +
-  "[&_p]:mb-5 [&_p:last-child]:mb-0 " +
-  "[&_strong]:font-semibold [&_strong]:text-neutral-900 " +
-  "[&_em]:italic " +
-  "[&_a]:font-medium [&_a]:text-brand-primary [&_a]:underline [&_a]:underline-offset-2 hover:[&_a]:text-brand-primary-hover " +
-  "[&_h2]:mt-8 [&_h2]:mb-3 [&_h2]:text-xl [&_h2]:font-bold [&_h2]:tracking-tight [&_h2]:text-neutral-900 md:[&_h2]:text-2xl " +
-  "[&_h3]:mt-6 [&_h3]:mb-2 [&_h3]:text-lg [&_h3]:font-bold [&_h3]:text-neutral-900 " +
-  "[&_ul]:mb-5 [&_ul]:list-disc [&_ul]:space-y-1.5 [&_ul]:pl-6 " +
-  "[&_ol]:mb-5 [&_ol]:list-decimal [&_ol]:space-y-1.5 [&_ol]:pl-6 " +
-  "[&_li]:leading-7 [&_li]:marker:text-brand-primary " +
-  "[&_blockquote]:my-6 [&_blockquote]:border-l-4 [&_blockquote]:border-brand-primary/40 [&_blockquote]:pl-4 [&_blockquote]:italic [&_blockquote]:text-neutral-600 " +
-  "[&_img]:my-6 [&_img]:w-full [&_img]:rounded-lg [&_img]:border [&_img]:border-white/50 " +
-  "[&_hr]:my-8 [&_hr]:border-neutral-200";
 
 // Prose ringkas untuk kartu Visi & Misi (font lebih kecil).
 const proseClassCompact =
@@ -125,7 +109,7 @@ export function EkskulDetail({ item }: EkskulDetailProps) {
               style={{ "--stagger-index": 0 } as React.CSSProperties}
             >
               <div
-                className={proseClass}
+                className={cmsProseClass}
                 dangerouslySetInnerHTML={{ __html: item.contentHtml }}
               />
             </section>

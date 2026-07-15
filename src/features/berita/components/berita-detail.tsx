@@ -12,6 +12,7 @@ import {
 } from "@phosphor-icons/react";
 import { Badge } from "@/components/ui/badge";
 import { safeHref } from "@/lib/utils";
+import { cmsProseClass } from "@/lib/cms-prose";
 import { useScrollReveal } from "@/lib/hooks/use-scroll-reveal";
 import { ShareButton } from "@/features/berita/components/share-button";
 import { BeritaCard } from "@/features/berita/components/berita-card";
@@ -27,24 +28,6 @@ type BeritaDetailProps = {
   related: BeritaListItem[];
 };
 
-// Styling artikel HTML (contentHtml) tanpa plugin typography — pakai
-// descendant variant Tailwind v4 pada tag yang mungkin muncul dari CMS.
-const proseClass =
-  "max-w-none text-base leading-8 text-neutral-700 " +
-  "[&_p]:mb-5 [&_p:last-child]:mb-0 " +
-  "[&_strong]:font-semibold [&_strong]:text-neutral-900 " +
-  "[&_em]:italic " +
-  "[&_a]:font-medium [&_a]:text-brand-primary [&_a]:underline [&_a]:underline-offset-2 hover:[&_a]:text-brand-primary-hover " +
-  "[&_h2]:mt-8 [&_h2]:mb-3 [&_h2]:text-xl [&_h2]:font-bold [&_h2]:tracking-tight [&_h2]:text-neutral-900 md:[&_h2]:text-2xl " +
-  "[&_h3]:mt-6 [&_h3]:mb-2 [&_h3]:text-lg [&_h3]:font-bold [&_h3]:text-neutral-900 " +
-  "[&_ul]:mb-5 [&_ul]:list-disc [&_ul]:space-y-1.5 [&_ul]:pl-6 " +
-  "[&_ol]:mb-5 [&_ol]:list-decimal [&_ol]:space-y-1.5 [&_ol]:pl-6 " +
-  "[&_li]:leading-7 [&_li]:marker:text-brand-primary " +
-  "[&_blockquote]:my-6 [&_blockquote]:border-l-4 [&_blockquote]:border-brand-primary/40 [&_blockquote]:pl-4 [&_blockquote]:italic [&_blockquote]:text-neutral-600 " +
-  "[&_img]:my-6 [&_img]:w-full [&_img]:rounded-lg [&_img]:border [&_img]:border-white/50 " +
-  "[&_figure]:my-6 [&_figcaption]:mt-2 [&_figcaption]:text-center [&_figcaption]:text-xs [&_figcaption]:text-neutral-500 " +
-  "[&_hr]:my-8 [&_hr]:border-neutral-200";
-
 export function BeritaDetail({ item, related }: BeritaDetailProps) {
   const photos = (item.attachments ?? []).filter(
     (att) => att.type?.toUpperCase() === "PHOTO",
@@ -57,7 +40,7 @@ export function BeritaDetail({ item, related }: BeritaDetailProps) {
   const relatedRef = useScrollReveal();
 
   return (
-    <article className="space-y-10">
+    <article className="space-y-8 md:space-y-10">
       <Link
         href="/posts"
         className="inline-flex items-center gap-2 text-sm font-semibold text-neutral-600 transition hover:text-brand-primary"
@@ -100,11 +83,11 @@ export function BeritaDetail({ item, related }: BeritaDetailProps) {
       </div>
 
       {/* Body + sidebar */}
-      <div className="grid gap-10 lg:grid-cols-[1fr_320px]">
-        <div ref={bodyRef} className="scroll-reveal min-w-0 space-y-10">
+      <div className="grid gap-8 lg:grid-cols-[1fr_320px] lg:gap-10">
+        <div ref={bodyRef} className="scroll-reveal min-w-0 space-y-8 md:space-y-10">
           {/* Isi artikel dari CMS (first-party, tepercaya) */}
           <div
-            className={proseClass}
+            className={cmsProseClass}
             dangerouslySetInnerHTML={{ __html: item.contentHtml }}
           />
 
@@ -120,9 +103,9 @@ export function BeritaDetail({ item, related }: BeritaDetailProps) {
           ) : null}
         </div>
 
-        <aside ref={asideRef} className="scroll-reveal space-y-6 lg:sticky lg:top-28 lg:self-start">
+        <aside ref={asideRef} className="scroll-reveal min-w-0 space-y-6 lg:sticky lg:top-28 lg:self-start">
           {/* Info ringkas */}
-          <div className="rounded-lg border border-white/50 bg-white/50 p-6 backdrop-blur-xl">
+          <div className="rounded-lg border border-white/50 bg-white/70 p-5 backdrop-blur-xl md:p-6">
             <p className="mb-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-500">
               Informasi
             </p>
@@ -165,7 +148,7 @@ export function BeritaDetail({ item, related }: BeritaDetailProps) {
 
           {/* Lampiran (pdf/doc/docx) */}
           {lampiran.length ? (
-            <div className="rounded-lg border border-white/50 bg-white/50 p-6 backdrop-blur-xl">
+            <div className="rounded-lg border border-white/50 bg-white/70 p-5 backdrop-blur-xl md:p-6">
               <p className="mb-4 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-500">
                 <DownloadSimple weight="duotone" className="size-4 text-brand-primary" />
                 Lampiran
@@ -184,7 +167,7 @@ export function BeritaDetail({ item, related }: BeritaDetailProps) {
                         <FileArrowDown weight="duotone" size={20} />
                       </span>
                       <span className="min-w-0 flex-1">
-                        <span className="block truncate text-sm font-semibold text-neutral-900">
+                        <span className="block break-words line-clamp-2 text-sm font-semibold text-neutral-900">
                           {att.label}
                         </span>
                         <span className="text-xs uppercase text-neutral-400">
@@ -204,7 +187,7 @@ export function BeritaDetail({ item, related }: BeritaDetailProps) {
 
           {/* Tags */}
           {item.tags?.length ? (
-            <div className="rounded-lg border border-white/50 bg-white/50 p-6 backdrop-blur-xl">
+            <div className="rounded-lg border border-white/50 bg-white/70 p-5 backdrop-blur-xl md:p-6">
               <p className="mb-4 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-500">
                 <Tag weight="duotone" className="size-4 text-brand-primary" />
                 Tag
@@ -227,7 +210,7 @@ export function BeritaDetail({ item, related }: BeritaDetailProps) {
 
       {/* Related */}
       {related.length ? (
-        <section ref={relatedRef} className="scroll-reveal space-y-6 border-t border-neutral-200/60 pt-10">
+        <section ref={relatedRef} className="scroll-reveal space-y-6 border-t border-neutral-200/60 pt-8 md:pt-10">
           <div className="flex items-end justify-between gap-4">
             <h2 className="text-xl font-bold tracking-tight text-neutral-900 md:text-2xl">
               Berita Lainnya
