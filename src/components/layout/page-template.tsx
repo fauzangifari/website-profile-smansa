@@ -137,7 +137,7 @@ export function PageTemplate({
               </Badge>
             ) : null}
 
-            <h1 className="max-w-2xl text-lg font-extrabold leading-tight text-neutral-900 md:text-xl lg:text-3xl">
+            <h1 className="max-w-2xl text-lg font-extrabold leading-tight text-neutral-900 break-words md:text-xl lg:text-3xl">
               {title}
             </h1>
             {description ? (
