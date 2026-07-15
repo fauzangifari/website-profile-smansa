@@ -4,7 +4,6 @@ import { AppNavbar } from "@/components/site/app-navbar";
 import { SiteFooter } from "@/components/site/site-footer";
 import { mainNavItems } from "@/config/site";
 import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Reveal } from "@/components/ui/reveal";
 import { orgMembers } from "@/features/struktur-organisasi/data/struktur-data";
 import { MapelChips } from "./mapel-chips";
@@ -39,39 +38,72 @@ function PersonCard({
   isMain?: boolean;
 }) {
   const initials = getInitials(name);
+  const first = initials.slice(0, 1);
+  const second = initials.slice(1);
 
   return (
     <Card
       variant={isMain ? "glass-strong" : "glass-soft"}
-      className={`relative flex flex-col items-center p-6 text-center transition-all duration-300 hover:-translate-y-2 hover:shadow-xl ${
-        isMain ? "border-brand-primary/30 shadow-brand-primary/5" : "border-white/30"
+      className={`group relative flex flex-col overflow-hidden p-0 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${
+        isMain ? "border-brand-primary/30 shadow-brand-primary/5" : "border-white/40"
       }`}
     >
-      <div
-        className={`mb-5 flex h-24 w-24 items-center justify-center rounded-full border shadow-inner backdrop-blur-md ${
-          isMain
-            ? "border-brand-primary/30 bg-brand-primary/10 text-3xl text-brand-primary"
-            : "border-white/60 bg-white/50 text-2xl text-brand-primary-hover"
-        }`}
-      >
-        <span className="font-black tracking-tighter">{initials}</span>
+      {/* Area potret monogram */}
+      <div className="relative aspect-[3/4] w-full overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-brand-primary-soft via-blue-50 to-indigo-50" />
+
+        {/* Cincin konsentris + glow (dekoratif) */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 flex items-center justify-center"
+        >
+          <div className="absolute size-72 rounded-full border border-brand-primary/5" />
+          <div className="absolute size-56 rounded-full border border-brand-primary/10" />
+          <div className="absolute size-40 rounded-full border border-brand-primary/10" />
+          <div className="absolute size-36 rounded-full bg-brand-primary/10 blur-2xl" />
+        </div>
+
+        {/* Monogram dua-nada */}
+        <div className="absolute inset-0 flex items-center justify-center">
+          <span
+            className={`relative z-10 font-black tracking-tighter transition-transform duration-300 group-hover:scale-105 ${
+              isMain ? "text-7xl md:text-8xl" : "text-6xl md:text-7xl"
+            }`}
+          >
+            <span className="text-brand-primary">{first}</span>
+            <span className={isMain ? "text-brand-primary" : "text-brand-primary/40"}>
+              {second}
+            </span>
+          </span>
+        </div>
+
+        {/* Scrim putih bawah */}
+        <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-white/85 to-transparent" />
       </div>
-      <Badge variant={isMain ? "primary" : "glass"} className="mb-4">
-        {role}
-      </Badge>
-      <h3
-        className={`font-bold text-neutral-900 ${
-          isMain ? "text-lg md:text-xl" : "text-base"
+
+      {/* Plakat kaca mengambang */}
+      <div
+        className={`relative z-20 mx-3 -mt-6 mb-3 rounded-lg border border-white/60 px-4 py-3 text-center shadow-sm backdrop-blur-xl ${
+          isMain ? "bg-white/80" : "bg-white/70"
         }`}
       >
-        {name}
-      </h3>
-      {nip && nip !== "-" && (
-        <p className="mt-2 text-xs font-medium text-neutral-600">{nip}</p>
-      )}
-      {rank && rank !== "-" && (
-        <p className="mt-1 text-xs text-neutral-500">{rank}</p>
-      )}
+        <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-brand-primary">
+          {role}
+        </p>
+        <h3
+          className={`mt-1 font-bold text-neutral-900 transition-colors group-hover:text-brand-primary ${
+            isMain ? "text-lg" : "text-base"
+          }`}
+        >
+          {name}
+        </h3>
+        {nip && nip !== "-" && (
+          <p className="mt-1 text-xs font-medium text-neutral-500">{nip}</p>
+        )}
+        {rank && rank !== "-" && (
+          <p className="mt-0.5 text-xs text-neutral-400">{rank}</p>
+        )}
+      </div>
     </Card>
   );
 }
@@ -105,7 +137,7 @@ export default function StrukturOrganisasiPage() {
         <div className="mx-auto max-w-6xl py-8">
           {/* KEPALA SEKOLAH */}
           <Reveal className="flex justify-center">
-            <div className="w-full max-w-md">
+            <div className="w-full max-w-xs">
               {kepala.map((member) => (
                 <PersonCard
                   key={member.name}
@@ -122,7 +154,7 @@ export default function StrukturOrganisasiPage() {
           <Connector />
 
           {/* WAKA */}
-          <Reveal className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <Reveal className="grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4">
             {waka.map((member) => (
               <PersonCard
                 key={member.name}
@@ -137,7 +169,7 @@ export default function StrukturOrganisasiPage() {
           <Connector />
 
           {/* KOORDINATOR & BENDAHARA */}
-          <Reveal className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <Reveal className="grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4">
             {koordinator.map((member) => (
               <PersonCard
                 key={member.name}
