@@ -75,7 +75,7 @@ export const orgMembers: OrgMember[] = [
     role: "BENDAHARA",
     name: "Chairunisa Puspanegara, S.Pd.",
     nip: "NIPPPK 198411042025212021",
-    rank: "Pengatur Muda",
+    rank: "Pengadministrasi Perkantoran",
     group: "koordinator",
     description:
       "Mengelola perencanaan, pelaksanaan, dan pelaporan keuangan sekolah.",
