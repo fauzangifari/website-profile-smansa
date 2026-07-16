@@ -105,7 +105,7 @@ export function ProfileVideoSection({
               className="relative z-10 flex size-20 items-center justify-center rounded-full border border-white/20 bg-white/12 text-white shadow-2xl backdrop-blur-md transition-all duration-300 ease-out group-hover:scale-110 group-hover:bg-brand-primary group-hover:border-brand-primary group-hover:text-white"
               aria-label="Putar video profil"
             >
-              <Play size={32} weight="fill" className="ml-1.5 transition-transform duration-300 group-hover:scale-105" />
+              <Play size={32} weight="fill" className="transition-transform duration-300 group-hover:scale-105" />
             </button>
           </div>
         </div>
