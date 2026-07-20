@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   title: "Denah Sekolah",
   alternates: { canonical: "/denah-sekolah" },
   description:
-    "Jelajahi denah dan peta kampus SMA Negeri 1 Samarinda. Temukan lokasi gedung sekolah, cafetaria, perpustakaan, laboratorium, masjid, auditorium, dan seluruh fasilitas kampus SMANSA.",
+    "Jelajahi denah dan peta sekolah SMA Negeri 1 Samarinda. Temukan lokasi gedung sekolah, cafetaria, perpustakaan, laboratorium, masjid, auditorium, dan seluruh fasilitas sekolah SMANSA.",
 };
 
 export default function DenahSekolahPage() {
@@ -18,8 +18,8 @@ export default function DenahSekolahPage() {
       <AppNavbar items={mainNavItems} anchorBasePath="/" />
       <PageTemplate
         eyebrow="Denah Sekolah"
-        title="Denah Kampus SMA Negeri 1 Samarinda"
-        description="Kenali tata letak dan lokasi setiap gedung serta fasilitas di lingkungan kampus SMANSA untuk memudahkan navigasi dan orientasi."
+        title="Denah Sekolah SMA Negeri 1 Samarinda"
+        description="Kenali tata letak dan lokasi setiap gedung serta fasilitas di lingkungan sekolah SMANSA untuk memudahkan navigasi dan orientasi."
         variant="glass"
         breadcrumbs={[
           { label: "Beranda", href: "/" },

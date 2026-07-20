@@ -44,7 +44,7 @@ export function ContactLocationSection() {
             <div ref={cardsRef} className="scroll-reveal-stagger grid gap-5">
               <ContactCard 
                 icon={<MapPin size={24} weight="duotone" />}
-                title="Alamat Kampus"
+                title="Alamat Sekolah"
                 content={contactInfo.address}
                 href="https://maps.google.com"
                 staggerIndex={0}

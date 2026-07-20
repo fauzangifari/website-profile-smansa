@@ -195,7 +195,7 @@ Ringkasan: ${facilitiesStats.map((s) => `${s.value} ${s.label}`).join(", ")}.
 Fasilitas:
 ${facilities.map((f) => `- ${f.name} (${f.category}): ${f.shortDescription}`).join("\n")}
 
-Denah / area kampus (halaman: /denah-sekolah) — ${schoolMapStats.map((s) => `${s.value} ${s.label}`).join(", ")}:
+Denah / area sekolah (halaman: /denah-sekolah) — ${schoolMapStats.map((s) => `${s.value} ${s.label}`).join(", ")}:
 ${schoolAreas.map((a) => `- ${a.name}: ${a.description} Fasilitas: ${a.features.join(", ")}.`).join("\n")}`);
 
   parts.push(`## KALENDER AKADEMIK 2026/2027 (halaman: /kalender-akademik)

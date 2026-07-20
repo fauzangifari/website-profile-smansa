@@ -55,9 +55,9 @@ export const historyMilestones: Milestone[] = [
   },
   {
     year: "Masa Kini",
-    title: "Relokasi Kampus Modern",
+    title: "Relokasi Sekolah Modern",
     description:
-      "Berpindah dari lokasi lama di Jalan Bhayangkara (dahulu Jalan Melati) ke kampus modern yang luas dan representatif di Jalan Drs. H. Anang Hasyim.",
+      "Berpindah dari lokasi lama di Jalan Bhayangkara (dahulu Jalan Melati) ke sekolah modern yang luas dan representatif di Jalan Drs. H. Anang Hasyim.",
     icon: "MapPinLine",
   },
 ];

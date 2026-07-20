@@ -33,6 +33,13 @@ function questionIcon(question: string): Icon {
   return Sparkle;
 }
 
+// Format sisa cooldown untuk ditampilkan (detik → detik/menit/jam).
+function formatCooldown(seconds: number): string {
+  if (seconds >= 3600) return `${Math.ceil(seconds / 3600)} jam`;
+  if (seconds >= 60) return `${Math.ceil(seconds / 60)} menit`;
+  return `${seconds} detik`;
+}
+
 export function ChatWidget() {
   const reduceMotion = useReducedMotion();
   const [open, setOpen] = useState(false);
@@ -40,6 +47,11 @@ export function ChatWidget() {
   const [input, setInput] = useState("");
   const [isStreaming, setIsStreaming] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // Cooldown akibat 429 (rate limit). `cooldownUntil` = timestamp berakhir;
+  // `cooldownLeft` = detik tersisa untuk hitung mundur di UI.
+  const [cooldownUntil, setCooldownUntil] = useState<number | null>(null);
+  const [cooldownLeft, setCooldownLeft] = useState(0);
+  const isCoolingDown = cooldownUntil !== null;
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -72,10 +84,30 @@ export function ChatWidget() {
   // Batalkan stream saat komponen dilepas.
   useEffect(() => () => abortRef.current?.abort(), []);
 
+  // Hitung mundur cooldown 429. Interval aktif hanya selama cooldown berjalan;
+  // saat habis, bersihkan agar input aktif lagi.
+  useEffect(() => {
+    if (cooldownUntil === null) return;
+    const tick = () => {
+      const left = Math.ceil((cooldownUntil - Date.now()) / 1000);
+      if (left <= 0) {
+        setCooldownLeft(0);
+        setCooldownUntil(null);
+      } else {
+        setCooldownLeft(left);
+      }
+    };
+    tick();
+    const id = window.setInterval(tick, 1000);
+    return () => window.clearInterval(id);
+  }, [cooldownUntil]);
+
   const sendMessage = useCallback(
     async (raw: string) => {
       const content = raw.trim();
       if (!content || isStreaming) return;
+      // Sedang cooldown akibat rate limit → jangan kirim.
+      if (cooldownUntil !== null && Date.now() < cooldownUntil) return;
 
       setError(null);
       setInput("");
@@ -104,6 +136,12 @@ export function ChatWidget() {
             if (data?.error) message = data.error;
           } catch {
             /* biarkan pesan default */
+          }
+          // 429 → mulai cooldown sesuai header Retry-After (detik).
+          if (res.status === 429) {
+            const secs = Number(res.headers.get("Retry-After"));
+            const wait = Number.isFinite(secs) && secs > 0 ? secs : 60;
+            setCooldownUntil(Date.now() + wait * 1000);
           }
           setMessages((prev) => prev.slice(0, -1)); // buang placeholder kosong
           setError(message);
@@ -148,7 +186,7 @@ export function ChatWidget() {
         abortRef.current = null;
       }
     },
-    [messages, isStreaming],
+    [messages, isStreaming, cooldownUntil],
   );
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -260,7 +298,10 @@ export function ChatWidget() {
               aria-label="Percakapan"
             >
               {messages.length === 0 ? (
-                <EmptyState onPick={(q) => void sendMessage(q)} disabled={isStreaming} />
+                <EmptyState
+                  onPick={(q) => void sendMessage(q)}
+                  disabled={isStreaming || isCoolingDown}
+                />
               ) : (
                 messages.map((message, i) =>
                   message.role === "assistant" && message.content === "" ? (
@@ -295,8 +336,12 @@ export function ChatWidget() {
                   onChange={autoGrow}
                   onKeyDown={handleTextareaKeyDown}
                   rows={1}
-                  placeholder="Tulis pertanyaanmu…"
-                  disabled={isStreaming}
+                  placeholder={
+                    isCoolingDown
+                      ? `Tunggu ${formatCooldown(cooldownLeft)}…`
+                      : "Tulis pertanyaanmu…"
+                  }
+                  disabled={isStreaming || isCoolingDown}
                   className={cn(
                     "max-h-[120px] min-h-[40px] flex-1 resize-none border-none bg-transparent px-2.5 py-2 text-sm text-neutral-900",
                     "placeholder:text-neutral-400 focus:outline-none focus:ring-0",
@@ -306,7 +351,7 @@ export function ChatWidget() {
                 />
                 <button
                   type="submit"
-                  disabled={isStreaming || !input.trim()}
+                  disabled={isStreaming || isCoolingDown || !input.trim()}
                   className={cn(
                     "grid size-10 shrink-0 place-items-center rounded-xl text-white transition",
                     "bg-gradient-to-br from-brand-primary to-primary-600 shadow-md shadow-brand-primary/30",
@@ -319,9 +364,15 @@ export function ChatWidget() {
                   <PaperPlaneRight size={18} weight="fill" />
                 </button>
               </div>
-              <p className="mt-2 px-1 text-[11px] leading-tight text-neutral-400">
-                Jawaban dibuat AI dan bisa keliru. Untuk hal penting, konfirmasi ke sekolah.
-              </p>
+              {isCoolingDown ? (
+                <p className="mt-2 px-1 text-[11px] leading-tight text-danger">
+                  Terlalu banyak permintaan. Coba lagi dalam {formatCooldown(cooldownLeft)}.
+                </p>
+              ) : (
+                <p className="mt-2 px-1 text-[11px] leading-tight text-neutral-400">
+                  Jawaban dibuat AI dan bisa keliru. Untuk hal penting, konfirmasi ke sekolah.
+                </p>
+              )}
             </form>
           </motion.div>
         )}

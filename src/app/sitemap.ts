@@ -32,6 +32,7 @@ const staticRoutes: Array<{
   { path: "/", changeFrequency: "daily", priority: 1 },
   { path: "/profil", changeFrequency: "monthly", priority: 0.8 },
   { path: "/sejarah", changeFrequency: "yearly", priority: 0.6 },
+  { path: "/maskot", changeFrequency: "yearly", priority: 0.5 },
   { path: "/visi-misi", changeFrequency: "yearly", priority: 0.6 },
   { path: "/struktur-organisasi", changeFrequency: "yearly", priority: 0.6 },
   { path: "/denah-sekolah", changeFrequency: "yearly", priority: 0.5 },

@@ -25,7 +25,7 @@ const cspDirectives: Record<string, string[]> = {
   "base-uri": ["'self'"],
   "form-action": ["'self'"],
   "object-src": ["'none'"],
-  "frame-src": ["'self'", "https://www.google.com", "https://maps.google.com"],
+  "frame-src": ["'self'", "https://www.google.com", "https://maps.google.com", "https://www.youtube.com"],
   ...(isProd ? { "upgrade-insecure-requests": [] } : {}),
 };
 

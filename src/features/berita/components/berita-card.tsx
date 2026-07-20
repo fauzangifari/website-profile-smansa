@@ -50,11 +50,11 @@ export function BeritaCard({ item, className }: BeritaCardProps) {
           </time>
         </div>
 
-        <h3 className="line-clamp-2 text-lg font-bold leading-snug text-neutral-900 transition-colors group-hover:text-brand-primary">
+        <h3 className="line-clamp-2 min-h-[2lh] text-lg font-bold leading-snug text-neutral-900 transition-colors group-hover:text-brand-primary">
           {item.title}
         </h3>
 
-        <p className="line-clamp-2 text-sm leading-relaxed text-neutral-600">
+        <p className="line-clamp-2 min-h-[2lh] text-sm leading-relaxed text-neutral-600">
           {item.excerpt}
         </p>
 

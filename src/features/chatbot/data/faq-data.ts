@@ -37,7 +37,7 @@ export const faqEntries: FaqEntry[] = [
     answer:
       `Alamat SMA Negeri 1 Samarinda:\n` +
       `${schoolAddress}\n\n` +
-      `Lihat denah & area kampus di /denah-sekolah.`,
+      `Lihat denah & area sekolah di /denah-sekolah.`,
   },
   {
     id: "kontak",

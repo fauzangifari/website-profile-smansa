@@ -54,6 +54,7 @@ export const mainNavItems: SiteNavItem[] = [
     children: [
       { label: "Profil", href: "/profil" },
       { label: "Sejarah", href: "/sejarah" },
+      { label: "Maskot", href: "/maskot" },
       { label: "Visi & Misi", href: "/visi-misi" },
       { label: "Struktur Organisasi", href: "/struktur-organisasi" },
       { label: "Direktori Guru", href: "/direktori-guru" },

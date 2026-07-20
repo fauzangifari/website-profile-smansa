@@ -84,7 +84,7 @@ export function SchoolMapContent() {
             variant="primary"
             className="mb-5 px-4 py-1 text-[11px] font-bold uppercase tracking-[0.18em]"
           >
-            Denah &amp; Lokasi Kampus
+            Denah &amp; Lokasi Sekolah
           </Badge>
 
           <h2 className="max-w-3xl text-2xl font-extrabold leading-tight text-neutral-900 md:text-3xl lg:text-4xl">
@@ -93,7 +93,7 @@ export function SchoolMapContent() {
           </h2>
 
           <p className="mt-4 max-w-2xl text-sm leading-8 text-neutral-600 md:text-base">
-            Jelajahi kampus SMA Negeri 1 Samarinda melalui denah interaktif.
+            Jelajahi sekolah SMA Negeri 1 Samarinda melalui denah interaktif.
             Kenali setiap gedung, fasilitas, dan area yang mendukung kehidupan
             akademik dan non-akademik siswa.
           </p>
@@ -126,13 +126,13 @@ export function SchoolMapContent() {
       <section className="space-y-6">
         <div className="flex flex-col items-center text-center">
           <Badge variant="glass" className="mb-4">
-            Denah Kampus
+            Denah Sekolah
           </Badge>
           <h3 className="text-2xl font-extrabold text-neutral-900 md:text-3xl">
             Peta &amp; Denah SMANSA
           </h3>
           <p className="mt-3 max-w-xl text-sm leading-7 text-neutral-500 md:text-base">
-            Denah ilustrasi kampus dan peta lokasi SMAN 1 Samarinda untuk
+            Denah ilustrasi sekolah dan peta lokasi SMAN 1 Samarinda untuk
             memudahkan navigasi.
           </p>
         </div>
@@ -154,7 +154,7 @@ export function SchoolMapContent() {
             <div className="relative aspect-[16/9] w-full overflow-hidden">
               <Image
                 src="/images/denah-sekolah/denah-sekolah.jpg"
-                alt="Denah Kampus SMA Negeri 1 Samarinda"
+                alt="Denah Sekolah SMA Negeri 1 Samarinda"
                 fill
                 sizes="(max-width: 1024px) 100vw, 58vw"
                 className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.03]"
@@ -167,7 +167,7 @@ export function SchoolMapContent() {
             {/* Caption bar */}
             <div className="border-t border-white/40 bg-white/50 px-5 py-3 backdrop-blur-sm">
               <p className="text-xs font-semibold text-neutral-600">
-                Ilustrasi Isometrik Kampus SMANSA — Klik "Perbesar" untuk melihat detail
+                Ilustrasi Isometrik Sekolah SMANSA — Klik "Perbesar" untuk melihat detail
               </p>
             </div>
           </div>
@@ -203,7 +203,7 @@ export function SchoolMapContent() {
             {/* Caption bar */}
             <div className="border-t border-white/40 bg-white/50 px-5 py-3 backdrop-blur-sm">
               <p className="text-xs font-semibold text-neutral-600">
-                Lokasi Kampus SMANSA — Klik tombol Google Maps untuk membuka rute
+                Lokasi Sekolah SMANSA — Klik tombol Google Maps untuk membuka rute
               </p>
             </div>
           </div>
@@ -246,7 +246,7 @@ export function SchoolMapContent() {
                 <div className="relative aspect-[16/9] w-full">
                   <Image
                     src="/images/denah-sekolah/denah-sekolah.jpg"
-                    alt="Denah Kampus SMA Negeri 1 Samarinda — tampilan penuh"
+                    alt="Denah Sekolah SMA Negeri 1 Samarinda — tampilan penuh"
                     fill
                     sizes="(max-width: 1280px) 100vw, 90vw"
                     className="object-contain"
@@ -256,7 +256,7 @@ export function SchoolMapContent() {
 
                 <div className="border-t border-neutral-100 bg-white px-6 py-4">
                   <p className="text-sm font-semibold text-neutral-700">
-                    Denah Kampus SMA Negeri 1 Samarinda
+                    Denah Sekolah SMA Negeri 1 Samarinda
                   </p>
                   <p className="mt-0.5 text-xs text-neutral-400">{schoolAddress}</p>
                 </div>

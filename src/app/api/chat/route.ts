@@ -7,7 +7,7 @@ import {
   streamChatResponse,
 } from "@/features/chatbot/api/gemini";
 import { getKnowledgeBase } from "@/features/chatbot/api/knowledge-base";
-import { rateLimit } from "@/features/chatbot/api/rate-limit";
+import { chargeAnswerCost, rateLimit } from "@/features/chatbot/api/rate-limit";
 import { matchFaq } from "@/features/chatbot/api/faq";
 import { budgetState, markExhausted, noteGeminiCall } from "@/features/chatbot/api/budget";
 import { getCached, isCacheable, normalizeQuestion, setCached } from "@/features/chatbot/api/response-cache";
@@ -114,8 +114,9 @@ export async function POST(req: NextRequest): Promise<Response> {
     return jsonError("Permintaan tidak diizinkan.", 403);
   }
 
-  // B & C. Rate limit per IP (burst/menit + plafon harian).
-  const limit = rateLimit(getIp(req));
+  // B & C. Rate limit per IP (burst/menit + plafon harian berbasis kredit).
+  const ip = getIp(req);
+  const limit = rateLimit(ip);
   if (!limit.ok) {
     return jsonError(
       "Maaf, permintaan sedang terlalu banyak. Coba lagi sebentar lagi ya. 🙏",
@@ -211,6 +212,9 @@ export async function POST(req: NextRequest): Promise<Response> {
           );
         }
       } finally {
+        // Bebankan kredit ekstra sesuai panjang jawaban (jawaban panjang = biaya
+        // lebih besar terhadap jatah harian IP). Jalur FAQ/cache tak sampai sini.
+        chargeAnswerCost(ip, acc.length);
         controller.close();
       }
     },

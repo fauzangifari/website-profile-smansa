@@ -130,7 +130,7 @@ export const schoolMapStats = [
   { value: "7", label: "Gedung & Area" },
   { value: "30+", label: "Ruang Kelas" },
   { value: "5", label: "Laboratorium" },
-  { value: "5+ Ha", label: "Luas Kampus" },
+  { value: "5+ Ha", label: "Luas Sekolah" },
 ];
 
 export const schoolAddress =
