@@ -37,7 +37,7 @@ const highlights = [
   },
 ];
 
-// TODO: ganti href "#" dengan URL final saat aplikasi dirilis.
+// TODO: ganti href "#" dengan URL final saat aplikasi Android dirilis.
 const platforms = [
   {
     icon: Monitor,
@@ -46,7 +46,7 @@ const platforms = [
       "Kelola data dan pantau aktivitas sekolah langsung dari peramban, tanpa perlu instalasi.",
     cta: "Buka Dashboard",
     ctaIcon: ArrowUpRight,
-    href: "#",
+    href: "https://sims.sman1samarinda.sch.id",
   },
   {
     icon: AndroidLogo,
@@ -64,7 +64,7 @@ const platforms = [
       "Nikmati pengalaman terpadu yang sama di iPhone maupun iPad dengan aplikasi iOS.",
     cta: "Unduh di App Store",
     ctaIcon: AppStoreLogo,
-    href: "#",
+    href: "https://apps.apple.com/us/app/simsdig/id6761016391",
   },
 ];
 
@@ -155,6 +155,7 @@ export function SimsdigContent() {
           {platforms.map((platform, index) => {
             const Icon = platform.icon;
             const CtaIcon = platform.ctaIcon;
+            const isExternal = platform.href.startsWith("http");
 
             return (
               <div
@@ -180,6 +181,8 @@ export function SimsdigContent() {
 
                 <Link
                   href={platform.href}
+                  target={isExternal ? "_blank" : undefined}
+                  rel={isExternal ? "noopener noreferrer" : undefined}
                   className="mt-auto inline-flex items-center gap-2 rounded-xl bg-brand-primary px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-brand-primary/25 transition-colors hover:bg-brand-primary-hover"
                 >
                   <CtaIcon size={18} weight="fill" />
@@ -213,11 +216,14 @@ export function SimsdigContent() {
             {platforms.map((platform, index) => {
               const CtaIcon = platform.ctaIcon;
               const isPrimary = index === 0;
+              const isExternal = platform.href.startsWith("http");
 
               return (
                 <Link
                   key={platform.name}
                   href={platform.href}
+                  target={isExternal ? "_blank" : undefined}
+                  rel={isExternal ? "noopener noreferrer" : undefined}
                   className={cn(
                     "inline-flex items-center gap-2 rounded-xl px-5 py-3 text-sm font-bold transition-colors",
                     isPrimary
@@ -233,7 +239,8 @@ export function SimsdigContent() {
           </div>
 
           <p className="text-xs text-neutral-500">
-            Aplikasi mobile segera hadir di Google Play &amp; App Store.
+            Aplikasi iOS sudah tersedia di App Store. Aplikasi Android segera hadir di
+            Google Play.
           </p>
         </Card>
       </section>
