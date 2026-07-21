@@ -33,13 +33,13 @@ export function BackToTopButton() {
       <button
         onClick={handleClick}
         className={cn(
-          "flex items-center justify-center size-10 rounded-full",
+          "flex items-center justify-center size-12 rounded-full",
           "bg-brand-primary text-white shadow-md transition-all duration-300",
           "hover:scale-105 active:scale-95",
         )}
         aria-label="Kembali ke atas"
       >
-        <ArrowUp weight="bold" size={20} />
+        <ArrowUp weight="bold" size={22} />
       </button>
     </div>
   );

@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import type { Icon } from "@phosphor-icons/react";
 import {
   BookOpen,
@@ -232,7 +233,7 @@ export function ChatWidget() {
               "transition-transform hover:scale-110 active:scale-95",
               "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-primary",
             )}
-            aria-label="Buka Asisten SMANSA"
+            aria-label="Buka RANGSA"
           >
             <ChatbotMark className="size-full transition-transform group-hover:rotate-6" />
           </motion.button>
@@ -249,45 +250,45 @@ export function ChatWidget() {
             exit={reduceMotion ? undefined : { opacity: 0, y: 24, scale: 0.98 }}
             transition={panelTransition}
             className={cn(
-              "fixed z-[201] flex flex-col overflow-hidden bg-white shadow-xl shadow-neutral-900/25",
+              "fixed z-[201] flex flex-col bg-white shadow-xl shadow-neutral-900/25",
               "inset-x-3 bottom-3 top-16 rounded-3xl border border-neutral-200/80",
               "sm:inset-auto sm:bottom-6 sm:right-6 sm:top-auto sm:h-[600px] sm:max-h-[calc(100dvh-3rem)] sm:w-[400px]",
             )}
             role="dialog"
-            aria-label="Asisten SMANSA"
+            aria-label="RANGSA"
             // Cegah Lenis (smooth-scroll global) membajak wheel di atas panel,
             // agar scroll native pada daftar pesan berfungsi normal.
             data-lenis-prevent
           >
-            {/* Header */}
-            <header className="relative flex items-center gap-3 overflow-hidden bg-gradient-to-r from-brand-primary to-primary-600 px-4 py-3.5 text-white">
-              {/* Kilau halus di latar header */}
-              <span
-                className="pointer-events-none absolute -right-8 -top-10 size-32 rounded-full bg-white/10 blur-2xl"
-                aria-hidden="true"
-              />
-              <span className="block size-10 shrink-0 overflow-hidden rounded-full ring-1 ring-white/40">
-                <ChatbotMark className="size-full" />
-              </span>
-              <div className="min-w-0 flex-1">
-                <p className="text-sm font-semibold leading-tight">Asisten SMANSA</p>
-                <span className="mt-0.5 flex items-center gap-1.5 text-xs text-white/80">
-                  <span className="relative flex size-2">
-                    <span className="absolute inline-flex size-full rounded-full bg-success/70 motion-safe:animate-ping" />
-                    <span className="relative inline-flex size-2 rounded-full bg-success" />
+            {/* Konten panel di-clip ke sudut membulat; mascot di bawah sengaja ditaruh
+                di luar div ini supaya boleh "keluar" dari top bar. */}
+            <div className="flex flex-1 flex-col overflow-hidden rounded-3xl">
+              {/* Header */}
+              <header className="relative flex items-center gap-3 overflow-hidden bg-gradient-to-r from-brand-primary to-primary-600 py-3.5 pl-20 pr-4 text-white sm:pl-24">
+                {/* Kilau halus di latar header */}
+                <span
+                  className="pointer-events-none absolute -right-8 -top-10 size-32 rounded-full bg-white/10 blur-2xl"
+                  aria-hidden="true"
+                />
+                <div className="min-w-0 flex-1">
+                  <p className="text-sm font-semibold leading-tight">RANGSA</p>
+                  <span className="mt-0.5 flex items-center gap-1.5 text-xs text-white/80">
+                    <span className="relative flex size-2">
+                      <span className="absolute inline-flex size-full rounded-full bg-success/70 motion-safe:animate-ping" />
+                      <span className="relative inline-flex size-2 rounded-full bg-success" />
+                    </span>
+                    Online • siap membantu
                   </span>
-                  Online • siap membantu
-                </span>
-              </div>
-              <button
-                type="button"
-                onClick={() => setOpen(false)}
-                className="grid size-8 shrink-0 place-items-center rounded-full text-white/85 transition hover:bg-white/20 hover:text-white"
-                aria-label="Tutup"
-              >
-                <X size={18} weight="bold" />
-              </button>
-            </header>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setOpen(false)}
+                  className="grid size-8 shrink-0 place-items-center rounded-full text-white/85 transition hover:bg-white/20 hover:text-white"
+                  aria-label="Tutup"
+                >
+                  <X size={18} weight="bold" />
+                </button>
+              </header>
 
             {/* Pesan */}
             <div
@@ -374,6 +375,28 @@ export function ChatWidget() {
                 </p>
               )}
             </form>
+            </div>
+
+            {/* Rangsa 3D — melongok di atas top bar, sengaja lolos dari clip panel
+                agar terasa "keluar" dari kotak, bukan cuma foto profil bundar. */}
+            <motion.div
+              aria-hidden="true"
+              className="pointer-events-none absolute -top-12 left-3 z-10 h-24 w-20 sm:-top-14 sm:h-28 sm:w-24"
+              animate={reduceMotion ? undefined : { y: [0, -6, 0] }}
+              transition={
+                reduceMotion ? undefined : { duration: 3.2, repeat: Infinity, ease: "easeInOut" }
+              }
+            >
+              {/* Contact shadow — jejak bayangan di bawah kaki, biar terasa berpijak */}
+              <span className="absolute bottom-0 left-1/2 h-1.5 w-8 -translate-x-1/2 rounded-full bg-neutral-900/30 blur-[3px] sm:w-9" />
+              <Image
+                src="/images/maskot/putihabu-4.png"
+                alt=""
+                fill
+                sizes="96px"
+                className="object-contain object-bottom drop-shadow-[0_14px_12px_rgba(15,23,42,0.35)]"
+              />
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -395,7 +418,7 @@ function EmptyState({
       <div className="flex items-end gap-2">
         <BotAvatar />
         <div className="max-w-[82%] rounded-2xl rounded-bl-md border border-neutral-200/70 bg-white px-3.5 py-3 text-sm leading-relaxed text-neutral-700 shadow-sm">
-          Halo! 👋 Aku <strong className="font-semibold text-neutral-900">Asisten SMANSA</strong>.
+          Halo! 👋 Aku <strong className="font-semibold text-neutral-900">RANGSA</strong>.
           Aku bisa bantu jawab soal profil, sejarah, ekstrakurikuler, tata tertib, kalender, kontak,
           dan info lain seputar SMA Negeri 1 Samarinda. Mau tanya apa?
         </div>

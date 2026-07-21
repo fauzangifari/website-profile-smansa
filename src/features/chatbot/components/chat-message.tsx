@@ -1,21 +1,21 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
 
-import { ChatbotMark } from "@/features/chatbot/components/chatbot-mark";
 import { cn, safeHref } from "@/lib/utils";
 import type { ChatRole } from "@/features/chatbot/types/chat";
 
-/** Avatar bulat bergradien untuk balasan asisten — identitas visual chatbot. */
+/** Avatar foto RANGSA untuk balasan asisten — identitas visual chatbot. */
 export function BotAvatar({ className }: { className?: string }) {
   return (
-    <span
-      className={cn(
-        "block size-7 shrink-0 overflow-hidden rounded-full shadow-sm shadow-brand-primary/30",
-        className,
-      )}
-      aria-hidden="true"
-    >
-      <ChatbotMark className="size-full" />
+    <span className={cn("relative block h-16 w-14 shrink-0", className)} aria-hidden="true">
+      <Image
+        src="/images/maskot/sarungsmd-2.png"
+        alt="RANGSA"
+        fill
+        sizes="64px"
+        className="object-contain object-bottom drop-shadow-sm"
+      />
     </span>
   );
 }
