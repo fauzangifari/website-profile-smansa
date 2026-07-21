@@ -34,15 +34,14 @@ export const siteConfig = {
       country: "ID",
     },
   },
-  // TODO: ganti dengan URL akun media sosial resmi sekolah.
   // Dipakai di footer & sebagai `sameAs` pada JSON-LD organisasi.
   // Kosongkan ("") entri yang belum punya akun agar tidak ditampilkan.
   social: {
-    facebook: "https://www.facebook.com/",
-    x: "https://x.com/",
-    linkedin: "https://www.linkedin.com/",
-    youtube: "https://www.youtube.com/",
-    instagram: "https://www.instagram.com/",
+    facebook: "https://www.facebook.com/smanegeri1samarinda",
+    x: "https://x.com/smansamarinda",
+    linkedin: "https://www.linkedin.com/school/sman-1-samarinda",
+    youtube: "https://www.youtube.com/@SMAN1Samarinda",
+    instagram: "https://www.instagram.com/smansamarinda",
   },
 } as const;
 

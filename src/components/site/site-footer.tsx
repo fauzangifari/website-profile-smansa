@@ -116,8 +116,9 @@ export function SiteFooter({ anchorBasePath }: SiteFooterProps) {
                   Sekolah Menengah Atas
                 </p>
                 <p className="mt-4 max-w-2xl text-sm leading-7 text-neutral-700">
-                  Website profile sekolah untuk informasi publik, berita,
-                  program, prestasi, fasilitas, alumni, e-learning, dan SPMB.
+                  Situs web resmi sekolah yang menyajikan informasi publik
+                  seputar berita, program, prestasi, fasilitas, alumni,
+                  e-learning, dan SPMB.
                 </p>
               </div>
             </div>
